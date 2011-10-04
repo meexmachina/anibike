@@ -1,0 +1,840 @@
+
+AniBikeBootLoader.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000006  00800100  00007406  0000049a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000406  00007000  00007000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000006  00800106  00800106  000004a0  2**0
+                  ALLOC
+  3 .debug_aranges 00000020  00000000  00000000  000004a0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 00000058  00000000  00000000  000004c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000315  00000000  00000000  00000518  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000001db  00000000  00000000  0000082d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000003d5  00000000  00000000  00000a08  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000050  00000000  00000000  00000de0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000001bd  00000000  00000000  00000e30  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000002c2  00000000  00000000  00000fed  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000018  00000000  00000000  000012af  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00007000 <__vectors>:
+    7000:	0c 94 2e 38 	jmp	0x705c	; 0x705c <__ctors_end>
+    7004:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7008:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    700c:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7010:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7014:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7018:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    701c:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7020:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7024:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7028:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    702c:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7030:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7034:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7038:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    703c:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7040:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7044:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7048:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    704c:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7050:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7054:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+    7058:	0c 94 4b 38 	jmp	0x7096	; 0x7096 <__bad_interrupt>
+
+0000705c <__ctors_end>:
+    705c:	11 24       	eor	r1, r1
+    705e:	1f be       	out	0x3f, r1	; 63
+    7060:	cf ef       	ldi	r28, 0xFF	; 255
+    7062:	d8 e0       	ldi	r29, 0x08	; 8
+    7064:	de bf       	out	0x3e, r29	; 62
+    7066:	cd bf       	out	0x3d, r28	; 61
+
+00007068 <__do_copy_data>:
+    7068:	11 e0       	ldi	r17, 0x01	; 1
+    706a:	a0 e0       	ldi	r26, 0x00	; 0
+    706c:	b1 e0       	ldi	r27, 0x01	; 1
+    706e:	e6 e0       	ldi	r30, 0x06	; 6
+    7070:	f4 e7       	ldi	r31, 0x74	; 116
+    7072:	02 c0       	rjmp	.+4      	; 0x7078 <.do_copy_data_start>
+
+00007074 <.do_copy_data_loop>:
+    7074:	05 90       	lpm	r0, Z+
+    7076:	0d 92       	st	X+, r0
+
+00007078 <.do_copy_data_start>:
+    7078:	a6 30       	cpi	r26, 0x06	; 6
+    707a:	b1 07       	cpc	r27, r17
+    707c:	d9 f7       	brne	.-10     	; 0x7074 <.do_copy_data_loop>
+
+0000707e <__do_clear_bss>:
+    707e:	11 e0       	ldi	r17, 0x01	; 1
+    7080:	a6 e0       	ldi	r26, 0x06	; 6
+    7082:	b1 e0       	ldi	r27, 0x01	; 1
+    7084:	01 c0       	rjmp	.+2      	; 0x7088 <.do_clear_bss_start>
+
+00007086 <.do_clear_bss_loop>:
+    7086:	1d 92       	st	X+, r1
+
+00007088 <.do_clear_bss_start>:
+    7088:	ac 30       	cpi	r26, 0x0C	; 12
+    708a:	b1 07       	cpc	r27, r17
+    708c:	e1 f7       	brne	.-8      	; 0x7086 <.do_clear_bss_loop>
+    708e:	0e 94 68 38 	call	0x70d0	; 0x70d0 <main>
+    7092:	0c 94 01 3a 	jmp	0x7402	; 0x7402 <_exit>
+
+00007096 <__bad_interrupt>:
+    7096:	0c 94 00 38 	jmp	0x7000	; 0x7000 <__vectors>
+
+0000709a <uart_putc>:
+#define noinline __attribute__((noinline))
+
+
+/** output one character */
+static noinline void uart_putc(uint8_t data)
+/*{{{*/ {
+    709a:	98 2f       	mov	r25, r24
+
+    /* loop until data has been transmitted */
+    while (!(_UCSRA_UART0 & _BV(_UDRE_UART0)));
+    709c:	80 91 c0 00 	lds	r24, 0x00C0
+    70a0:	85 ff       	sbrs	r24, 5
+    70a2:	fc cf       	rjmp	.-8      	; 0x709c <uart_putc+0x2>
+
+    /* put data in buffer */
+    _UDR_UART0 = data;
+    70a4:	90 93 c6 00 	sts	0x00C6, r25
+
+} /* }}} */
+    70a8:	08 95       	ret
+
+000070aa <uart_getc>:
+/** block until one character has been read */
+static noinline uint8_t uart_getc(void)
+/*{{{*/ {
+
+    /* wait if a byte has been received */
+    while (!(_UCSRA_UART0 & _BV(_RXC_UART0)));
+    70aa:	80 91 c0 00 	lds	r24, 0x00C0
+    70ae:	87 ff       	sbrs	r24, 7
+    70b0:	fc cf       	rjmp	.-8      	; 0x70aa <uart_getc>
+
+    /* return received byte */
+    return _UDR_UART0;
+    70b2:	80 91 c6 00 	lds	r24, 0x00C6
+
+} /* }}} */
+    70b6:	08 95       	ret
+
+000070b8 <start_application>:
+/** move interrupt vectors to application section and jump to main program */
+static noinline void start_application(void)
+/* {{{ */ {
+
+        /* reset input pin */
+        BOOTLOADER_PORT &= BOOTLOADER_MASK;
+    70b8:	8e b1       	in	r24, 0x0e	; 14
+    70ba:	84 70       	andi	r24, 0x04	; 4
+    70bc:	8e b9       	out	0x0e, r24	; 14
+
+        /* move interrupt vectors to application section and jump to main program */
+        _IVREG = _BV(IVCE);
+    70be:	81 e0       	ldi	r24, 0x01	; 1
+    70c0:	85 bf       	out	0x35, r24	; 53
+        _IVREG = 0;
+    70c2:	15 be       	out	0x35, r1	; 53
+        jump_to_application();
+    70c4:	e0 91 06 01 	lds	r30, 0x0106
+    70c8:	f0 91 07 01 	lds	r31, 0x0107
+    70cc:	09 95       	icall
+
+} /* }}} */
+    70ce:	08 95       	ret
+
+000070d0 <main>:
+
+int main(void)
+/* {{{ */ {
+    70d0:	4f 92       	push	r4
+    70d2:	5f 92       	push	r5
+    70d4:	6f 92       	push	r6
+    70d6:	7f 92       	push	r7
+    70d8:	8f 92       	push	r8
+    70da:	9f 92       	push	r9
+    70dc:	af 92       	push	r10
+    70de:	bf 92       	push	r11
+    70e0:	cf 92       	push	r12
+    70e2:	df 92       	push	r13
+    70e4:	ef 92       	push	r14
+    70e6:	ff 92       	push	r15
+    70e8:	0f 93       	push	r16
+    70ea:	1f 93       	push	r17
+    70ec:	cf 93       	push	r28
+    70ee:	df 93       	push	r29
+/** init the hardware uart */
+static inline void init_uart(void)
+/*{{{*/ {
+
+    /* set baud rate */
+    _UBRRH_UART0 = (uint8_t)(UART_UBRR >> 8);  /* high byte */
+    70f0:	10 92 c5 00 	sts	0x00C5, r1
+    _UBRRL_UART0 = (uint8_t)UART_UBRR;         /* low byte */
+    70f4:	84 e1       	ldi	r24, 0x14	; 20
+    70f6:	80 93 c4 00 	sts	0x00C4, r24
+
+    /* set mode */
+    _UCSRC_UART0 = UART_UCSRC;
+    70fa:	86 e0       	ldi	r24, 0x06	; 6
+    70fc:	80 93 c2 00 	sts	0x00C2, r24
+
+    /* enable transmitter, receiver */
+    _UCSRB_UART0 = _BV(_TXEN_UART0) | _BV(_RXEN_UART0);
+    7100:	88 e1       	ldi	r24, 0x18	; 24
+    7102:	80 93 c1 00 	sts	0x00C1, r24
+
+    init_uart();
+
+    /* send boot message */
+#if SEND_BOOT_MESSAGE
+        uart_putc('b');
+    7106:	82 e6       	ldi	r24, 0x62	; 98
+    7108:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+#endif
+
+    /* configure pin as input and enable pullup */
+    BOOTLOADER_DDR &= ~BOOTLOADER_MASK;
+    710c:	6a 98       	cbi	0x0d, 2	; 13
+    BOOTLOADER_PORT |= BOOTLOADER_MASK;
+    710e:	72 9a       	sbi	0x0e, 2	; 14
+    7110:	20 e0       	ldi	r18, 0x00	; 0
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+    7112:	4f ef       	ldi	r20, 0xFF	; 255
+    7114:	5f ef       	ldi	r21, 0xFF	; 255
+    7116:	ca 01       	movw	r24, r20
+    7118:	01 97       	sbiw	r24, 0x01	; 1
+    711a:	f1 f7       	brne	.-4      	; 0x7118 <main+0x48>
+    uint8_t i;
+
+    for(i = 0; i < 5; i++) {
+        _delay_loop_2(65535);
+
+        if(_UCSRA_UART0 & _BV(_RXC_UART0)) {
+    711c:	80 91 c0 00 	lds	r24, 0x00C0
+    7120:	87 ff       	sbrs	r24, 7
+    7122:	04 c0       	rjmp	.+8      	; 0x712c <main+0x5c>
+            if(_UDR_UART0 == BOOTLOADER_ENTRY_CHAR) {
+    7124:	80 91 c6 00 	lds	r24, 0x00C6
+    7128:	80 37       	cpi	r24, 0x70	; 112
+    712a:	21 f0       	breq	.+8      	; 0x7134 <main+0x64>
+/* loop a few times, and see if the character is received */
+static inline uint8_t wait_for_char(void)
+/*{{{*/ {
+    uint8_t i;
+
+    for(i = 0; i < 5; i++) {
+    712c:	2f 5f       	subi	r18, 0xFF	; 255
+    712e:	25 30       	cpi	r18, 0x05	; 5
+    7130:	91 f7       	brne	.-28     	; 0x7116 <main+0x46>
+    7132:	4c c1       	rjmp	.+664    	; 0x73cc <main+0x2fc>
+
+
+start_bootloader:
+
+#   if SEND_BOOT_MESSAGE
+    uart_putc('p');
+    7134:	80 e7       	ldi	r24, 0x70	; 112
+    7136:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+
+                        /* iterate over all pages in flash, and try to erase every single
+                         * one of them (the bootloader section should be protected by lock-bits (!) */
+
+                        for (flash_address = 0; flash_address < BOOT_SECTION_START; flash_address += SPM_PAGESIZE) {
+                            boot_page_erase_safe(flash_address);
+    713a:	63 e0       	ldi	r22, 0x03	; 3
+    713c:	76 2e       	mov	r7, r22
+
+                                /* get data word */
+                                temp_word_buffer = uart_getc() | (uart_getc() << 8);
+
+                                /* write data to temporary buffer */
+                                boot_page_fill(temp_address, temp_word_buffer);
+    713e:	66 24       	eor	r6, r6
+    7140:	63 94       	inc	r6
+                                 * address, but we are writing words! */
+                                temp_address += 2;
+                            }
+
+                            /* after filling the temp buffer, write the page and wait till we're done */
+                            boot_page_write_safe(flash_address);
+    7142:	55 e0       	ldi	r21, 0x05	; 5
+    7144:	55 2e       	mov	r5, r21
+                            boot_spm_busy_wait();
+
+                            /* re-enable application flash section, so we can read it again */
+                            boot_rww_enable();
+    7146:	41 e1       	ldi	r20, 0x11	; 17
+    7148:	44 2e       	mov	r4, r20
+    while (1)
+    {
+        uint8_t command;
+
+        /* block until a command has been received */
+        command = uart_getc();
+    714a:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+
+        switch (command)
+    714e:	86 35       	cpi	r24, 0x56	; 86
+    7150:	09 f4       	brne	.+2      	; 0x7154 <main+0x84>
+    7152:	78 c0       	rjmp	.+240    	; 0x7244 <main+0x174>
+    7154:	87 35       	cpi	r24, 0x57	; 87
+    7156:	c0 f4       	brcc	.+48     	; 0x7188 <main+0xb8>
+    7158:	8c 34       	cpi	r24, 0x4C	; 76
+    715a:	09 f4       	brne	.+2      	; 0x715e <main+0x8e>
+    715c:	f3 c0       	rjmp	.+486    	; 0x7344 <main+0x274>
+    715e:	8d 34       	cpi	r24, 0x4D	; 77
+    7160:	50 f4       	brcc	.+20     	; 0x7176 <main+0xa6>
+    7162:	82 34       	cpi	r24, 0x42	; 66
+    7164:	09 f4       	brne	.+2      	; 0x7168 <main+0x98>
+    7166:	80 c0       	rjmp	.+256    	; 0x7268 <main+0x198>
+    7168:	85 34       	cpi	r24, 0x45	; 69
+    716a:	09 f4       	brne	.+2      	; 0x716e <main+0x9e>
+    716c:	eb c0       	rjmp	.+470    	; 0x7344 <main+0x274>
+    716e:	81 34       	cpi	r24, 0x41	; 65
+    7170:	09 f0       	breq	.+2      	; 0x7174 <main+0xa4>
+    7172:	28 c1       	rjmp	.+592    	; 0x73c4 <main+0x2f4>
+    7174:	2a c0       	rjmp	.+84     	; 0x71ca <main+0xfa>
+    7176:	83 35       	cpi	r24, 0x53	; 83
+    7178:	19 f1       	breq	.+70     	; 0x71c0 <main+0xf0>
+    717a:	84 35       	cpi	r24, 0x54	; 84
+    717c:	09 f4       	brne	.+2      	; 0x7180 <main+0xb0>
+    717e:	4c c0       	rjmp	.+152    	; 0x7218 <main+0x148>
+    7180:	80 35       	cpi	r24, 0x50	; 80
+    7182:	09 f0       	breq	.+2      	; 0x7186 <main+0xb6>
+    7184:	1f c1       	rjmp	.+574    	; 0x73c4 <main+0x2f4>
+    7186:	de c0       	rjmp	.+444    	; 0x7344 <main+0x274>
+    7188:	85 36       	cpi	r24, 0x65	; 101
+    718a:	81 f1       	breq	.+96     	; 0x71ec <main+0x11c>
+    718c:	86 36       	cpi	r24, 0x66	; 102
+    718e:	48 f4       	brcc	.+18     	; 0x71a2 <main+0xd2>
+    7190:	81 36       	cpi	r24, 0x61	; 97
+    7192:	c9 f0       	breq	.+50     	; 0x71c6 <main+0xf6>
+    7194:	82 36       	cpi	r24, 0x62	; 98
+    7196:	09 f4       	brne	.+2      	; 0x719a <main+0xca>
+    7198:	5f c0       	rjmp	.+190    	; 0x7258 <main+0x188>
+    719a:	88 35       	cpi	r24, 0x58	; 88
+    719c:	09 f0       	breq	.+2      	; 0x71a0 <main+0xd0>
+    719e:	12 c1       	rjmp	.+548    	; 0x73c4 <main+0x2f4>
+    71a0:	58 c0       	rjmp	.+176    	; 0x7252 <main+0x182>
+    71a2:	80 37       	cpi	r24, 0x70	; 112
+    71a4:	09 f4       	brne	.+2      	; 0x71a8 <main+0xd8>
+    71a6:	53 c0       	rjmp	.+166    	; 0x724e <main+0x17e>
+    71a8:	81 37       	cpi	r24, 0x71	; 113
+    71aa:	20 f4       	brcc	.+8      	; 0x71b4 <main+0xe4>
+    71ac:	87 36       	cpi	r24, 0x67	; 103
+    71ae:	09 f0       	breq	.+2      	; 0x71b2 <main+0xe2>
+    71b0:	09 c1       	rjmp	.+530    	; 0x73c4 <main+0x2f4>
+    71b2:	ca c0       	rjmp	.+404    	; 0x7348 <main+0x278>
+    71b4:	83 37       	cpi	r24, 0x73	; 115
+    71b6:	99 f1       	breq	.+102    	; 0x721e <main+0x14e>
+    71b8:	84 37       	cpi	r24, 0x74	; 116
+    71ba:	09 f0       	breq	.+2      	; 0x71be <main+0xee>
+    71bc:	03 c1       	rjmp	.+518    	; 0x73c4 <main+0x2f4>
+    71be:	37 c0       	rjmp	.+110    	; 0x722e <main+0x15e>
+    71c0:	c0 e0       	ldi	r28, 0x00	; 0
+    71c2:	d1 e0       	ldi	r29, 0x01	; 1
+    71c4:	3c c0       	rjmp	.+120    	; 0x723e <main+0x16e>
+#endif
+                        uart_putc('\r');
+                        break;
+
+            case 'a':   /* report if we support address autoincrementing: yes, of course */
+                        uart_putc('Y');
+    71c6:	89 e5       	ldi	r24, 0x59	; 89
+    71c8:	fe c0       	rjmp	.+508    	; 0x73c6 <main+0x2f6>
+
+            case 'A':   /* set write address start (in words), read high and low byte and respond with CR */
+                        /* {{{ */
+
+                        /* eeprom address is a byte address */
+                        eeprom_address = (uart_getc() << 8) | uart_getc();
+    71ca:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+    71ce:	18 2f       	mov	r17, r24
+    71d0:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+    71d4:	b1 2e       	mov	r11, r17
+    71d6:	aa 24       	eor	r10, r10
+    71d8:	90 e0       	ldi	r25, 0x00	; 0
+    71da:	8a 29       	or	r24, r10
+    71dc:	9b 29       	or	r25, r11
+    71de:	90 93 09 01 	sts	0x0109, r25
+    71e2:	80 93 08 01 	sts	0x0108, r24
+
+                        /* flash address is a byte address too, but we get a
+                         * word address so convert it */
+                        flash_address = eeprom_address << 1;
+    71e6:	88 0f       	add	r24, r24
+    71e8:	99 1f       	adc	r25, r25
+    71ea:	8d c0       	rjmp	.+282    	; 0x7306 <main+0x236>
+
+                        /* acknowledge */
+                        uart_putc('\r');
+                        break;
+    71ec:	e0 e0       	ldi	r30, 0x00	; 0
+    71ee:	f0 e0       	ldi	r31, 0x00	; 0
+    71f0:	0a c0       	rjmp	.+20     	; 0x7206 <main+0x136>
+
+                        /* iterate over all pages in flash, and try to erase every single
+                         * one of them (the bootloader section should be protected by lock-bits (!) */
+
+                        for (flash_address = 0; flash_address < BOOT_SECTION_START; flash_address += SPM_PAGESIZE) {
+                            boot_page_erase_safe(flash_address);
+    71f2:	07 b6       	in	r0, 0x37	; 55
+    71f4:	00 fc       	sbrc	r0, 0
+    71f6:	fd cf       	rjmp	.-6      	; 0x71f2 <main+0x122>
+    71f8:	f9 99       	sbic	0x1f, 1	; 31
+    71fa:	fe cf       	rjmp	.-4      	; 0x71f8 <main+0x128>
+    71fc:	70 92 57 00 	sts	0x0057, r7
+    7200:	e8 95       	spm
+    7202:	e0 58       	subi	r30, 0x80	; 128
+    7204:	ff 4f       	sbci	r31, 0xFF	; 255
+                        /* {{{ */
+
+                        /* iterate over all pages in flash, and try to erase every single
+                         * one of them (the bootloader section should be protected by lock-bits (!) */
+
+                        for (flash_address = 0; flash_address < BOOT_SECTION_START; flash_address += SPM_PAGESIZE) {
+    7206:	20 e7       	ldi	r18, 0x70	; 112
+    7208:	e0 30       	cpi	r30, 0x00	; 0
+    720a:	f2 07       	cpc	r31, r18
+    720c:	90 f3       	brcs	.-28     	; 0x71f2 <main+0x122>
+    720e:	f0 93 0b 01 	sts	0x010B, r31
+    7212:	e0 93 0a 01 	sts	0x010A, r30
+    7216:	96 c0       	rjmp	.+300    	; 0x7344 <main+0x274>
+            case 'T':   /* select device type: received device type and respond with CR */
+                        /* ignore this command, only the device this bootloader
+                         * is installed on can be programmed :) */
+
+                        /* discard byte and acknowledge */
+                        uart_getc();
+    7218:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+    721c:	93 c0       	rjmp	.+294    	; 0x7344 <main+0x274>
+                        uart_putc('\r');
+                        break;
+
+            case 's':   /* read signature bytes: respond with the three signature bytes for this MCU */
+                        uart_putc(_SIG_BYTE_3);
+    721e:	8d e0       	ldi	r24, 0x0D	; 13
+    7220:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+                        uart_putc(_SIG_BYTE_2);
+    7224:	85 e9       	ldi	r24, 0x95	; 149
+    7226:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+                        uart_putc(_SIG_BYTE_1);
+    722a:	8e e1       	ldi	r24, 0x1E	; 30
+    722c:	cc c0       	rjmp	.+408    	; 0x73c6 <main+0x2f6>
+                        break;
+
+            case 't':   /* return supported device codes (only one in this case), and terminate with a nullbyte */
+                        uart_putc(_AVR910_DEVCODE);
+    722e:	8c e3       	ldi	r24, 0x3C	; 60
+    7230:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+                        uart_putc(0);
+    7234:	80 e0       	ldi	r24, 0x00	; 0
+    7236:	c7 c0       	rjmp	.+398    	; 0x73c6 <main+0x2f6>
+static inline void uart_puts(uint8_t buffer[])
+/*{{{*/ {
+
+    /* send everything until end of string */
+    while (*buffer != 0) {
+        uart_putc(*buffer);
+    7238:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+        buffer++;
+    723c:	21 96       	adiw	r28, 0x01	; 1
+/** output a string */
+static inline void uart_puts(uint8_t buffer[])
+/*{{{*/ {
+
+    /* send everything until end of string */
+    while (*buffer != 0) {
+    723e:	88 81       	ld	r24, Y
+    7240:	88 23       	and	r24, r24
+    7242:	d1 f7       	brne	.-12     	; 0x7238 <main+0x168>
+
+            case 'S':   /* give software identifier, send exactly 7 chars */
+                        uart_puts((uint8_t *)"FDL v");
+
+            case 'V':   /* return software version (2 byte) */
+                        uart_putc(VERSION_BYTE_1);
+    7244:	80 e3       	ldi	r24, 0x30	; 48
+    7246:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+                        uart_putc(VERSION_BYTE_2);
+    724a:	82 e3       	ldi	r24, 0x32	; 50
+    724c:	bc c0       	rjmp	.+376    	; 0x73c6 <main+0x2f6>
+                        break;
+
+            case 'p':   /* send programmer type, in this case 'S' for serial */
+                        uart_putc('S');
+    724e:	83 e5       	ldi	r24, 0x53	; 83
+    7250:	ba c0       	rjmp	.+372    	; 0x73c6 <main+0x2f6>
+#if EXIT_BOOTLOADER == 1
+            case 'E':   /* exit bootloader */
+#endif
+            case 'X':   /* start application */
+
+                        start_application();
+    7252:	0e 94 5c 38 	call	0x70b8	; 0x70b8 <start_application>
+    7256:	76 c0       	rjmp	.+236    	; 0x7344 <main+0x274>
+                        uart_putc('\r');
+
+                        break;
+
+            case 'b':   /* check block support: return yes and 2 bytes block size we support */
+                        uart_putc('Y');
+    7258:	89 e5       	ldi	r24, 0x59	; 89
+    725a:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+                        uart_putc(HIGH(BLOCKSIZE));
+    725e:	80 e0       	ldi	r24, 0x00	; 0
+    7260:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+                        uart_putc(LOW(BLOCKSIZE));
+    7264:	80 e8       	ldi	r24, 0x80	; 128
+    7266:	af c0       	rjmp	.+350    	; 0x73c6 <main+0x2f6>
+
+            case 'B':   /* start block flash or eeprom load (fill mcu internal page buffer) */
+                        /* {{{ */
+
+                        /* first, read buffer size (in bytes) */
+                        buffer_size = (uart_getc() << 8) | uart_getc();
+    7268:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+    726c:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+    7270:	08 2f       	mov	r16, r24
+
+                        /* check if our buffer can hold all this data */
+                        if (buffer_size > BLOCKSIZE) {
+    7272:	81 38       	cpi	r24, 0x81	; 129
+    7274:	08 f0       	brcs	.+2      	; 0x7278 <main+0x1a8>
+    7276:	a6 c0       	rjmp	.+332    	; 0x73c4 <main+0x2f4>
+                            uart_putc('?');
+                            break;
+                        }
+
+                        /* then, read flash ('F') or eeprom ('E') memory type */
+                        memory_type = uart_getc();
+    7278:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+
+                        /* memory type is flash */
+                        if (memory_type == 'F')
+    727c:	86 34       	cpi	r24, 0x46	; 70
+    727e:	09 f0       	breq	.+2      	; 0x7282 <main+0x1b2>
+    7280:	47 c0       	rjmp	.+142    	; 0x7310 <main+0x240>
+                        /* {{{ */ {
+
+                            BUF_T i;
+                            uint16_t temp_word_buffer;
+
+                            if (flash_address > BOOT_SECTION_START) {
+    7282:	80 91 0a 01 	lds	r24, 0x010A
+    7286:	90 91 0b 01 	lds	r25, 0x010B
+    728a:	81 50       	subi	r24, 0x01	; 1
+    728c:	90 47       	sbci	r25, 0x70	; 112
+    728e:	18 f0       	brcs	.+6      	; 0x7296 <main+0x1c6>
+                                uart_putc(0);
+    7290:	80 e0       	ldi	r24, 0x00	; 0
+    7292:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+                            }
+
+                            uint16_t temp_address = flash_address;
+    7296:	c0 90 0a 01 	lds	r12, 0x010A
+    729a:	d0 90 0b 01 	lds	r13, 0x010B
+                            boot_spm_busy_wait();
+    729e:	07 b6       	in	r0, 0x37	; 55
+    72a0:	00 fc       	sbrc	r0, 0
+    72a2:	fd cf       	rjmp	.-6      	; 0x729e <main+0x1ce>
+
+                            /* read data, wordwise, low byte first */
+                            for (i = 0; i < buffer_size/2; i++) {
+    72a4:	e0 2e       	mov	r14, r16
+    72a6:	e6 94       	lsr	r14
+    72a8:	e6 01       	movw	r28, r12
+    72aa:	ff 24       	eor	r15, r15
+    72ac:	12 c0       	rjmp	.+36     	; 0x72d2 <main+0x202>
+
+                                /* get data word */
+                                temp_word_buffer = uart_getc() | (uart_getc() << 8);
+    72ae:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+    72b2:	08 2f       	mov	r16, r24
+    72b4:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+
+                                /* write data to temporary buffer */
+                                boot_page_fill(temp_address, temp_word_buffer);
+    72b8:	98 2e       	mov	r9, r24
+    72ba:	88 24       	eor	r8, r8
+    72bc:	10 e0       	ldi	r17, 0x00	; 0
+    72be:	08 29       	or	r16, r8
+    72c0:	19 29       	or	r17, r9
+    72c2:	fe 01       	movw	r30, r28
+    72c4:	08 01       	movw	r0, r16
+    72c6:	60 92 57 00 	sts	0x0057, r6
+    72ca:	e8 95       	spm
+    72cc:	11 24       	eor	r1, r1
+
+                                /* increment by two, since temp_address is a byte
+                                 * address, but we are writing words! */
+                                temp_address += 2;
+    72ce:	22 96       	adiw	r28, 0x02	; 2
+
+                            uint16_t temp_address = flash_address;
+                            boot_spm_busy_wait();
+
+                            /* read data, wordwise, low byte first */
+                            for (i = 0; i < buffer_size/2; i++) {
+    72d0:	f3 94       	inc	r15
+    72d2:	fe 14       	cp	r15, r14
+    72d4:	60 f3       	brcs	.-40     	; 0x72ae <main+0x1de>
+    72d6:	8e 2d       	mov	r24, r14
+    72d8:	90 e0       	ldi	r25, 0x00	; 0
+    72da:	88 0f       	add	r24, r24
+    72dc:	99 1f       	adc	r25, r25
+    72de:	8c 0d       	add	r24, r12
+    72e0:	9d 1d       	adc	r25, r13
+                                 * address, but we are writing words! */
+                                temp_address += 2;
+                            }
+
+                            /* after filling the temp buffer, write the page and wait till we're done */
+                            boot_page_write_safe(flash_address);
+    72e2:	07 b6       	in	r0, 0x37	; 55
+    72e4:	00 fc       	sbrc	r0, 0
+    72e6:	fd cf       	rjmp	.-6      	; 0x72e2 <main+0x212>
+    72e8:	f9 99       	sbic	0x1f, 1	; 31
+    72ea:	fe cf       	rjmp	.-4      	; 0x72e8 <main+0x218>
+    72ec:	e0 91 0a 01 	lds	r30, 0x010A
+    72f0:	f0 91 0b 01 	lds	r31, 0x010B
+    72f4:	50 92 57 00 	sts	0x0057, r5
+    72f8:	e8 95       	spm
+                            boot_spm_busy_wait();
+    72fa:	07 b6       	in	r0, 0x37	; 55
+    72fc:	00 fc       	sbrc	r0, 0
+    72fe:	fd cf       	rjmp	.-6      	; 0x72fa <main+0x22a>
+
+                            /* re-enable application flash section, so we can read it again */
+                            boot_rww_enable();
+    7300:	40 92 57 00 	sts	0x0057, r4
+    7304:	e8 95       	spm
+
+                            /* store next page's address, since we do auto-address-incrementing */
+                            flash_address = temp_address;
+    7306:	90 93 0b 01 	sts	0x010B, r25
+    730a:	80 93 0a 01 	sts	0x010A, r24
+    730e:	1a c0       	rjmp	.+52     	; 0x7344 <main+0x274>
+
+                            uart_putc('\r');
+
+                        } /* }}} */
+                        else if (memory_type == 'E')
+    7310:	85 34       	cpi	r24, 0x45	; 69
+    7312:	09 f0       	breq	.+2      	; 0x7316 <main+0x246>
+    7314:	57 c0       	rjmp	.+174    	; 0x73c4 <main+0x2f4>
+    7316:	10 e0       	ldi	r17, 0x00	; 0
+    7318:	13 c0       	rjmp	.+38     	; 0x7340 <main+0x270>
+                            //uart_putc('E');
+                            uint8_t temp_data;
+                            BUF_T i;
+
+                            for (i = 0; i < buffer_size; i++) {
+                                temp_data = uart_getc();
+    731a:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+    731e:	68 2f       	mov	r22, r24
+                                eeprom_write_byte( (uint8_t *)eeprom_address, temp_data);
+    7320:	80 91 08 01 	lds	r24, 0x0108
+    7324:	90 91 09 01 	lds	r25, 0x0109
+    7328:	0e 94 f4 39 	call	0x73e8	; 0x73e8 <__eewr_byte_m325p>
+
+                                eeprom_address++;
+    732c:	80 91 08 01 	lds	r24, 0x0108
+    7330:	90 91 09 01 	lds	r25, 0x0109
+    7334:	01 96       	adiw	r24, 0x01	; 1
+    7336:	90 93 09 01 	sts	0x0109, r25
+    733a:	80 93 08 01 	sts	0x0108, r24
+
+                            //uart_putc('E');
+                            uint8_t temp_data;
+                            BUF_T i;
+
+                            for (i = 0; i < buffer_size; i++) {
+    733e:	1f 5f       	subi	r17, 0xFF	; 255
+    7340:	10 17       	cp	r17, r16
+    7342:	58 f3       	brcs	.-42     	; 0x731a <main+0x24a>
+                                eeprom_write_byte( (uint8_t *)eeprom_address, temp_data);
+
+                                eeprom_address++;
+                            }
+
+                            uart_putc('\r');
+    7344:	8d e0       	ldi	r24, 0x0D	; 13
+    7346:	3f c0       	rjmp	.+126    	; 0x73c6 <main+0x2f6>
+
+            case 'g':   /* start block flash or eeprom read */
+                        /* {{{ */
+
+                        /* first, read byte counter */
+                        buffer_size = (uart_getc() << 8) | uart_getc();
+    7348:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+    734c:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+    7350:	e8 2e       	mov	r14, r24
+
+                        /* then, read memory type */
+                        memory_type = uart_getc();
+    7352:	0e 94 55 38 	call	0x70aa	; 0x70aa <uart_getc>
+
+                        /* memory type is flash */
+                        if (memory_type == 'F')
+    7356:	86 34       	cpi	r24, 0x46	; 70
+    7358:	e1 f4       	brne	.+56     	; 0x7392 <main+0x2c2>
+    735a:	ff 24       	eor	r15, r15
+    735c:	17 c0       	rjmp	.+46     	; 0x738c <main+0x2bc>
+                            /* read buffer_size words */
+                            for (BUF_T i = 0; i < buffer_size; i += 2) {
+                                uint16_t temp_word_buffer;
+
+                                /* read word */
+                                temp_word_buffer = pgm_read_word(flash_address);
+    735e:	e0 91 0a 01 	lds	r30, 0x010A
+    7362:	f0 91 0b 01 	lds	r31, 0x010B
+    7366:	05 91       	lpm	r16, Z+
+    7368:	14 91       	lpm	r17, Z+
+
+                                /* send data */
+                                uart_putc(LOW(temp_word_buffer));
+    736a:	80 2f       	mov	r24, r16
+    736c:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+                                uart_putc(HIGH(temp_word_buffer));
+    7370:	81 2f       	mov	r24, r17
+    7372:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+
+                                /* increment address by 2, since it's a byte address */
+                                flash_address += 2;
+    7376:	80 91 0a 01 	lds	r24, 0x010A
+    737a:	90 91 0b 01 	lds	r25, 0x010B
+    737e:	02 96       	adiw	r24, 0x02	; 2
+    7380:	90 93 0b 01 	sts	0x010B, r25
+    7384:	80 93 0a 01 	sts	0x010A, r24
+                        /* memory type is flash */
+                        if (memory_type == 'F')
+                        /* {{{ */ {
+
+                            /* read buffer_size words */
+                            for (BUF_T i = 0; i < buffer_size; i += 2) {
+    7388:	f2 e0       	ldi	r31, 0x02	; 2
+    738a:	ff 0e       	add	r15, r31
+    738c:	fe 14       	cp	r15, r14
+    738e:	38 f3       	brcs	.-50     	; 0x735e <main+0x28e>
+    7390:	dc ce       	rjmp	.-584    	; 0x714a <main+0x7a>
+                                flash_address += 2;
+                            }
+
+                        } /* }}} */
+                        /* if memory type is eeprom */
+                        else if (memory_type == 'E')
+    7392:	85 34       	cpi	r24, 0x45	; 69
+    7394:	b9 f4       	brne	.+46     	; 0x73c4 <main+0x2f4>
+    7396:	10 e0       	ldi	r17, 0x00	; 0
+    7398:	12 c0       	rjmp	.+36     	; 0x73be <main+0x2ee>
+
+                            for (uint8_t i = 0; i < buffer_size; i += 1) {
+                                uint8_t temp_buffer;
+
+                                /* read and send byte */
+                                temp_buffer = eeprom_read_byte((uint8_t *)eeprom_address);
+    739a:	80 91 08 01 	lds	r24, 0x0108
+    739e:	90 91 09 01 	lds	r25, 0x0109
+    73a2:	0e 94 ec 39 	call	0x73d8	; 0x73d8 <__eerd_byte_m325p>
+                                uart_putc(temp_buffer);
+    73a6:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+
+                                eeprom_address++;
+    73aa:	80 91 08 01 	lds	r24, 0x0108
+    73ae:	90 91 09 01 	lds	r25, 0x0109
+    73b2:	01 96       	adiw	r24, 0x01	; 1
+    73b4:	90 93 09 01 	sts	0x0109, r25
+    73b8:	80 93 08 01 	sts	0x0108, r24
+                        } /* }}} */
+                        /* if memory type is eeprom */
+                        else if (memory_type == 'E')
+                        /* {{{ */ {
+
+                            for (uint8_t i = 0; i < buffer_size; i += 1) {
+    73bc:	1f 5f       	subi	r17, 0xFF	; 255
+    73be:	1e 15       	cp	r17, r14
+    73c0:	60 f3       	brcs	.-40     	; 0x739a <main+0x2ca>
+    73c2:	c3 ce       	rjmp	.-634    	; 0x714a <main+0x7a>
+            /* 'F': read fuse bits -- NOT IMPLEMENTED */
+            /* 'N': read high fuse bits -- NOT IMPLEMENTED */
+            /* 'Q': read extended fuse bits -- NOT IMPLEMENTED */ /* }}} */
+
+            default:    /* default: respond with '?' */
+                        uart_putc('?');
+    73c4:	8f e3       	ldi	r24, 0x3F	; 63
+    73c6:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+    73ca:	bf ce       	rjmp	.-642    	; 0x714a <main+0x7a>
+
+        goto start_bootloader;
+
+    } else {
+#       if SEND_BOOT_MESSAGE
+        uart_putc('a');
+    73cc:	81 e6       	ldi	r24, 0x61	; 97
+    73ce:	0e 94 4d 38 	call	0x709a	; 0x709a <uart_putc>
+#       endif
+
+        start_application();
+    73d2:	0e 94 5c 38 	call	0x70b8	; 0x70b8 <start_application>
+    73d6:	ae ce       	rjmp	.-676    	; 0x7134 <main+0x64>
+
+000073d8 <__eerd_byte_m325p>:
+    73d8:	f9 99       	sbic	0x1f, 1	; 31
+    73da:	fe cf       	rjmp	.-4      	; 0x73d8 <__eerd_byte_m325p>
+    73dc:	92 bd       	out	0x22, r25	; 34
+    73de:	81 bd       	out	0x21, r24	; 33
+    73e0:	f8 9a       	sbi	0x1f, 0	; 31
+    73e2:	99 27       	eor	r25, r25
+    73e4:	80 b5       	in	r24, 0x20	; 32
+    73e6:	08 95       	ret
+
+000073e8 <__eewr_byte_m325p>:
+    73e8:	26 2f       	mov	r18, r22
+
+000073ea <__eewr_r18_m325p>:
+    73ea:	f9 99       	sbic	0x1f, 1	; 31
+    73ec:	fe cf       	rjmp	.-4      	; 0x73ea <__eewr_r18_m325p>
+    73ee:	92 bd       	out	0x22, r25	; 34
+    73f0:	81 bd       	out	0x21, r24	; 33
+    73f2:	20 bd       	out	0x20, r18	; 32
+    73f4:	0f b6       	in	r0, 0x3f	; 63
+    73f6:	f8 94       	cli
+    73f8:	fa 9a       	sbi	0x1f, 2	; 31
+    73fa:	f9 9a       	sbi	0x1f, 1	; 31
+    73fc:	0f be       	out	0x3f, r0	; 63
+    73fe:	01 96       	adiw	r24, 0x01	; 1
+    7400:	08 95       	ret
+
+00007402 <_exit>:
+    7402:	f8 94       	cli
+
+00007404 <__stop_program>:
+    7404:	ff cf       	rjmp	.-2      	; 0x7404 <__stop_program>
