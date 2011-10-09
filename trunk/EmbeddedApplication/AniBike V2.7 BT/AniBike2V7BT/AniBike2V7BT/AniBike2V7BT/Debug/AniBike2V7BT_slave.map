@@ -1,0 +1,808 @@
+Archive member included because of file (symbol)
+
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_exit.o)
+                              c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2/crtx32d4.o (exit)
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_copy_data.o)
+                              AniBike2V7BT_LightingSystem.o (__do_copy_data)
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_clear_bss.o)
+                              AniBike2V7BT_DataLink.o (__do_clear_bss)
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+                              swUART.o (__iob)
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+                              AniBike2V7BT_DataLink.o (printf_P)
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+                              c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o) (vfprintf)
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen_P.o)
+                              c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o) (strnlen_P)
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen.o)
+                              c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o) (strnlen)
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+                              c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o) (fputc)
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(ultoa_invert.o)
+                              c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o) (__ultoa_invert)
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_prologue.o)
+                              c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o) (__prologue_saves__)
+c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_epilogue.o)
+                              c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o) (__epilogue_restores__)
+
+Allocating common symbols
+Common symbol       size              file
+
+spiMasterC          0x7               AniBike2V7BT_DataLink.o
+rxBuffer            0x80              AniBike2V7BT_DataLink.o
+__iob               0x6               c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x00000000         0x00100000         xr
+data             0x00802000         0x0000ffa0         rw !x
+eeprom           0x00810000         0x00010000         rw !x
+fuse             0x00820000         0x00000400         rw !x
+lock             0x00830000         0x00000400         rw !x
+signature        0x00840000         0x00000400         rw !x
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2/crtx32d4.o
+LOAD AniBike2V7BT_Clock.o
+LOAD AniBike2V7BT_DataLink.o
+LOAD AniBike2V7BT_LightingSystem.o
+LOAD AniBike2V7BT_slave.o
+LOAD clksys_driver.o
+LOAD eeprom_driver.o
+LOAD port_driver.o
+LOAD spi_driver.o
+LOAD swUART.o
+LOAD tc_driver.o
+LOAD c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a
+LOAD c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a
+LOAD c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a
+
+.hash
+ *(.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rela.init
+ *(.rela.init)
+
+.rel.text
+ *(.rel.text)
+ *(.rel.text.*)
+ *(.rel.gnu.linkonce.t*)
+
+.rela.text
+ *(.rela.text)
+ *(.rela.text.*)
+ *(.rela.gnu.linkonce.t*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rela.fini
+ *(.rela.fini)
+
+.rel.rodata
+ *(.rel.rodata)
+ *(.rel.rodata.*)
+ *(.rel.gnu.linkonce.r*)
+
+.rela.rodata
+ *(.rela.rodata)
+ *(.rela.rodata.*)
+ *(.rela.gnu.linkonce.r*)
+
+.rel.data
+ *(.rel.data)
+ *(.rel.data.*)
+ *(.rel.gnu.linkonce.d*)
+
+.rela.data
+ *(.rela.data)
+ *(.rela.data.*)
+ *(.rela.gnu.linkonce.d*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rel.got
+ *(.rel.got)
+
+.rela.got
+ *(.rela.got)
+
+.rel.bss
+ *(.rel.bss)
+
+.rela.bss
+ *(.rela.bss)
+
+.rel.plt
+ *(.rel.plt)
+
+.rela.plt
+ *(.rela.plt)
+
+.text           0x00000000     0x1a26
+ *(.vectors)
+ .vectors       0x00000000      0x16c c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2/crtx32d4.o
+                0x00000000                __vector_default
+                0x00000000                __vectors
+ *(.vectors)
+ *(.progmem.gcc*)
+ *(.progmem*)
+ .progmem.data  0x0000016c        0xf AniBike2V7BT_DataLink.o
+                0x0000017c                . = ALIGN (0x2)
+ *fill*         0x0000017b        0x1 00
+                0x0000017c                __trampolines_start = .
+ *(.trampolines)
+ .trampolines   0x0000017c        0x0 linker stubs
+ *(.trampolines*)
+                0x0000017c                __trampolines_end = .
+ *(.jumptables)
+ *(.jumptables*)
+ *(.lowtext)
+ *(.lowtext*)
+                0x0000017c                __ctors_start = .
+ *(.ctors)
+                0x0000017c                __ctors_end = .
+                0x0000017c                __dtors_start = .
+ *(.dtors)
+                0x0000017c                __dtors_end = .
+ SORT(*)(.ctors)
+ SORT(*)(.dtors)
+ *(.init0)
+ .init0         0x0000017c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2/crtx32d4.o
+                0x0000017c                __init
+ *(.init0)
+ *(.init1)
+ *(.init1)
+ *(.init2)
+ .init2         0x0000017c        0xc c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2/crtx32d4.o
+ *(.init2)
+ *(.init3)
+ *(.init3)
+ *(.init4)
+ .init4         0x00000188       0x16 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_copy_data.o)
+                0x00000188                __do_copy_data
+ .init4         0x0000019e       0x10 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_clear_bss.o)
+                0x0000019e                __do_clear_bss
+ *(.init4)
+ *(.init5)
+ *(.init5)
+ *(.init6)
+ *(.init6)
+ *(.init7)
+ *(.init7)
+ *(.init8)
+ *(.init8)
+ *(.init9)
+ .init9         0x000001ae        0x8 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2/crtx32d4.o
+ *(.init9)
+ *(.text)
+ .text          0x000001b6        0x4 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2/crtx32d4.o
+                0x000001b6                __vector_38
+                0x000001b6                __vector_22
+                0x000001b6                __vector_63
+                0x000001b6                __vector_28
+                0x000001b6                __vector_67
+                0x000001b6                __vector_1
+                0x000001b6                __vector_32
+                0x000001b6                __vector_75
+                0x000001b6                __vector_71
+                0x000001b6                __vector_62
+                0x000001b6                __vector_77
+                0x000001b6                __vector_24
+                0x000001b6                __vector_12
+                0x000001b6                __vector_55
+                0x000001b6                __vector_69
+                0x000001b6                __vector_81
+                0x000001b6                __vector_90
+                0x000001b6                __vector_46
+                0x000001b6                __bad_interrupt
+                0x000001b6                __vector_72
+                0x000001b6                __vector_6
+                0x000001b6                __vector_31
+                0x000001b6                __vector_35
+                0x000001b6                __vector_78
+                0x000001b6                __vector_74
+                0x000001b6                __vector_39
+                0x000001b6                __vector_3
+                0x000001b6                __vector_23
+                0x000001b6                __vector_68
+                0x000001b6                __vector_30
+                0x000001b6                __vector_73
+                0x000001b6                __vector_45
+                0x000001b6                __vector_25
+                0x000001b6                __vector_61
+                0x000001b6                __vector_11
+                0x000001b6                __vector_54
+                0x000001b6                __vector_13
+                0x000001b6                __vector_17
+                0x000001b6                __vector_19
+                0x000001b6                __vector_56
+                0x000001b6                __vector_7
+                0x000001b6                __vector_49
+                0x000001b6                __vector_41
+                0x000001b6                __vector_86
+                0x000001b6                __vector_64
+                0x000001b6                __vector_88
+                0x000001b6                __vector_43
+                0x000001b6                __vector_27
+                0x000001b6                __vector_5
+                0x000001b6                __vector_33
+                0x000001b6                __vector_76
+                0x000001b6                __vector_47
+                0x000001b6                __vector_52
+                0x000001b6                __vector_37
+                0x000001b6                __vector_89
+                0x000001b6                __vector_4
+                0x000001b6                __vector_44
+                0x000001b6                __vector_82
+                0x000001b6                __vector_51
+                0x000001b6                __vector_9
+                0x000001b6                __vector_21
+                0x000001b6                __vector_15
+                0x000001b6                __vector_66
+                0x000001b6                __vector_36
+                0x000001b6                __vector_79
+                0x000001b6                __vector_58
+                0x000001b6                __vector_70
+                0x000001b6                __vector_83
+                0x000001b6                __vector_29
+                0x000001b6                __vector_60
+                0x000001b6                __vector_40
+                0x000001b6                __vector_85
+                0x000001b6                __vector_8
+                0x000001b6                __vector_26
+                0x000001b6                __vector_48
+                0x000001b6                __vector_80
+                0x000001b6                __vector_14
+                0x000001b6                __vector_84
+                0x000001b6                __vector_57
+                0x000001b6                __vector_53
+                0x000001b6                __vector_10
+                0x000001b6                __vector_50
+                0x000001b6                __vector_16
+                0x000001b6                __vector_59
+                0x000001b6                __vector_18
+                0x000001b6                __vector_20
+                0x000001b6                __vector_42
+                0x000001b6                __vector_87
+                0x000001b6                __vector_65
+ .text          0x000001ba       0x90 AniBike2V7BT_Clock.o
+                0x000001ba                SetClockFreq
+ .text          0x0000024a      0x426 AniBike2V7BT_DataLink.o
+                0x0000024a                anibike_dl_initialize
+                0x00000316                anibike_dl_send_data
+                0x00000426                anibike_dl_receive_byte
+                0x000004a8                anibike_dl_receive_data
+                0x00000618                __vector_2
+ .text          0x00000670      0x2f6 AniBike2V7BT_LightingSystem.o
+                0x00000670                initialize_lighting_system
+                0x00000846                read_period_calibrations
+                0x000008e2                write_period_calibrations
+ .text          0x00000966       0x2c AniBike2V7BT_slave.o
+                0x00000966                main
+ .text          0x00000992      0x182 clksys_driver.o
+                0x00000992                CCPWrite
+                0x000009bc                CLKSYS_XOSC_Config
+                0x000009dc                CLKSYS_PLL_Config
+                0x000009e8                CLKSYS_Disable
+                0x000009fc                CLKSYS_Prescalers_Config
+                0x00000a2c                CLKSYS_Main_ClockSource_Select
+                0x00000a68                CLKSYS_RTC_ClockSource_Enable
+                0x00000a78                CLKSYS_AutoCalibration_Enable
+                0x00000ab4                CLKSYS_XOSC_FailureDetection_Enable
+                0x00000ae4                CLKSYS_Configuration_Lock
+ .text          0x00000b14      0x288 eeprom_driver.o
+                0x00000b14                EEPROM_WriteByte
+                0x00000b9c                EEPROM_ReadByte
+                0x00000bf6                EEPROM_WaitForNVM
+                0x00000c00                EEPROM_FlushBuffer
+                0x00000c36                EEPROM_LoadByte
+                0x00000c52                EEPROM_LoadPage
+                0x00000c8a                EEPROM_AtomicWritePage
+                0x00000cd6                EEPROM_ErasePage
+                0x00000d22                EEPROM_SplitWritePage
+                0x00000d6e                EEPROM_EraseAll
+ .text          0x00000d9c       0x8a port_driver.o
+                0x00000d9c                PORT_ConfigureInterrupt0
+                0x00000daa                PORT_ConfigureInterrupt1
+                0x00000db8                PORT_ConfigurePins
+                0x00000dee                PORT_MapVirtualPort0
+                0x00000dfc                PORT_MapVirtualPort1
+                0x00000e0a                PORT_MapVirtualPort2
+                0x00000e18                PORT_MapVirtualPort3
+ .text          0x00000e26      0x2da spi_driver.o
+                0x00000e26                SPI_MasterInit
+                0x00000ea6                SPI_MasterEnable
+                0x00000eca                SPI_SlaveInit
+                0x00000f02                SPI_MasterCreateDataPacket
+                0x00000f26                SPI_MasterInterruptHandler
+                0x00000fbe                SPI_MasterInterruptTransceivePacket
+                0x00001036                SPI_MasterTransceiveByte
+                0x00001052                SPI_MasterTransceivePacket
+ .text          0x00001100      0x258 swUART.o
+                0x00001100                swUART_PutChar
+                0x0000112c                swUART_ReadChar
+                0x00001154                swUART_ConfigureDevice
+                0x00001228                swUART_SetRxInterruptLevel
+                0x000012dc                swUART_SetInterruptHandler
+                0x000012e6                __vector_34
+                0x0000133c                swUART_Delay_Tx
+                0x0000134a                swUART_Delay_Rx
+ .text          0x00001358      0x114 tc_driver.o
+                0x00001358                TC0_ConfigClockSource
+                0x00001364                TC1_ConfigClockSource
+                0x00001370                TC0_ConfigWGM
+                0x0000137c                TC1_ConfigWGM
+                0x00001388                TC0_ConfigInputCapture
+                0x00001396                TC1_ConfigInputCapture
+                0x000013a4                TC0_EnableCCChannels
+                0x000013b0                TC1_EnableCCChannels
+                0x000013bc                TC0_DisableCCChannels
+                0x000013ca                TC1_DisableCCChannels
+                0x000013d8                TC0_SetOverflowIntLevel
+                0x000013e4                TC1_SetOverflowIntLevel
+                0x000013f0                TC0_SetErrorIntLevel
+                0x000013fc                TC1_SetErrorIntLevel
+                0x00001408                TC0_SetCCAIntLevel
+                0x00001414                TC1_SetCCAIntLevel
+                0x00001420                TC0_SetCCBIntLevel
+                0x0000142c                TC1_SetCCBIntLevel
+                0x00001438                TC0_SetCCCIntLevel
+                0x00001444                TC0_SetCCDIntLevel
+                0x00001450                TC0_Reset
+                0x0000145e                TC1_Reset
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_exit.o)
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_copy_data.o)
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_clear_bss.o)
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen_P.o)
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen.o)
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(ultoa_invert.o)
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_prologue.o)
+ .text          0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_epilogue.o)
+                0x0000146c                . = ALIGN (0x2)
+ *(.text.*)
+ .text.libgcc   0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_exit.o)
+ .text.libgcc   0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_copy_data.o)
+ .text.libgcc   0x0000146c        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_clear_bss.o)
+ .text.avr-libc
+                0x0000146c       0x46 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+                0x0000146c                printf_P
+ .text.avr-libc
+                0x000014b2      0x3ce c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+                0x000014b2                vfprintf
+ .text.avr-libc
+                0x00001880       0x16 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen_P.o)
+                0x00001880                strnlen_P
+ .text.avr-libc
+                0x00001896       0x16 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen.o)
+                0x00001896                strnlen
+ .text.avr-libc
+                0x000018ac       0x58 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+                0x000018ac                fputc
+ .text.avr-libc
+                0x00001904       0xbc c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(ultoa_invert.o)
+                0x00001904                __ultoa_invert
+ .text.libgcc   0x000019c0       0x32 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_prologue.o)
+                0x000019c0                __prologue_saves__
+ .text.libgcc   0x000019f2       0x30 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_epilogue.o)
+                0x000019f2                __epilogue_restores__
+                0x00001a22                . = ALIGN (0x2)
+ *(.fini9)
+ .fini9         0x00001a22        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_exit.o)
+                0x00001a22                _exit
+                0x00001a22                exit
+ *(.fini9)
+ *(.fini8)
+ *(.fini8)
+ *(.fini7)
+ *(.fini7)
+ *(.fini6)
+ *(.fini6)
+ *(.fini5)
+ *(.fini5)
+ *(.fini4)
+ *(.fini4)
+ *(.fini3)
+ *(.fini3)
+ *(.fini2)
+ *(.fini2)
+ *(.fini1)
+ *(.fini1)
+ *(.fini0)
+ .fini0         0x00001a22        0x4 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_exit.o)
+ *(.fini0)
+                0x00001a26                _etext = .
+
+.data           0x00802000       0x14 load address 0x00001a26
+                0x00802000                PROVIDE (__data_start, .)
+ *(.data)
+ .data          0x00802000        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2/crtx32d4.o
+ .data          0x00802000        0x0 AniBike2V7BT_Clock.o
+ .data          0x00802000        0x0 AniBike2V7BT_DataLink.o
+ .data          0x00802000        0x6 AniBike2V7BT_LightingSystem.o
+                0x00802000                g_iRedCalibrationPeriod
+                0x00802002                g_iGreenCalibrationPeriod
+                0x00802004                g_iBlueCalibrationPeriod
+ .data          0x00802006        0x0 AniBike2V7BT_slave.o
+ .data          0x00802006        0x0 clksys_driver.o
+ .data          0x00802006        0x0 eeprom_driver.o
+ .data          0x00802006        0x0 port_driver.o
+ .data          0x00802006        0x0 spi_driver.o
+ .data          0x00802006        0xe swUART.o
+                0x00802006                file_str
+ .data          0x00802014        0x0 tc_driver.o
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_exit.o)
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_copy_data.o)
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_clear_bss.o)
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen_P.o)
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen.o)
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(ultoa_invert.o)
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_prologue.o)
+ .data          0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_epilogue.o)
+ *(.data*)
+ *(.rodata)
+ *(.rodata*)
+ *(.gnu.linkonce.d*)
+                0x00802014                . = ALIGN (0x2)
+                0x00802014                _edata = .
+                0x00802014                PROVIDE (__data_end, .)
+
+.bss            0x00802014       0x91
+                0x00802014                PROVIDE (__bss_start, .)
+ *(.bss)
+ .bss           0x00802014        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2/crtx32d4.o
+ .bss           0x00802014        0x0 AniBike2V7BT_Clock.o
+ .bss           0x00802014        0x1 AniBike2V7BT_DataLink.o
+                0x00802014                rxLength
+ .bss           0x00802015        0x0 AniBike2V7BT_LightingSystem.o
+ .bss           0x00802015        0x0 AniBike2V7BT_slave.o
+ .bss           0x00802015        0x0 clksys_driver.o
+ .bss           0x00802015        0x0 eeprom_driver.o
+ .bss           0x00802015        0x0 port_driver.o
+ .bss           0x00802015        0x0 spi_driver.o
+ .bss           0x00802015        0x3 swUART.o
+                0x00802015                swUART_RxHandler
+                0x00802017                bInterruptEnabled
+ .bss           0x00802018        0x0 tc_driver.o
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_exit.o)
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_copy_data.o)
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_clear_bss.o)
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen_P.o)
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen.o)
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(ultoa_invert.o)
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_prologue.o)
+ .bss           0x00802018        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avrxmega2\libgcc.a(_epilogue.o)
+ *(.bss*)
+ *(COMMON)
+ COMMON         0x00802018       0x87 AniBike2V7BT_DataLink.o
+                0x00802018                spiMasterC
+                0x0080201f                rxBuffer
+ COMMON         0x0080209f        0x6 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+                0x0080209f                __iob
+                0x008020a5                PROVIDE (__bss_end, .)
+                0x00001a26                __data_load_start = LOADADDR (.data)
+                0x00001a3a                __data_load_end = (__data_load_start + SIZEOF (.data))
+
+.noinit         0x008020a5        0x0
+                0x008020a5                PROVIDE (__noinit_start, .)
+ *(.noinit*)
+                0x008020a5                PROVIDE (__noinit_end, .)
+                0x008020a5                _end = .
+                0x008020a5                PROVIDE (__heap_start, .)
+
+.eeprom         0x00810000        0x0
+ *(.eeprom*)
+                0x00810000                __eeprom_end = .
+
+.fuse
+ *(.fuse)
+ *(.lfuse)
+ *(.hfuse)
+ *(.efuse)
+
+.lock
+ *(.lock*)
+
+.signature
+ *(.signature*)
+
+.stab           0x00000000      0xc84
+ *(.stab)
+ .stab          0x00000000      0x6cc c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2/crtx32d4.o
+ .stab          0x000006cc       0x9c c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen_P.o)
+                                 0xa8 (size before relaxing)
+ .stab          0x00000768       0x9c c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(strnlen.o)
+                                 0xa8 (size before relaxing)
+ .stab          0x00000804      0x480 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(ultoa_invert.o)
+                                0x48c (size before relaxing)
+
+.stabstr        0x00000000      0x1b6
+ *(.stabstr)
+ .stabstr       0x00000000      0x1b6 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2/crtx32d4.o
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment
+ *(.comment)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000      0x1a0
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x20 AniBike2V7BT_Clock.o
+ .debug_aranges
+                0x00000020       0x20 AniBike2V7BT_DataLink.o
+ .debug_aranges
+                0x00000040       0x20 AniBike2V7BT_LightingSystem.o
+ .debug_aranges
+                0x00000060       0x20 AniBike2V7BT_slave.o
+ .debug_aranges
+                0x00000080       0x20 clksys_driver.o
+ .debug_aranges
+                0x000000a0       0x20 eeprom_driver.o
+ .debug_aranges
+                0x000000c0       0x20 port_driver.o
+ .debug_aranges
+                0x000000e0       0x20 spi_driver.o
+ .debug_aranges
+                0x00000100       0x20 swUART.o
+ .debug_aranges
+                0x00000120       0x20 tc_driver.o
+ .debug_aranges
+                0x00000140       0x20 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+ .debug_aranges
+                0x00000160       0x20 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .debug_aranges
+                0x00000180       0x20 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+
+.debug_pubnames
+                0x00000000      0x910
+ *(.debug_pubnames)
+ .debug_pubnames
+                0x00000000       0x23 AniBike2V7BT_Clock.o
+ .debug_pubnames
+                0x00000023       0xb5 AniBike2V7BT_DataLink.o
+ .debug_pubnames
+                0x000000d8       0xc3 AniBike2V7BT_LightingSystem.o
+ .debug_pubnames
+                0x0000019b       0x1b AniBike2V7BT_slave.o
+ .debug_pubnames
+                0x000001b6      0x129 clksys_driver.o
+ .debug_pubnames
+                0x000002df       0xee eeprom_driver.o
+ .debug_pubnames
+                0x000003cd       0xc7 port_driver.o
+ .debug_pubnames
+                0x00000494       0xee spi_driver.o
+ .debug_pubnames
+                0x00000582      0x102 swUART.o
+ .debug_pubnames
+                0x00000684      0x216 tc_driver.o
+ .debug_pubnames
+                0x0000089a       0x1c c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+ .debug_pubnames
+                0x000008b6       0x1f c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+ .debug_pubnames
+                0x000008d5       0x1f c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .debug_pubnames
+                0x000008f4       0x1c c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+
+.debug_info     0x00000000     0x4e67
+ *(.debug_info)
+ .debug_info    0x00000000      0x1ee AniBike2V7BT_Clock.o
+ .debug_info    0x000001ee      0x6f7 AniBike2V7BT_DataLink.o
+ .debug_info    0x000008e5      0xa4a AniBike2V7BT_LightingSystem.o
+ .debug_info    0x0000132f       0xb2 AniBike2V7BT_slave.o
+ .debug_info    0x000013e1      0x69f clksys_driver.o
+ .debug_info    0x00001a80      0x508 eeprom_driver.o
+ .debug_info    0x00001f88      0x701 port_driver.o
+ .debug_info    0x00002689      0x7a0 spi_driver.o
+ .debug_info    0x00002e29      0x5e9 swUART.o
+ .debug_info    0x00003412     0x1289 tc_driver.o
+ .debug_info    0x0000469b      0x14f c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+ .debug_info    0x000047ea      0x1c6 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+ .debug_info    0x000049b0      0x350 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .debug_info    0x00004d00      0x167 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+ *(.gnu.linkonce.wi.*)
+
+.debug_abbrev   0x00000000     0x1200
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000       0xb4 AniBike2V7BT_Clock.o
+ .debug_abbrev  0x000000b4      0x1d9 AniBike2V7BT_DataLink.o
+ .debug_abbrev  0x0000028d      0x17e AniBike2V7BT_LightingSystem.o
+ .debug_abbrev  0x0000040b       0x64 AniBike2V7BT_slave.o
+ .debug_abbrev  0x0000046f      0x1fe clksys_driver.o
+ .debug_abbrev  0x0000066d      0x1c8 eeprom_driver.o
+ .debug_abbrev  0x00000835      0x101 port_driver.o
+ .debug_abbrev  0x00000936      0x186 spi_driver.o
+ .debug_abbrev  0x00000abc      0x1cf swUART.o
+ .debug_abbrev  0x00000c8b      0x15c tc_driver.o
+ .debug_abbrev  0x00000de7       0xc5 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+ .debug_abbrev  0x00000eac      0x11c c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+ .debug_abbrev  0x00000fc8      0x15f c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .debug_abbrev  0x00001127       0xd9 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+
+.debug_line     0x00000000     0x29ec
+ *(.debug_line)
+ .debug_line    0x00000000      0x1f6 AniBike2V7BT_Clock.o
+ .debug_line    0x000001f6      0x506 AniBike2V7BT_DataLink.o
+ .debug_line    0x000006fc      0x345 AniBike2V7BT_LightingSystem.o
+ .debug_line    0x00000a41       0xb6 AniBike2V7BT_slave.o
+ .debug_line    0x00000af7      0x327 clksys_driver.o
+ .debug_line    0x00000e1e      0x405 eeprom_driver.o
+ .debug_line    0x00001223      0x23d port_driver.o
+ .debug_line    0x00001460      0x490 spi_driver.o
+ .debug_line    0x000018f0      0x33c swUART.o
+ .debug_line    0x00001c2c      0x3a9 tc_driver.o
+ .debug_line    0x00001fd5       0xeb c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+ .debug_line    0x000020c0      0x198 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+ .debug_line    0x00002258      0x64d c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .debug_line    0x000028a5      0x147 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+
+.debug_frame    0x00000000      0x5b0
+ *(.debug_frame)
+ .debug_frame   0x00000000       0x20 AniBike2V7BT_Clock.o
+ .debug_frame   0x00000020       0x60 AniBike2V7BT_DataLink.o
+ .debug_frame   0x00000080       0x40 AniBike2V7BT_LightingSystem.o
+ .debug_frame   0x000000c0       0x20 AniBike2V7BT_slave.o
+ .debug_frame   0x000000e0       0xb0 clksys_driver.o
+ .debug_frame   0x00000190       0xb0 eeprom_driver.o
+ .debug_frame   0x00000240       0x80 port_driver.o
+ .debug_frame   0x000002c0       0x90 spi_driver.o
+ .debug_frame   0x00000350       0x90 swUART.o
+ .debug_frame   0x000003e0      0x170 tc_driver.o
+ .debug_frame   0x00000550       0x20 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+ .debug_frame   0x00000570       0x20 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .debug_frame   0x00000590       0x20 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+
+.debug_str      0x00000000     0x283f
+ *(.debug_str)
+ .debug_str     0x00000000      0x301 AniBike2V7BT_Clock.o
+                                0x33f (size before relaxing)
+ .debug_str     0x00000301      0x6e1 AniBike2V7BT_DataLink.o
+                                0x7e1 (size before relaxing)
+ .debug_str     0x000009e2      0x503 AniBike2V7BT_LightingSystem.o
+                                0x804 (size before relaxing)
+ .debug_str     0x00000ee5       0x1f AniBike2V7BT_slave.o
+                                0x12e (size before relaxing)
+ .debug_str     0x00000f04      0x3ef clksys_driver.o
+                                0x704 (size before relaxing)
+ .debug_str     0x000012f3      0x419 eeprom_driver.o
+                                0x550 (size before relaxing)
+ .debug_str     0x0000170c      0x6b5 port_driver.o
+                                0xbab (size before relaxing)
+ .debug_str     0x00001dc1      0x14b spi_driver.o
+                                0x4f8 (size before relaxing)
+ .debug_str     0x00001f0c      0x107 swUART.o
+                                0x67e (size before relaxing)
+ .debug_str     0x00002013      0x667 tc_driver.o
+                                0xbc8 (size before relaxing)
+ .debug_str     0x0000267a       0x4e c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+                                 0xf2 (size before relaxing)
+ .debug_str     0x000026c8       0x7d c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+                                0x129 (size before relaxing)
+ .debug_str     0x00002745       0xa4 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+                                0x177 (size before relaxing)
+ .debug_str     0x000027e9       0x56 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+                                 0xfb (size before relaxing)
+
+.debug_loc      0x00000000     0x18cb
+ *(.debug_loc)
+ .debug_loc     0x00000000       0x29 AniBike2V7BT_Clock.o
+ .debug_loc     0x00000029      0x269 AniBike2V7BT_DataLink.o
+ .debug_loc     0x00000292      0x126 AniBike2V7BT_LightingSystem.o
+ .debug_loc     0x000003b8      0x1c0 clksys_driver.o
+ .debug_loc     0x00000578      0x131 eeprom_driver.o
+ .debug_loc     0x000006a9      0x104 port_driver.o
+ .debug_loc     0x000007ad      0x407 spi_driver.o
+ .debug_loc     0x00000bb4       0xd8 swUART.o
+ .debug_loc     0x00000c8c      0x54e tc_driver.o
+ .debug_loc     0x000011da      0x6a1 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .debug_loc     0x0000187b       0x50 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+
+.debug_macinfo
+ *(.debug_macinfo)
+OUTPUT(AniBike2V7BT_slave.elf elf32-avr)
+LOAD linker stubs
+
+.debug_pubtypes
+                0x00000000      0xac7
+ .debug_pubtypes
+                0x00000000       0x89 AniBike2V7BT_Clock.o
+ .debug_pubtypes
+                0x00000089      0x15b AniBike2V7BT_DataLink.o
+ .debug_pubtypes
+                0x000001e4       0xa9 AniBike2V7BT_LightingSystem.o
+ .debug_pubtypes
+                0x0000028d       0x12 AniBike2V7BT_slave.o
+ .debug_pubtypes
+                0x0000029f      0x185 clksys_driver.o
+ .debug_pubtypes
+                0x00000424       0x55 eeprom_driver.o
+ .debug_pubtypes
+                0x00000479      0x1a2 port_driver.o
+ .debug_pubtypes
+                0x0000061b      0x129 spi_driver.o
+ .debug_pubtypes
+                0x00000744       0xc7 swUART.o
+ .debug_pubtypes
+                0x0000080b      0x1cf tc_driver.o
+ .debug_pubtypes
+                0x000009da       0x29 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(iob.o)
+ .debug_pubtypes
+                0x00000a03       0x48 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+ .debug_pubtypes
+                0x00000a4b       0x53 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .debug_pubtypes
+                0x00000a9e       0x29 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
+
+.debug_ranges   0x00000000       0xc8
+ .debug_ranges  0x00000000       0x60 clksys_driver.o
+ .debug_ranges  0x00000060       0x20 swUART.o
+ .debug_ranges  0x00000080       0x10 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(printf_p.o)
+ .debug_ranges  0x00000090       0x28 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(vfprintf_std.o)
+ .debug_ranges  0x000000b8       0x10 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avrxmega2\libc.a(fputc.o)
