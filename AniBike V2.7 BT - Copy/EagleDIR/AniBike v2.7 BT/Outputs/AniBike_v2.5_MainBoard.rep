@@ -1,0 +1,422 @@
+Data Exported from: C:/Projects/AniBike Project/Hardware/AniBike V2.5/EagleDIR/AniBike v2.5/Board/AniBike_v2.5_MainBoard.brd
+with: C:/Program Files (x86)/EAGLE-5.8.0/ulp/statistic-brd.ulp Version 1.2.2
+at: 11/25/2010 3:44:49 PM
+EAGLE Version 5.8.0 Copyright (c) 1988-2010 CadSoft
+
+all Values in mm
+max. Board length (Layer 20)
+X = 243.54
+Y = 57.40
+Outline contour = 583.48
+
+used layers 2
+
+ 1 Top
+16 Bottom
+_________________________
+
+3004  	 Wire(s) incl. Arc(s)
+25    	 Polygon(s)
+_________________________
+362   	 SMD(s) top
+148   	 SMD(s) bottom
+===================
+510   	 SMD(s) total
+
+173   	 PAD(s)
+_________________________
+170   	 Via
+11    	 Hole
+===================
+354   	 Drills total
+_________________________
+490	 tCream
+20	 bCream
+_________________________
+Routing Info: 
+93    	 Signal(s) 
+683   	 PAD/SMD total
+===================
+643   	 PAD/SMD on Signal
+_________________________
+Packages used area:
+~ 4488.86 mm² (0.449 dm²)
+_________________________
+
+
+============================
+
+----------------------------
+LAYER
+Nb.	Name	Used
+  1	Top	1
+  2	Route2	0
+  3	Route3	0
+  4	Route4	0
+  5	Route5	0
+  6	Route6	0
+  7	Route7	0
+  8	Route8	0
+  9	Route9	0
+ 10	Route10	0
+ 11	Route11	0
+ 12	Route12	0
+ 13	Route13	0
+ 14	Route14	0
+ 15	Route15	0
+ 16	Bottom	1
+ 17	Pads	1
+ 18	Vias	1
+ 19	Unrouted	0
+ 20	Dimension	1
+ 21	tPlace	1
+ 22	bPlace	1
+ 23	tOrigins	1
+ 24	bOrigins	1
+ 25	tNames	1
+ 26	bNames	1
+ 27	tValues	1
+ 28	bValues	1
+ 29	tStop	1
+ 30	bStop	1
+ 31	tCream	1
+ 32	bCream	1
+ 33	tFinish	0
+ 34	bFinish	0
+ 35	tGlue	1
+ 36	bGlue	1
+ 37	tTest	0
+ 38	bTest	0
+ 39	tKeepout	1
+ 40	bKeepout	1
+ 41	tRestrict	0
+ 42	bRestrict	0
+ 43	vRestrict	1
+ 44	Drills	1
+ 45	Holes	1
+ 46	Milling	0
+ 47	Measures	0
+ 48	Document	0
+ 49	Reference	0
+ 50	dxf	0
+ 51	tDocu	1
+ 52	bDocu	1
+ 53	tGND_GNDA	0
+ 54	bGND_GNDA	0
+ 56	wert	0
+100	Mechanical	0
+101	Hidden	0
+102	Changes	0
+103	tMap	0
+104	Name	0
+105	tPlate	0
+106	bPlate	0
+107	Crop	0
+116	Patch_BOT	0
+121	_tsilk	0
+122	_bsilk	0
+151	HeatSink	0
+200	200bmp	0
+201	201bmp	0
+202	202bmp	0
+203	203bmp	0
+204	204bmp	0
+205	205bmp	0
+206	206bmp	0
+207	207bmp	0
+208	208bmp	0
+250	Descript	0
+251	SMDround	0
+254	OrgLBR	0
+
+----------------------------
+CLASS
+# 	Name	min. Width	Clearance	min. Drill	Used
+0	default	0.0000 	0.0000 	0.0000 	93  
+
+----------------------------
+WIDTH
+WIRE	Q.
+0.4064 	233 
+0.6096 	30  
+0.2032 	2185
+0.3048 	18  
+0.5080 	6   
+0.7620 	27  
+1.6764 	16  
+0.6350 	4   
+0.2540 	317 
+1.2700 	4   
+0.4572 	4   
+0.5588 	1   
+1.0160 	4   
+0.3556 	151 
+1.1684 	3   
+0.8128 	1   
+
+ARC	Q.
+ * Wire width are saved in 0.2 micron resolution.
+
+POLY. width	Q.
+0.2032 	22  
+0.2540 	3   
+
+POLY. Isol.	Q.
+0.0000 	24  
+0.2540 	1   
+
+Polygon
+Type	Name	Layer	Rank	Width
+Signal	+5V	1	1	0.203
+Signal	+5V	1	1	0.203
+Signal	GND	16	1	0.203
+Signal	GND	1	1	0.203
+Signal	GND	1	1	0.203
+Signal	N$4	16	1	0.203
+Signal	ROW1_LED	16	1	0.203
+Signal	ROW1_LED	1	1	0.203
+Signal	ROW2_LED	16	1	0.203
+Signal	ROW2_LED	1	1	0.203
+Signal	ROW3_LED	16	1	0.203
+Signal	ROW3_LED	1	1	0.203
+Signal	ROW4_LED	16	1	0.203
+Signal	ROW4_LED	1	1	0.203
+Signal	ROW5_LED	16	1	0.203
+Signal	ROW5_LED	1	1	0.203
+Signal	ROW6_LED	16	1	0.203
+Signal	ROW6_LED	1	1	0.203
+Signal	ROW7_LED	16	1	0.203
+Signal	ROW7_LED	1	1	0.203
+Signal	ROW8_LED	16	1	0.203
+Signal	ROW8_LED	1	1	0.203
+Signal	USB5V	1	1	0.254
+Signal	VCC_BAT	16	1	0.254
+Signal	VCC_SW_BAT	16	1	0.254
+ * Wire width are saved in 0.2 micron resolution.
+
+----------------------------
+CIRCLE (width)	Q.
+
+CIRCLE diam.	Q.
+
+----------------------------
+TEXT (w)	Q.
+
+TEXT (s)	Q.
+
+----------------------------
+SMD x	SMD y	Roundn.	Q.
+1.2000 	1.3000 	0%	40  
+1.7780 	2.2860 	0%	4   
+1.5000 	1.2700 	0%	2   
+1.2000 	1.4000 	0%	256 
+0.7000 	1.2000 	0%	2   
+1.1938 	0.5588 	0%	32  
+0.5588 	1.1938 	0%	32  
+0.4000 	1.5000 	0%	28  
+0.5000 	2.2000 	0%	8   
+1.0000 	0.8000 	0%	3   
+0.5000 	1.0000 	0%	32  
+3.3000 	1.7800 	0%	1   
+0.7200 	1.7800 	0%	1   
+4.5300 	1.7800 	0%	1   
+5.3340 	1.9304 	0%	2   
+0.6000 	0.5588 	0%	48  
+1.2000 	2.5000 	0%	3   
+3.1000 	0.5000 	0%	5   
+2.5000 	2.0000 	0%	2   
+3.3000 	2.0000 	0%	2   
+2.5400 	1.2700 	20%	6   
+
+PAD tDiam	Q.
+3.0480 	12  
+0.9398 	96  
+1.4224 	32  
+0.9580 	3   
+1.8796 	20  
+1.5240 	4   
+1.6002 	1   
+1.6764 	5   
+
+PAD bDiam	Q.
+3.0480 	12  
+0.9398 	96  
+1.4224 	32  
+0.9580 	3   
+1.8796 	20  
+1.5240 	4   
+1.6002 	1   
+1.6764 	5   
+
+PAD tRestring	Q.
+0.6350 	12  
+0.2540 	103 
+0.3302 	32  
+0.4318 	20  
+0.2667 	1   
+0.3048 	5   
+
+PAD bRestring	Q.
+0.6350 	12  
+0.2540 	103 
+0.3302 	32  
+0.4318 	20  
+0.2667 	1   
+0.3048 	5   
+
+PAD iDiam	Q.
+2.6670 	12  
+0.9398 	96  
+1.2700 	32  
+0.9580 	3   
+1.5240 	24  
+1.6002 	6   
+
+PAD iRestring	Q.
+0.4445 	12  
+0.2540 	155 
+0.2667 	6   
+
+VIA Outer-Diam	Q.
+1.0064 	18  
+0.8382 	150 
+1.2064 	1   
+1.6500 	1   
+
+VIA Outer-Restring 	Q.
+0.2032 	169 
+0.2750 	1   
+
+VIA Inner-Diam.	Q.
+1.0064 	18  
+0.8382 	150 
+1.2064 	1   
+1.6500 	1   
+
+VIA Inner-Restring	Q.
+0.2032 	169 
+0.2750 	1   
+
+VIA drill	Q.
+0.6000 	18  
+0.4318 	150 
+0.8000 	1   
+1.1000 	1   
+
+VIA Stack	Q.
+01-16	343 
+
+PAD drill	Q.
+1.7780 	12  
+0.4318 	96  
+0.7620 	32  
+0.4500 	3   
+1.0160 	24  
+1.0668 	6   
+
+----------------------------
+HOLE drill	Q.
+6.3500 	5   
+5.0800 	2   
+0.9000 	4   
+
+RACK
+T01   0.4
+T02   0.5
+T03   0.6
+T04   0.8
+T05   0.9
+T06   1.0
+T07   1.1
+T08   1.8
+T09   5.1
+T10   6.4
+
+----------------------------
+LIBRARY	Q.
+AniBike_v3.0_Library	22  
+AniBike_Common_Library	53  
+atmel	1   
+ftdichip	1   
+SparkFun	2   
+
+PACKAGE	Q.
+BATTERY_AAA	3   
+C0805	7   
+C3528-21/T	2   
+C3216/T	1   
+LED1210_DS	32  
+SOD-123	1   
+TQFP64	1   
+SSOP28	1   
+SOIC8	1   
+HALL_SENSOR_SE	1   
+HALL_SENSOR_UA	1   
+SOIC16	2   
+2X10	1   
+PMOS_SO-8	1   
+HC49UP	1   
+R0805	13  
+YCTC164	6   
+B3F-10XX	1   
+SWITCH-SPDT-SMD	1   
+32005-201	1   
+AVR_ISP_ANIBIKE	1   
+
+VALUE	PAC	Q.	Top	Bot
+BATTERY_AAA	BATTERY_AAA	3	0	3
+22pF	C0805	2	2	0
+100nF	C0805	5	5	0
+47uF	C3528-21/T	1	1	0
+10uF	C3528-21/T	1	1	0
+10uF	C3216/T	1	1	0
+LED_RGB_DS	LED1210_DS	32	32	0
+1N5819	SOD-123	1	1	0
+ATMEGA325P	TQFP64	1	1	0
+FT232RL	SSOP28	1	1	0
+AT26DF321	SOIC8	1	1	0
+HALL_SENSORSMT	HALL_SENSOR_SE	1	1	0
+HALL_SENSORTH	HALL_SENSOR_UA	1	1	0
+MMPQ2222	SOIC16	2	2	0
+~/-empty-/~JP1	2X10	1	1	0
+IRF7404	PMOS_SO-8	1	1	0
+20MHz	HC49UP	1	1	0
+3000	R0805	2	2	0
+5K	R0805	1	0	1
+100	R0805	1	0	1
+10K	R0805	1	1	0
+301	R0805	3	3	0
+650	R0805	3	3	0
+15k	R0805	1	1	0
+33k	R0805	1	1	0
+RESISTOR_ARR4	YCTC164	6	4	2
+Open	B3F-10XX	1	1	0
+~/-empty-/~S2	SWITCH-SPDT-SMD	1	1	0
+MINI-USB-32005-201	32005-201	1	1	0
+AVR_ISP_ANIBIKE	AVR_ISP_ANIBIKE	1	1	0
+
+----------------------------
+RECT x	RECT y	Q.
+0 RECT (copper)
+
+----------------------------
+TEXT (s)	Q.
+0 TEXT size (copper)
+
+TEXT (w)	Q.
+0 TEXT wire width (copper)
+
+TEXT 	Q.
+1.7780 	2   
+1.2700 	20  
+0.8128 	23  
+0.6096 	142 
+0.4064 	1   
+0.3048 	1   
+6 TEXT size (place)
+5 TEXT wire width (place)
+
+CIRCLE diam.	Q.
+0 CICLE (copper)
+
+End report

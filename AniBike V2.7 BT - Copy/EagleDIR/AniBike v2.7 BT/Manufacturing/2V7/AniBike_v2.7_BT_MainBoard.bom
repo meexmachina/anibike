@@ -1,0 +1,64 @@
+Partlist exported from C:/Projects/AniBike Project/Hardware/AniBike V2.7 BT/EagleDIR/AniBike v2.7 BT/Board/AniBike_v2.7_BT_MainBoard.sch at 2/28/2011 2:13:39 PM
+
+Part Value                            Device                           Package               Description      
+BAT1 BATTERY_AAA                      BATTERY_AAA                      BATTERY_AAA                            
+BAT2 BATTERY_AAA                      BATTERY_AAA                      BATTERY_AAA                            
+C1   10uF                             CP_3528-21                       C3528-21/T            POLARIZED CAP    
+C2   10uF                             CP_3528-21                       C3528-21/T            POLARIZED CAP    
+C3   100nF                            C_0805                           C0805                 NON-POLARIZED CAP
+C4   100nF                            C_0805                           C0805                 NON-POLARIZED CAP
+C6   100nF                            C_0805                           C0805                 NON-POLARIZED CAP
+C11  47uF                             CP_3528-21                       C3528-21/T            POLARIZED CAP    
+C12  10uF                             CP_3528-21                       C3528-21/T            POLARIZED CAP    
+D1   LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D2   LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D3   LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D4   LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D5   LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D6   LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D7   LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D8   LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D9   LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D10  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D11  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D12  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D13  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D14  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D15  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D16  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D17  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D18  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D19  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D20  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D21  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D22  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D23  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D24  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D25  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D26  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D27  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D28  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D29  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D30  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D31  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+D32  LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+IC1  TI_TPS61073DDC                   TI_TPS61073DDC                   DDC                                    
+IC2  ATXMEGA_XX_D4TQFP44              ATXMEGA_XX_D4TQFP44              TQFP44                                 
+IC3  AT26DF321                        AT26DF321                        SOIC8                                  
+IC4  HALL_SENSORSMT                   HALL_SENSORSMT                   HALL_SENSOR_SE                         
+IC5  SN74CB3Q3251TSSOP16              SN74CB3Q3251TSSOP16              TSSOP16                                
+L1   4.7 uH                           INDUCTOR1210                     1210                  Inductors        
+M1   BTM400_6BBTM400_6B               BTM400_6BBTM400_6B               BTM400_6B                              
+R1                                    RESISTOR0603-RES                 0603-RES              Resistor         
+R2                                    RESISTOR0603-RES                 0603-RES              Resistor         
+R3   10K                              R_0805                           R0805                 RESISTOR         
+R4   10K                              R_0805                           R0805                 RESISTOR         
+R5   47k                              RESISTOR0603-RES                 0603-RES              Resistor         
+RN1  RESISTOR_ARR4                    RESISTOR_ARR4                    YCTC164                                
+RN3  RESISTOR_ARR4                    RESISTOR_ARR4                    YCTC164                                
+RN5  RESISTOR_ARR4                    RESISTOR_ARR4                    YCTC164                                
+S2                                    SWITCH-SPSTSMD2                  SWITCH-SPDT-SMD       SPST Switch      
+U$1  ANIBIKE_LOGOLOGO_3_MED           ANIBIKE_LOGOLOGO_3_MED           ANIBIKE_LOGO_3_MEDIUM                  
+U$2  ANIBIKE_LOGOLOGO_6_BIG           ANIBIKE_LOGOLOGO_6_BIG           ANIBIKE_LOGO_6_BIG                     
+X1   PDI_INTERFACEHEADER0.1IN         PDI_INTERFACEHEADER0.1IN         MOLEX-1X4_LOCK                         
+X2   ANIBIKE_SEC_INTERFACEHEADER0.1IN ANIBIKE_SEC_INTERFACEHEADER0.1IN MOLEX-1X4_LOCK                         
