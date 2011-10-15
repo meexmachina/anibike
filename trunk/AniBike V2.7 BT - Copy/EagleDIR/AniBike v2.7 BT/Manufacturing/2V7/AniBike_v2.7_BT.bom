@@ -1,0 +1,32 @@
+Partlist exported from C:/Projects/AniBike Project/Hardware/AniBike V2.7 BT/EagleDIR/AniBike v2.7 BT/Board/AniBike_v2.7_BT_MainBoard.sch at 2/28/2011 2:13:39 PM
+
+MAIN-BOARD
+Part 		Value                            Device                           Package               Description      
+
+*BAT1,2		BATTERY_AAA                      BATTERY_AAA                      BATTERY_AAA                            
+*C1,2,12  	10uF                             CP_3528-21                       C3528-21/T            POLARIZED CAP    
+*C3,4,6 	100nF                            C_0805                           C0805                 NON-POLARIZED CAP
+*C11  		47uF                             CP_3528-21                       C3528-21/T            POLARIZED CAP    
+*IC1  		TI_TPS61073DDC                   TI_TPS61073DDC                   DDC                                    
+*IC2  		ATXMEGA_XX_D4TQFP44              ATXMEGA_XX_D4TQFP44              TQFP44                                 
+*IC3  		AT26DF321                        AT26DF321                        SOIC8                                  
+*IC4  		HALL_SENSORSMT                   HALL_SENSORSMT                   HALL_SENSOR_SE                         
+*IC5  		SN74CB3Q3251TSSOP16              SN74CB3Q3251TSSOP16              TSSOP16                                
+*L1   		4.7 uH                           INDUCTOR1210                     1210                  Inductors        
+*M1   		BTM400_6BBTM400_6B               BTM400_6BBTM400_6B               BTM400_6B             BlueTooth Module                 
+*R1,2		1.24M, 200k            		 RESISTOR0603-RES                 0603-RES              Resistor         
+*R3,4   	10K                              R_0805                           R0805                 RESISTOR         
+*R5   		47k                              RESISTOR0603-RES                 0603-RES              Resistor         
+*RN1,3,5	RESISTOR_ARR4                    RESISTOR_ARR4                    YCTC164                                
+*S2                                    		 SWITCH-SPSTSMD2                  SWITCH-SPDT-SMD       SPST Switch      
+D1:128   	LED_RGB_DS                       LED_RGB_DS                       LED1210_DS                             
+
+
+SECONDARY-BOARD
+*C3,4  		100nF                            C_0805                           C0805                 NON-POLARIZED CAP
+*C11  		47uF                             CP_3528-21                       C3528-21/T            POLARIZED CAP    
+*C12  		10uF                             CP_3528-21                       C3528-21/T            POLARIZED CAP    
+*IC2  		ATXMEGA_XX_D4TQFP44              ATXMEGA_XX_D4TQFP44              TQFP44                                 
+*IC5  		SN74CB3Q3251TSSOP16              SN74CB3Q3251TSSOP16              TSSOP16                                
+*R1   		47k                              RESISTOR                         0805                  Resistor         
+*RN1,3,5  	RESISTOR_ARR4                    RESISTOR_ARR4                    YCTC164                                
