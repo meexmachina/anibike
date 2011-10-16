@@ -9,6 +9,15 @@
 #ifndef ANIBIKE2V7BT_HIGHLEVELCOMM_H_
 #define ANIBIKE2V7BT_HIGHLEVELCOMM_H_
 
+/* EXTERN VARS
+ * *****************/
+extern volatile uint8_t		rxBuffer[128];
+extern volatile uint8_t		rxLength;
+extern volatile uint8_t		rxDataReady;
+
+
+/* OPCODES
+ * *****************/
 #define ANIBIKE_HLCOMM_IDN			0x01
 #define ANIBIKE_HLCOMM_SET_DATA		0x02
 #define ANIBIKE_HLCOMM_SET_CLOCK	0x05
@@ -17,6 +26,8 @@
 #define ANIBIKE_HLCOMM_SETUP		0x08
 #define ANIBIKE_HLCOMM_SET_CAL		0x09
 #define ANIBIKE_HLCOMM_LIGHT_LED	0x10
+
+
 /* HEADER
  * *****************/
 typedef struct 
@@ -40,19 +51,19 @@ typedef struct
  * *****************/
 typedef struct  
 {
-	anibike_hlcomm_header		header;
+	anibike_hlcomm_header	header;
 } anibike_hlcomm_sleep_msg;
 
 typedef struct  
 {
-	anibike_hlcomm_header		header;
+	anibike_hlcomm_header	header;
 } anibike_hlcomm_wakeup_msg;
 
 /* Data Msg
  * *****************/
 typedef struct  
 {
-	anibike_hlcomm_header		header;
+	anibike_hlcomm_header	header;
 	uint8_t					data[48];
 } anibike_hlcomm_set_data_msg;
 
@@ -60,7 +71,7 @@ typedef struct
  * *****************/
 typedef struct  
 {
-	anibike_hlcomm_header		header;
+	anibike_hlcomm_header	header;
 	uint8_t					row_num;
 	uint8_t					rgb_choose;
 	uint16_t				val;
@@ -77,7 +88,7 @@ void anibike_hlcomm_light_led_req ( uint8_t row, uint8_t rgb_choose, uint16_t va
 
 // SLAVE SIDE
 void anibike_hlcomm_setup_rx_system ( void );
-void anibike_hlcomm_handle_data ( uint8_t *data, uint8_t length );
+void anibike_hlcomm_handle_data ( void );
 
 
 #endif /* ANIBIKE2V7BT_HIGHLEVELCOMM_H_ */

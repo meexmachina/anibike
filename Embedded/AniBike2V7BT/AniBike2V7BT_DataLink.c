@@ -9,7 +9,7 @@
 SPI_Master_t		spiMasterC;
 volatile uint8_t	rxBuffer[128];
 volatile uint8_t	rxLength = 0;
-volatile uint8_t	reDataReady = 0;
+volatile uint8_t	rxDataReady = 0;
 
 //__________________________________________________________________________________________________
 void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
@@ -383,6 +383,13 @@ void anibike_dl_receive_data	( void )
 }
 
 //__________________________________________________________________________________________________
+void anibike_dl_flush ( void )
+{
+	rxLength = 0;
+	rxDataReady = 0;
+}
+
+//__________________________________________________________________________________________________
 ISR(PORTC_INT0_vect,  ISR_BLOCK)
 {
 	// Data was cleared
@@ -392,7 +399,7 @@ ISR(PORTC_INT0_vect,  ISR_BLOCK)
 	cli ();
 	rxLength = 0;
 	anibike_dl_receive_data ( );
-	reDataReady = 1;
+	rxDataReady = 1;
 	sei ( );
 }
 
