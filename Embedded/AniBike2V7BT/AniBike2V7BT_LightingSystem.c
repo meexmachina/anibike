@@ -62,6 +62,7 @@ void initialize_lighting_system ( void )
 
 void read_period_calibrations ( uint16_t *r, uint16_t *g, uint16_t *b )
 {
+	EEPROM_DisableMapping();
 	*r = EEPROM_ReadByte	(EEPROM_LED_CONFIG_PAGE, EEPROM_R_CONFIG_WORD*2);
 	*r |= (EEPROM_ReadByte	(EEPROM_LED_CONFIG_PAGE, EEPROM_R_CONFIG_WORD*2+1))<<8;
 	
@@ -74,7 +75,10 @@ void read_period_calibrations ( uint16_t *r, uint16_t *g, uint16_t *b )
 
 void write_period_calibrations ( uint16_t r, uint16_t g, uint16_t b )
 {
+	EEPROM_FlushBuffer();
+	EEPROM_DisableMapping();
 	EEPROM_ErasePage( EEPROM_LED_CONFIG_PAGE );
+	EEPROM_WaitForNVM(  );
 	
 	EEPROM_WriteByte(EEPROM_LED_CONFIG_PAGE, EEPROM_R_CONFIG_WORD*2, r&0xFF);
 	EEPROM_WriteByte(EEPROM_LED_CONFIG_PAGE, EEPROM_R_CONFIG_WORD*2+1, (r>>8)&0xFF);
