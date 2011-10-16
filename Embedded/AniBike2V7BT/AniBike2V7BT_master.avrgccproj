@@ -138,6 +138,12 @@
     <Compile Include="AniBike2V7BT_HallSensor.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="AniBike2V7BT_HighLevelComm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="AniBike2V7BT_HighLevelComm.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="AniBike2V7BT_Internal.h">
       <SubType>compile</SubType>
     </Compile>
