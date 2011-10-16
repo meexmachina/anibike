@@ -12,12 +12,22 @@ void hall_sensor_handler ( void )
 	printf_P ( PSTR("Hall Sensor\r\n"));
 }
 
+void anibike_master_initialize_hardware ( void )
+{
+	// Set the bt configuration mode to uart
+	PORTA.DIRSET = PIN3_bm;
+	PORTA.OUTCLR = PIN3_bm;
+	
+	
+}
+
 /*****************************************************************
  *			M A I N    F U N C T I O N 
  *****************************************************************/
 int main(void)
 {
 	SetClockFreq ( 16 );
+	anibike_master_initialize_hardware( );
 	
 	initialize_hall_sensor(  );
 	initialize_lighting_system(  );	
