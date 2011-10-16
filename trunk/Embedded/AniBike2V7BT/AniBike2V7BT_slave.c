@@ -28,5 +28,6 @@ int main(void)
 	
 	while (1)
 	{
+		anibike_hlcomm_handle_data (  );
 	}
 }
