@@ -29,6 +29,7 @@
 #include "AniBike2V7BT_LightingSystem.h"
 #include "AniBike2V7BT_HallSensor.h"
 #include "AniBike2V7BT_DataLink.h"
+#include "AniBike2V7BT_HighLevelComm.h"
 
 
 

@@ -63,66 +63,9 @@
 /*
  * Opcodes definition
  ***************************************************************************************/
-#define ANIBIKE_DL_IDN			0x01
-#define ANIBIKE_DL_SET_DATA		0x02
-#define ANIBIKE_DL_SET_CLOCK	0x05
-#define ANIBIKE_DL_SLEEP		0x06
-#define ANIBIKE_DL_WAKEUP		0x07
-#define ANIBIKE_DL_SETUP		0x08
-#define ANIBIKE_SET_CAL			0x09
-#define ANIBIKE_LIGHT_LED		0x10
-
 #define ANIBIKE_DL_ACK_PIN		DATALINK_DATA_PIN
 #define ANIBIKE_DL_NACK_PIN		DATALINK_CLK_PIN
 
-/* HEADER
- * *****************/
-typedef struct 
-{
-	uint8_t		opcode;
-	uint8_t		length;
-	uint8_t		dest;
-} anibike_dl_header;
-
-/* Calibration Msg
- * *****************/
-typedef struct  
-{
-	anibike_dl_header		header;
-	uint16_t				cal_red;
-	uint16_t				cal_green;
-	uint16_t				cal_blue;
-} anibike_dl_cal_msg;
-
-/* Sleep/Wakeup Msg
- * *****************/
-typedef struct  
-{
-	anibike_dl_header		header;
-} anibike_dl_sleep_msg;
-
-typedef struct  
-{
-	anibike_dl_header		header;
-} anibike_dl_wakeup_msg;
-
-/* Data Msg
- * *****************/
-typedef struct  
-{
-	anibike_dl_header		header;
-	uint8_t					data[48];
-} anibike_dl_set_data_msg;
-
-/* Light LED Msg
- * *****************/
-typedef struct  
-{
-	anibike_dl_header		header;
-	uint8_t					row_num;
-	uint8_t					rgb_choose;
-	uint16_t				val;
-} anibike_dl_light_led_msg;
 
 /*
  * Other definitions
@@ -154,16 +97,4 @@ uint8_t anibike_dl_send_data	( uint8_t *aData, uint8_t iLength );
 void anibike_dl_receive_data	( void );
 uint8_t anibike_dl_receive_byte ( void ) __attribute__((naked));
 
-
-/*
- * High-level function definitions
- ***************************************************************************************/	
-
-// MASTER SIDE
-void anibike_dl_send_cal_data ( uint16_t red, uint16_t green, uint16_t blue );
-void anibike_dl_light_led_req ( uint8_t row, uint8_t rgb_choose, uint16_t val );
-
-
-// SLAVE SIDE
-void anibike_dl_handle_data ( uint8_t *data, uint8_t length );
-#endif /* ANIBIKE2V7BT_DATALINK_H_ */
+#endif	//ANIBIKE2V7BT_DATALINK_H_
