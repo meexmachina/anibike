@@ -12,8 +12,6 @@
  *****************************************************************/
 int main(void)
 {
-	int i;
-	
 	SetClockFreq ( 32 );
 	
 	swUART_ConfigureDevice ( 0 );

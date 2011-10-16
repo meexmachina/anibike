@@ -695,6 +695,8 @@ void tm_cmd_test_led		(U8 argc, char **argv)
 		uint8_t i;
 		uint16_t val = 0;
 		uint8_t rowNum = atoi (argv[1]);
+		uint8_t rgb_choose = 0;
+		uint8_t result = 0;
 		
 		MUX_ENABLE;
 		val = atol (argv[3]);
@@ -706,6 +708,7 @@ void tm_cmd_test_led		(U8 argc, char **argv)
 		{
 			if (argv[2][i]=='R')
 			{
+				rgb_choose |= 0x01;
 				RED_PWM_CTRL.CCABUF = val;        
 				RED_PWM_CTRL.CCBBUF = val;
 				RED_PWM_CTRL.CCCBUF = val;
@@ -714,6 +717,7 @@ void tm_cmd_test_led		(U8 argc, char **argv)
 
 			if (argv[2][i]=='G')
 			{
+				rgb_choose |= 0x02;
 				GREEN_PWM_CTRL.CCABUF = val;        
 				GREEN_PWM_CTRL.CCBBUF = val;
 				GREEN_PWM_CTRL.CCCBUF = val;
@@ -722,12 +726,24 @@ void tm_cmd_test_led		(U8 argc, char **argv)
 
 			if (argv[2][i]=='B')
 			{
+				rgb_choose |= 0x04;
 				BLUE_PWM_CTRL.CCABUF = val;        
 				BLUE_PWM_CTRL.CCBBUF = val;
 				BLUE_PWM_CTRL.CCCBUF = val;
 				BLUE_PWM_CTRL.CCDBUF = val;
 			}
 		}
+		
+		result = anibike_hlcomm_light_led_req( rowNum, rgb_choose, val );
+		
+		switch (result)
+		{
+			case 0: printf_P( PSTR("transaction successful (ACKed)\r\n")); break;
+			case 1: printf_P( PSTR("no slave detected\r\n")); break;
+			case 2: printf_P( PSTR("slave does not respond\r\n")); break;
+			case 3: printf_P( PSTR("received NACK\r\n")); break;
+			default: break;
+		};
 					
 	} 
 	printf_P (PSTR("OK\r\n"));
@@ -946,20 +962,30 @@ void tm_cmd_read_led_cal	(U8 argc, char **argv)
 /**************************************************************************/
 void tm_cmd_write_led_cal (U8 argc, char **argv)
 {
+	uint8_t result = 0;
+	
 	if (argc != 4)
 	{
 		printf_P( PSTR("usage: write_cal red16 green16 blue16\r\n"));
 		return;	
 	}
+	
 	g_iRedCalibrationPeriod = atol(argv[1]);
 	g_iGreenCalibrationPeriod = atol(argv[2]);
 	g_iBlueCalibrationPeriod = atol(argv[3]);
 	
 	write_period_calibrations ( g_iRedCalibrationPeriod, g_iGreenCalibrationPeriod, g_iBlueCalibrationPeriod );
+	result = anibike_hlcomm_send_cal_data( g_iRedCalibrationPeriod, g_iGreenCalibrationPeriod, g_iBlueCalibrationPeriod );	
 	
-	TC_SetPeriod(&GREEN_PWM_CTRL, g_iGreenCalibrationPeriod);
-	TC_SetPeriod(&RED_PWM_CTRL, g_iRedCalibrationPeriod);
-	TC_SetPeriod(&BLUE_PWM_CTRL, g_iBlueCalibrationPeriod);
+	switch (result)
+	{
+		case 0: printf_P( PSTR("transaction successful (ACKed)\r\n")); break;
+		case 1: printf_P( PSTR("no slave detected\r\n")); break;
+		case 2: printf_P( PSTR("slave does not respond\r\n")); break;
+		case 3: printf_P( PSTR("received NACK\r\n")); break;
+		default: break;
+	};	
+	
 	printf_P (PSTR("OK\r\n"));
 }
 
