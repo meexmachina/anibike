@@ -9,6 +9,7 @@
 SPI_Master_t		spiMasterC;
 volatile uint8_t	rxBuffer[128];
 volatile uint8_t	rxLength = 0;
+volatile uint8_t	reDataReady = 0;
 
 //__________________________________________________________________________________________________
 void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
@@ -391,5 +392,26 @@ ISR(PORTC_INT0_vect,  ISR_BLOCK)
 	cli ();
 	rxLength = 0;
 	anibike_dl_receive_data ( );
+	reDataReady = 1;
 	sei ( );
+}
+
+
+//__________________________________________________________________________________________________
+void anibike_dl_send_cal_data ( uint16_t red, uint16_t green, uint16_t blue )
+{
+	
+}
+
+//__________________________________________________________________________________________________
+void anibike_dl_light_led_req ( uint8_t row, uint8_t rgb_choose, uint16_t val )
+{
+	
+}
+
+//__________________________________________________________________________________________________
+void anibike_dl_handle_data ( uint8_t *data, uint8_t length )
+{
+	
+	
 }

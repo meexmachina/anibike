@@ -16,9 +16,7 @@ void anibike_master_initialize_hardware ( void )
 {
 	// Set the bt configuration mode to uart
 	PORTA.DIRSET = PIN3_bm;
-	PORTA.OUTCLR = PIN3_bm;
-	
-	
+	PORTA.OUTCLR = PIN3_bm;	
 }
 
 /*****************************************************************
