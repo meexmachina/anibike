@@ -20,8 +20,15 @@ void anibike_dl_light_led_req ( uint8_t row, uint8_t rgb_choose, uint16_t val )
 }
 
 //__________________________________________________________________________________________________
-void anibike_dl_handle_data ( uint8_t *data, uint8_t length )
+void anibike_hlcomm_setup_rx_system ( void )
 {
+		
+}
+
+//__________________________________________________________________________________________________
+void anibike_dl_handle_data ( void )
+{
+	if ( !rxDataReady ) return;
 	
-	
+	rxDataReady = 0;	
 }
