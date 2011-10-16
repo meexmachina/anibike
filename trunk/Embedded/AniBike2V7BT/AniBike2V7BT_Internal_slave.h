@@ -18,6 +18,7 @@
 #include "AniBike2V7BT_LightingSystem.h"
 #include "clksys_driver.h"
 #include "AniBike2V7BT_DataLink.h"
+#include "AniBike2V7BT_HighLevelComm.h"
 
 #include "swUART.h"
 #include "port_driver.h"

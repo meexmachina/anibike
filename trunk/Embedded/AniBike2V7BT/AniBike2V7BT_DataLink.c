@@ -397,21 +397,3 @@ ISR(PORTC_INT0_vect,  ISR_BLOCK)
 }
 
 
-//__________________________________________________________________________________________________
-void anibike_dl_send_cal_data ( uint16_t red, uint16_t green, uint16_t blue )
-{
-	
-}
-
-//__________________________________________________________________________________________________
-void anibike_dl_light_led_req ( uint8_t row, uint8_t rgb_choose, uint16_t val )
-{
-	
-}
-
-//__________________________________________________________________________________________________
-void anibike_dl_handle_data ( uint8_t *data, uint8_t length )
-{
-	
-	
-}
