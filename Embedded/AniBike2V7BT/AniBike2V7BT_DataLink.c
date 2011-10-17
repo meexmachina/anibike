@@ -86,13 +86,13 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 	}
 }
 
-
 //__________________________________________________________________________________________________
 uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 {
 	uint8_t i = iLength;
 	uint8_t chs = 0;
 	uint8_t d;
+	uint8_t k = 0;
 	uint8_t timeout = ANIBIKE_DL_RX_TIMEOUT;
 
 
@@ -102,6 +102,10 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 		return 1;	// no-one found
 	}
 
+	printf_P(PSTR("writing length %d data:\r\n"), iLength);
+	for (k=0; k<iLength; k++) printf_P(PSTR("0x%x, "), aData[k]);
+	printf_P(PSTR("\r\n"));
+	
 	// start transaction by clearing data pin
 	DATALINK_PORT.OUTCLR = DATALINK_DATA_PIN;		
 	
