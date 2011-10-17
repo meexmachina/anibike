@@ -6,11 +6,13 @@
  */ 
 #include "AniBike2V7BT_Internal.h"
 
-volatile uint16_t	g_iRedCalibrationPeriod = 320;
-volatile uint16_t	g_iGreenCalibrationPeriod = 255;
-volatile uint16_t	g_iBlueCalibrationPeriod = 255;
+volatile uint16_t	g_iRedCalibrationPeriod = 255;			// a little bit more dimmed
+volatile uint16_t	g_iGreenCalibrationPeriod = 235;		// maximum 235
+volatile uint16_t	g_iBlueCalibrationPeriod = 235;			// maximum 235
 
+prog_uint8_t CIE_Gamma_4bit[] PROGMEM = {0,2,4,7,12,18,27,38,51,67,86,108,134,163,197,235};
 
+//__________________________________________________________________________________________________
 void initialize_lighting_system ( void )
 {
 	// Row MUX control init
@@ -60,6 +62,7 @@ void initialize_lighting_system ( void )
 	BLUE_PWM_CTRL.CNT = 0;
 }
 
+//__________________________________________________________________________________________________
 void read_period_calibrations ( uint16_t *r, uint16_t *g, uint16_t *b )
 {
 	EEPROM_DisableMapping();
@@ -73,6 +76,7 @@ void read_period_calibrations ( uint16_t *r, uint16_t *g, uint16_t *b )
 	*b |= (EEPROM_ReadByte	(EEPROM_LED_CONFIG_PAGE, EEPROM_B_CONFIG_WORD*2+1))<<8;
 }
 
+//__________________________________________________________________________________________________
 void write_period_calibrations ( uint16_t r, uint16_t g, uint16_t b )
 {
 	EEPROM_FlushBuffer();
