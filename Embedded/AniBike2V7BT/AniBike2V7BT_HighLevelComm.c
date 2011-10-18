@@ -19,7 +19,7 @@ int anibike_hlcomm_send_cal_data ( uint16_t red, uint16_t green, uint16_t blue )
 	msg.cal_green = green;
 	msg.cal_blue = blue;
 	
-	return anibike_dl_send_data( ((void*)(&msg)), sizeof(msg) );
+	return anibike_dl_send_data( (uint8_t*)((void*)(&msg)), sizeof(msg) );
 }
 
 //__________________________________________________________________________________________________
@@ -34,7 +34,7 @@ int anibike_hlcomm_light_led_req ( uint8_t row, uint8_t rgb_choose, uint16_t val
 	msg.rgb_choose = rgb_choose;
 	msg.val = val;
 	
-	return anibike_dl_send_data( ((void*)(&msg)), sizeof(msg) );
+	return anibike_dl_send_data( (uint8_t*)((void*)(&msg)), sizeof(msg) );
 }
 
 //__________________________________________________________________________________________________

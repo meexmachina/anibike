@@ -63,6 +63,9 @@ int main(void)
 	
 	while (1)
 	{
+		
+//		anibike_hlcomm_send_cal_data ( 255, 235, 235 );
+//		anibike_hlcomm_light_led_req ( 0, 7, 235 );
 //		i += 1;
 //		i = i%8;
 //		MUX_SET_ROW (i);	
