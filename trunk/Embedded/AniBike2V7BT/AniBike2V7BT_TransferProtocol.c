@@ -698,39 +698,26 @@ void tm_cmd_test_led		(U8 argc, char **argv)
 		uint8_t rgb_choose = 0;
 		uint8_t result = 0;
 		
-		MUX_ENABLE;
 		val = atol (argv[3]);
 		
-		// Set the row num
-		MUX_SET_ROW (rowNum);
-					
 		for (i = 0; i<strlen(argv[2]); i++)
 		{
 			if (argv[2][i]=='R')
 			{
 				rgb_choose |= 0x01;
-				RED_PWM_CTRL.CCABUF = val;        
-				RED_PWM_CTRL.CCBBUF = val;
-				RED_PWM_CTRL.CCCBUF = val;
-				RED_PWM_CTRL.CCDBUF = val;
+				set_row_color ( rowNum, 1, val);
 			}
 
 			if (argv[2][i]=='G')
 			{
 				rgb_choose |= 0x02;
-				GREEN_PWM_CTRL.CCABUF = val;        
-				GREEN_PWM_CTRL.CCBBUF = val;
-				GREEN_PWM_CTRL.CCCBUF = val;
-				GREEN_PWM_CTRL.CCDBUF = val;
+				set_row_color ( rowNum, 2, val);
 			}
 
 			if (argv[2][i]=='B')
 			{
 				rgb_choose |= 0x04;
-				BLUE_PWM_CTRL.CCABUF = val;        
-				BLUE_PWM_CTRL.CCBBUF = val;
-				BLUE_PWM_CTRL.CCCBUF = val;
-				BLUE_PWM_CTRL.CCDBUF = val;
+				set_row_color ( rowNum, 3, val);
 			}
 		}
 		
