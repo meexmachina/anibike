@@ -80,32 +80,20 @@ void anibike_hlcomm_handle_data ( void )
 		case (ANIBIKE_HLCOMM_LIGHT_LED):
 				{
 					anibike_hlcomm_light_led_msg *msg = (anibike_hlcomm_light_led_msg *)((void*)(rxBuffer));
-					MUX_ENABLE;
-					// Set the row number
-					MUX_SET_ROW (msg->row_num);
 					
 					if (msg->rgb_choose&0x01)
 					{
-						RED_PWM_CTRL.CCABUF = msg->val;        
-						RED_PWM_CTRL.CCBBUF = msg->val;
-						RED_PWM_CTRL.CCCBUF = msg->val;
-						RED_PWM_CTRL.CCDBUF = msg->val;
+						set_row_color ( msg->row_num, 1, msg->val);
 					}
 
 					if (msg->rgb_choose&0x02)
 					{
-						GREEN_PWM_CTRL.CCABUF = msg->val;        
-						GREEN_PWM_CTRL.CCBBUF = msg->val;
-						GREEN_PWM_CTRL.CCCBUF = msg->val;
-						GREEN_PWM_CTRL.CCDBUF = msg->val;
+						set_row_color ( msg->row_num, 2, msg->val);
 					}
 
 					if (msg->rgb_choose&0x04)
 					{
-						BLUE_PWM_CTRL.CCABUF = msg->val;        
-						BLUE_PWM_CTRL.CCBBUF = msg->val;
-						BLUE_PWM_CTRL.CCCBUF = msg->val;
-						BLUE_PWM_CTRL.CCDBUF = msg->val;
+						set_row_color ( msg->row_num, 3, msg->val);
 					}
 				}							
 				break;

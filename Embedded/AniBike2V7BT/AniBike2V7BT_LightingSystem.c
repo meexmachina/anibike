@@ -6,11 +6,11 @@
  */ 
 #include "AniBike2V7BT_Internal.h"
 
-volatile uint16_t	g_iRedCalibrationPeriod = 255;			// a little bit more dimmed
+volatile uint16_t	g_iRedCalibrationPeriod = 280;			// a little bit more dimmed
 volatile uint16_t	g_iGreenCalibrationPeriod = 235;		// maximum 235
 volatile uint16_t	g_iBlueCalibrationPeriod = 235;			// maximum 235
 
-prog_uint8_t CIE_Gamma_4bit[] PROGMEM = {0,2,4,7,12,18,27,38,51,67,86,108,134,163,197,235};
+volatile uint8_t CIE_Gamma_4bit[] = {0,2,4,7,12,18,27,38,51,67,86,108,134,163,197,235};
 
 //__________________________________________________________________________________________________
 void initialize_lighting_system ( void )
@@ -96,4 +96,37 @@ void write_period_calibrations ( uint16_t r, uint16_t g, uint16_t b )
 	TC_SetPeriod(&GREEN_PWM_CTRL, g);
 	TC_SetPeriod(&RED_PWM_CTRL, r);
 	TC_SetPeriod(&BLUE_PWM_CTRL, b);
+}
+
+//__________________________________________________________________________________________________
+void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit)	// color = 1(RED), 2(GREEN), 3(BLUE)
+{
+	uint8_t val = CIE_Gamma_4bit[color4bit];
+	MUX_ENABLE;
+	// Set the row num
+	MUX_SET_ROW (row_num);
+					
+	if (color==1)
+	{
+		RED_PWM_CTRL.CCABUF = val;        
+		RED_PWM_CTRL.CCBBUF = val;
+		RED_PWM_CTRL.CCCBUF = val;
+		RED_PWM_CTRL.CCDBUF = val;	
+	}	
+	else if (color==2)
+	{
+		GREEN_PWM_CTRL.CCABUF = val;        
+		GREEN_PWM_CTRL.CCBBUF = val;
+		GREEN_PWM_CTRL.CCCBUF = val;
+		GREEN_PWM_CTRL.CCDBUF = val;
+	}					
+	else if (color==3)
+	{
+		BLUE_PWM_CTRL.CCABUF = val;        
+		BLUE_PWM_CTRL.CCBBUF = val;
+		BLUE_PWM_CTRL.CCCBUF = val;
+		BLUE_PWM_CTRL.CCDBUF = val;
+	}
+
+	
 }
