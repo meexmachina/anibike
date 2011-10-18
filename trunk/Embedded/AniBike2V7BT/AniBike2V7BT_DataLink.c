@@ -31,6 +31,13 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 							false,
 							PORT_OPC_WIREDORPULL_gc,
 							PORT_ISC_INPUT_DISABLE_gc );
+							
+		PORT_ConfigurePins( &DATALINK_PORT,
+							DATALINK_CS_PIN,
+							false,
+							false,
+							PORT_OPC_WIREDORPULL_gc,
+							PORT_ISC_INPUT_DISABLE_gc );
 		
 		/* Initialize SPI master on port DATAFLASH_PORT. */
 		SPI_MasterInit(&spiMasterC,
@@ -48,9 +55,11 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 		// Set directions - data out, clk in
 		DATALINK_PORT.DIRSET = DATALINK_DATA_PIN;
 		DATALINK_PORT.DIRCLR = DATALINK_CLK_PIN;
+		DATALINK_PORT.DIRSET = DATALINK_CS_PIN;
 		
 		// drive data to high
 		DATALINK_PORT.OUTSET = DATALINK_DATA_PIN;		
+		DATALINK_PORT.OUTSET = DATALINK_CS_PIN;	
 
 	}
 	else
@@ -61,9 +70,11 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 		// set clk out and data in
 		DATALINK_PORT.DIRCLR = DATALINK_DATA_PIN;
 		DATALINK_PORT.DIRSET = DATALINK_CLK_PIN;
+		DATALINK_PORT.DIRCLR = DATALINK_CS_PIN;
 		
 		// drive clk to high
 		DATALINK_PORT.OUTSET = DATALINK_CLK_PIN;
+		DATALINK_PORT.OUTCLR = DATALINK_CS_PIN;
 		
 		// Set pull-down and wired-or so that there will be no problems
 		// Setup interrupt for the data pin
@@ -80,6 +91,13 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 							false,
 							PORT_OPC_WIREDORPULL_gc,
 							PORT_ISC_BOTHEDGES_gc );
+							
+		PORT_ConfigurePins( &DATALINK_PORT,
+							DATALINK_CS_PIN,
+							false,
+							false,
+							PORT_OPC_WIREDORPULL_gc,
+							PORT_ISC_BOTHEDGES_gc );
 		
 		PORT_ConfigureInterrupt0( &DATALINK_PORT, PORT_INT0LVL_HI_gc, DATALINK_DATA_PIN );		
 		PMIC.CTRL |= PMIC_LOLVLEN_bm|PMIC_MEDLVLEN_bm|PMIC_HILVLEN_bm;		
@@ -92,7 +110,7 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 	uint8_t i = iLength;
 	uint8_t *tempData = aData; 
 	uint8_t chs = 0;
-	uint8_t d;
+	uint8_t d = 0;
 	uint8_t k = 0;
 	uint8_t timeout = ANIBIKE_DL_RX_TIMEOUT;
 
@@ -103,11 +121,6 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 		return 1;	// no-one found
 	}
 
-	// DEBUG
-	//printf_P(PSTR("writing length %d data:\r\n"), iLength);
-	//for (k=0; k<iLength; k++) printf_P(PSTR("0x%x, "), aData[k]);
-	//printf_P(PSTR("\r\n"));
-	// DEBUG
 	
 	// start transaction by clearing data pin
 	DATALINK_PORT.OUTCLR = DATALINK_DATA_PIN;		
@@ -124,7 +137,7 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 		DATALINK_PORT.OUTSET = DATALINK_DATA_PIN;
 		return 2;	// no response
 	}
-	
+
 	// here we know that there is someone on SLAVE and it responds
 
 	// Set both lines as totem-pole and activate SPI
@@ -139,10 +152,6 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 	
 	// the length is not part of the checksum
 	anibike_dl_send_byte (spiMasterC, iLength); 
-	
-	// DEBUG
-	//printf_P(PSTR("%d\r\n"), tempData);
-	// DEBUG
 	
 	// transfer iLength bytes
 	do 
@@ -200,7 +209,7 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 		// end transaction by setting data pin
 		DATALINK_PORT.OUTSET = DATALINK_DATA_PIN;
 	}
-		
+	
 	return 0;
 }
 
