@@ -90,6 +90,7 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 {
 	uint8_t i = iLength;
+	uint8_t *tempData = aData; 
 	uint8_t chs = 0;
 	uint8_t d;
 	uint8_t k = 0;
@@ -102,9 +103,11 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 		return 1;	// no-one found
 	}
 
-	printf_P(PSTR("writing length %d data:\r\n"), iLength);
-	for (k=0; k<iLength; k++) printf_P(PSTR("0x%x, "), aData[k]);
-	printf_P(PSTR("\r\n"));
+	// DEBUG
+	//printf_P(PSTR("writing length %d data:\r\n"), iLength);
+	//for (k=0; k<iLength; k++) printf_P(PSTR("0x%x, "), aData[k]);
+	//printf_P(PSTR("\r\n"));
+	// DEBUG
 	
 	// start transaction by clearing data pin
 	DATALINK_PORT.OUTCLR = DATALINK_DATA_PIN;		
@@ -137,21 +140,23 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 	// the length is not part of the checksum
 	anibike_dl_send_byte (spiMasterC, iLength); 
 	
+	// DEBUG
+	//printf_P(PSTR("%d\r\n"), tempData);
+	// DEBUG
+	
 	// transfer iLength bytes
 	do 
 	{
-		d = *aData++;
-		
+		d = *tempData++;	
 		spiMasterC.module->DATA = d;
 		/* Wait for transmission complete. */
 		while(!(spiMasterC.module->STATUS & SPI_IF_bm)) {}
-			
 		chs += d;
 	} while (--i);
 	
 	// transfer checksum
 	anibike_dl_send_byte (spiMasterC, chs);
-	
+		
 	// disable spi and set both lines as usual - pulled low wired-or
 	SPI_MasterEnable (&spiMasterC, 0);
 	PORT_ConfigurePins( &DATALINK_PORT,
@@ -195,7 +200,7 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 		// end transaction by setting data pin
 		DATALINK_PORT.OUTSET = DATALINK_DATA_PIN;
 	}
-	
+		
 	return 0;
 }
 
