@@ -8,6 +8,7 @@
 #include "AniBike2V7BT_Internal.h"
 
 //__________________________________________________________________________________________________
+#ifdef _ANIBIKE_MASTER	
 int anibike_hlcomm_send_cal_data ( uint16_t red, uint16_t green, uint16_t blue )
 {
 	anibike_hlcomm_cal_msg msg;
@@ -21,8 +22,10 @@ int anibike_hlcomm_send_cal_data ( uint16_t red, uint16_t green, uint16_t blue )
 	
 	return anibike_dl_send_data( (uint8_t*)((void*)(&msg)), sizeof(msg) );
 }
+#endif
 
 //__________________________________________________________________________________________________
+#ifdef _ANIBIKE_MASTER	
 int anibike_hlcomm_light_led_req ( uint8_t row, uint8_t rgb_choose, uint16_t val )
 {
 	anibike_hlcomm_light_led_msg msg;
@@ -36,14 +39,18 @@ int anibike_hlcomm_light_led_req ( uint8_t row, uint8_t rgb_choose, uint16_t val
 	
 	return anibike_dl_send_data( (uint8_t*)((void*)(&msg)), sizeof(msg) );
 }
+#endif
 
 //__________________________________________________________________________________________________
+#ifdef _ANIBIKE_SLAVE
 void anibike_hlcomm_setup_rx_system ( void )
 {
 		
 }
+#endif
 
 //__________________________________________________________________________________________________
+#ifdef _ANIBIKE_SLAVE
 void anibike_hlcomm_handle_data ( void )
 {
 	if ( !rxDataReady ) return;
@@ -101,3 +108,4 @@ void anibike_hlcomm_handle_data ( void )
 				break;
 	};
 }
+#endif
