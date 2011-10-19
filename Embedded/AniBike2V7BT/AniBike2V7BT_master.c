@@ -8,13 +8,6 @@
 #include "AniBike2V7BT_Internal.h"
 
 /*****************************************************************
- *			BUFFERS
- *****************************************************************/
-volatile uint8_t g_flash_read_buffer_I	[48] = {0};
-volatile uint8_t g_flash_read_buffer_II	[48] = {0};
-volatile uint8_t *g_current_flash_buffer = NULL;
-
-/*****************************************************************
  *			HALL SENSOR HANDLE
  *****************************************************************/
 void hall_sensor_handler ( void )
@@ -31,7 +24,7 @@ void anibike_master_initialize_hardware ( void )
 	PORTA.DIRSET = PIN3_bm;
 	PORTA.OUTCLR = PIN3_bm;	
 	
-	g_current_flash_buffer = g_flash_read_buffer_I;
+	//g_current_flash_buffer = g_flash_read_buffer_I;
 }
 
 /*****************************************************************
@@ -44,7 +37,7 @@ int main(void)
 	
 	initialize_hall_sensor(  );
 	initialize_lighting_system(  );	
-	run_row_control ( 0 );
+	run_row_control;
 	dataflash_spi_init (  );
 	
 	swUART_ConfigureDevice ( 0 );

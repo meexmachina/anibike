@@ -36,6 +36,12 @@
 #define EEPROM_G_CONFIG_WORD	1
 #define EEPROM_B_CONFIG_WORD	2
 
+/*****************************************************************
+ *			M A C R O    D E F I N I T I O N S
+ *****************************************************************/
+#define run_row_control			{TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );}
+#define stop_row_control		{TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_OFF_gc );}
+
 
 /*****************************************************************
  *			F U N C T I O N    D E F I N I T I O N S
@@ -44,8 +50,6 @@ void initialize_lighting_system ( void );
 void read_period_calibrations ( uint16_t *r, uint16_t *g, uint16_t *b );
 void write_period_calibrations ( uint16_t r, uint16_t g, uint16_t b );
 void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit);	// color = 1(RED), 2(GREEN), 3(BLUE)
-void initialize_projection_mechanism ( void );
 void set_projection_state ( uint8_t *data, uint8_t onoff );
-void run_row_control ( uint8_t runstop );
 
 #endif /* ANIBIKE2V7BT_LIGHTINGSYSTEM_H_ */
