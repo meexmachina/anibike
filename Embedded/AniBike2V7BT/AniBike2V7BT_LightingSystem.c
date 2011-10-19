@@ -9,6 +9,7 @@
 volatile uint16_t	g_iRedCalibrationPeriod = 280;			// a little bit more dimmed
 volatile uint16_t	g_iGreenCalibrationPeriod = 235;		// maximum 235
 volatile uint16_t	g_iBlueCalibrationPeriod = 235;			// maximum 235
+volatile uint8_t	g_current_row = 0;
 
 volatile uint8_t CIE_Gamma_4bit[] = {0,2,4,7,12,18,27,38,51,67,86,108,134,163,197,235};
 
@@ -60,6 +61,16 @@ void initialize_lighting_system ( void )
 	RED_PWM_CTRL.CNT = 0;
 	GREEN_PWM_CTRL.CNT = 0;
 	BLUE_PWM_CTRL.CNT = 0;
+	
+	
+	// setup row control time on TCC1A
+	ROW_TIMER_CTRL.CTRLA |= TC1_CCAEN_bm;
+	TC1_ConfigClockSource(&ROW_TIMER_CTRL, TC_CLKSEL_DIV64_gc);	// we need it every 64 microseconds
+	ROW_TIMER_CTRL.CTRLB |= TC1_WGMODE0_bm|TC1_WGMODE1_bm;
+	ROW_TIMER_CTRL.PER = 0x20;
+	ROW_TIMER_CTRL.CCA = 0x20;
+	TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
+	ROW_TIMER_CTRL.CNT = 0;
 }
 
 //__________________________________________________________________________________________________
@@ -127,6 +138,20 @@ void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit)	// color
 		BLUE_PWM_CTRL.CCCBUF = val;
 		BLUE_PWM_CTRL.CCDBUF = val;
 	}
+}
 
-	
+void run_row_control ( uint8_t runstop )
+{
+	if (runstop==1)
+		TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
+	else
+		TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_OFF_gc );
+}
+
+ISR(TCC1_CCA_vect)
+{
+	g_current_row ++;
+	g_current_row &= 0x07;
+	MUX_SET_ROW (g_current_row);
+	ROW_TIMER_CTRL.CNT = 0;
 }
