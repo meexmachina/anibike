@@ -29,6 +29,8 @@
 #define BLUE_PORT				PORTE
 #define BLUE_PWM_CTRL			TCE0
 
+#define ROW_TIMER_CTRL			TCC1
+
 #define EEPROM_LED_CONFIG_PAGE	0
 #define EEPROM_R_CONFIG_WORD	0
 #define EEPROM_G_CONFIG_WORD	1
@@ -42,5 +44,8 @@ void initialize_lighting_system ( void );
 void read_period_calibrations ( uint16_t *r, uint16_t *g, uint16_t *b );
 void write_period_calibrations ( uint16_t r, uint16_t g, uint16_t b );
 void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit);	// color = 1(RED), 2(GREEN), 3(BLUE)
+void initialize_projection_mechanism ( void );
+void set_projection_state ( uint8_t *data, uint8_t onoff );
+void run_row_control ( uint8_t runstop );
 
 #endif /* ANIBIKE2V7BT_LIGHTINGSYSTEM_H_ */

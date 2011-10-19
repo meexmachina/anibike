@@ -7,16 +7,31 @@
 
 #include "AniBike2V7BT_Internal.h"
 
+/*****************************************************************
+ *			BUFFERS
+ *****************************************************************/
+volatile uint8_t g_flash_read_buffer_I	[48] = {0};
+volatile uint8_t g_flash_read_buffer_II	[48] = {0};
+volatile uint8_t *g_current_flash_buffer = NULL;
+
+/*****************************************************************
+ *			HALL SENSOR HANDLE
+ *****************************************************************/
 void hall_sensor_handler ( void )
 {
 	printf_P ( PSTR("Hall Sensor\r\n"));
 }
 
+/*****************************************************************
+ *			GENERAL SYSTEM CONFIGURATION
+ *****************************************************************/
 void anibike_master_initialize_hardware ( void )
 {
 	// Set the bt configuration mode to uart
 	PORTA.DIRSET = PIN3_bm;
 	PORTA.OUTCLR = PIN3_bm;	
+	
+	g_current_flash_buffer = g_flash_read_buffer_I;
 }
 
 /*****************************************************************
@@ -29,6 +44,7 @@ int main(void)
 	
 	initialize_hall_sensor(  );
 	initialize_lighting_system(  );	
+	run_row_control ( 1 );
 	dataflash_spi_init (  );
 	
 	swUART_ConfigureDevice ( 0 );
@@ -39,35 +55,8 @@ int main(void)
 	anibike_dl_initialize ( ANIBIKE_DL_MASTER );	
 	
 	sei ( );
-	
-	//anibike_dl_send_data		( "david", 5 );
-/*	MUX_ENABLE;
-	MUX_SET_ROW (1);
-	write_period_calibrations ( 1200, 300, 255 );
 
-	RED_PWM_CTRL.CCABUF = 20;        
-	RED_PWM_CTRL.CCBBUF = 20;
-	RED_PWM_CTRL.CCCBUF = 20;
-	RED_PWM_CTRL.CCDBUF = 20;
-				
-	GREEN_PWM_CTRL.CCABUF = 20;        
-	GREEN_PWM_CTRL.CCBBUF = 20;
-	GREEN_PWM_CTRL.CCCBUF = 20;
-	GREEN_PWM_CTRL.CCDBUF = 20;
-				
-	BLUE_PWM_CTRL.CCABUF = 20;        
-	BLUE_PWM_CTRL.CCBBUF = 20;
-	BLUE_PWM_CTRL.CCCBUF = 20;
-	BLUE_PWM_CTRL.CCDBUF = 20;
-*/
-	
 	while (1)
 	{
-		
-//		anibike_hlcomm_send_cal_data ( 255, 235, 235 );
-//		anibike_hlcomm_light_led_req ( 0, 7, 235 );
-//		i += 1;
-//		i = i%8;
-//		MUX_SET_ROW (i);	
 	}
 }
