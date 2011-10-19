@@ -82,15 +82,11 @@ typedef struct
  ***************************************************************************************/	
 
 // MASTER SIDE
-#ifdef _ANIBIKE_MASTER
 	int anibike_hlcomm_send_cal_data ( uint16_t red, uint16_t green, uint16_t blue );
 	int anibike_hlcomm_light_led_req ( uint8_t row, uint8_t rgb_choose, uint16_t val );
-#endif
 
 // SLAVE SIDE
-#ifdef _ANIBIKE_SLAVE
 	void anibike_hlcomm_setup_rx_system ( void );
 	void anibike_hlcomm_handle_data ( void );
-#endif
 
 #endif /* ANIBIKE2V7BT_HIGHLEVELCOMM_H_ */

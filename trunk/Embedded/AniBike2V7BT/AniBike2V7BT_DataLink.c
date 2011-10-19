@@ -6,13 +6,13 @@
  */ 
 #include "AniBike2V7BT_Internal.h"
 
-#ifdef _ANIBIKE_MASTER
+//#ifdef _ANIBIKE_MASTER
 	SPI_Master_t		spiMasterC;
-#else
+//#else
 	volatile uint8_t	rxBuffer[128];
 	volatile uint8_t	rxLength = 0;
 	volatile uint8_t	rxDataReady = 0;
-#endif
+//#endif
 
 //__________________________________________________________________________________________________
 void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )

@@ -44,7 +44,7 @@ int main(void)
 	
 	initialize_hall_sensor(  );
 	initialize_lighting_system(  );	
-	run_row_control ( 1 );
+	run_row_control ( 0 );
 	dataflash_spi_init (  );
 	
 	swUART_ConfigureDevice ( 0 );
