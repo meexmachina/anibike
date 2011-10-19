@@ -12,6 +12,13 @@ volatile uint16_t	g_iBlueCalibrationPeriod = 235;			// maximum 235
 volatile uint8_t	g_current_row = 0;
 
 volatile uint8_t CIE_Gamma_4bit[] = {0,2,4,7,12,18,27,38,51,67,86,108,134,163,197,235};
+	
+/*****************************************************************
+ *			BUFFERS
+ *****************************************************************/
+volatile uint8_t g_flash_read_buffer_I	[48] = {0};
+volatile uint8_t g_flash_read_buffer_II	[48] = {0};
+volatile uint8_t *g_current_flash_buffer = NULL;
 
 //__________________________________________________________________________________________________
 void initialize_lighting_system ( void )
@@ -140,18 +147,38 @@ void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit)	// color
 	}
 }
 
-void run_row_control ( uint8_t runstop )
+//__________________________________________________________________________________________________
+void set_projection_state ( uint8_t *data, uint8_t onoff )
 {
-	if (runstop==1)
-		TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
-	else
-		TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_OFF_gc );
+	uint8_t blue_place =	0  + g_current_row<<1;
+	uint8_t green_place =	16 + g_current_row<<1;
+	uint8_t red_place =		32 + g_current_row<<1;
+	
+	// MUX control
+	if (onoff == 1) MUX_ENABLE
+	else MUX_DISABLE
+
+	BLUE_PWM_CTRL.CCABUF = CIE_Gamma_4bit[data[blue_place]&0x0f];        
+	BLUE_PWM_CTRL.CCBBUF = CIE_Gamma_4bit[(data[blue_place]&0xf0)>>4];
+	BLUE_PWM_CTRL.CCCBUF = CIE_Gamma_4bit[data[blue_place+1]&0x0f];        
+	BLUE_PWM_CTRL.CCDBUF = CIE_Gamma_4bit[(data[blue_place+1]&0xf0)>>4];
+	GREEN_PWM_CTRL.CCABUF = CIE_Gamma_4bit[data[green_place]&0x0f];            
+	GREEN_PWM_CTRL.CCBBUF = CIE_Gamma_4bit[(data[green_place]&0xf0)>>4];
+	GREEN_PWM_CTRL.CCCBUF = CIE_Gamma_4bit[data[green_place+1]&0x0f];        
+	GREEN_PWM_CTRL.CCDBUF = CIE_Gamma_4bit[(data[green_place+1]&0xf0)>>4];
+	RED_PWM_CTRL.CCABUF = CIE_Gamma_4bit[data[red_place]&0x0f];                 
+	RED_PWM_CTRL.CCBBUF = CIE_Gamma_4bit[(data[red_place]&0xf0)>>4];
+	RED_PWM_CTRL.CCCBUF = CIE_Gamma_4bit[data[red_place+1]&0x0f];        
+	RED_PWM_CTRL.CCDBUF = CIE_Gamma_4bit[(data[red_place+1]&0xf0)>>4];
 }
 
+//__________________________________________________________________________________________________
 ISR(TCC1_CCA_vect)
 {
 	g_current_row ++;
 	g_current_row &= 0x07;
 	MUX_SET_ROW (g_current_row);
 	ROW_TIMER_CTRL.CNT = 0;
+	
+	set_projection_state ( g_flash_read_buffer_I, 1 );
 }

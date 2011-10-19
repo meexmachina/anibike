@@ -9,9 +9,9 @@
 /*****************************************************************
  *			BUFFERS
  *****************************************************************/
-volatile uint8_t g_flash_read_buffer_I	[48] = {0};
-volatile uint8_t g_flash_read_buffer_II	[48] = {0};
-volatile uint8_t *g_current_flash_buffer = NULL;
+//volatile uint8_t g_flash_read_buffer_I	[48] = {0};
+//volatile uint8_t g_flash_read_buffer_II	[48] = {0};
+//volatile uint8_t *g_current_flash_buffer = NULL;
 
 /*****************************************************************
  *			M A I N    F U N C T I O N 
