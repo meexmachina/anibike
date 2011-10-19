@@ -6,17 +6,20 @@
  */ 
 #include "AniBike2V7BT_Internal.h"
 
-SPI_Master_t		spiMasterC;
-volatile uint8_t	rxBuffer[128];
-volatile uint8_t	rxLength = 0;
-volatile uint8_t	rxDataReady = 0;
+#ifdef _ANIBIKE_MASTER
+	SPI_Master_t		spiMasterC;
+#else
+	volatile uint8_t	rxBuffer[128];
+	volatile uint8_t	rxLength = 0;
+	volatile uint8_t	rxDataReady = 0;
+#endif
 
 //__________________________________________________________________________________________________
 void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
-{
-	
+{	
 	if (enNodeType == ANIBIKE_DL_MASTER)
-	{				
+	{
+		#ifdef _ANIBIKE_MASTER						
 		// Set pull-down and wired-or so that there will be no problems
 		PORT_ConfigurePins( &DATALINK_PORT,
 							DATALINK_CLK_PIN,
@@ -60,10 +63,11 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 		// drive data to high
 		DATALINK_PORT.OUTSET = DATALINK_DATA_PIN;		
 		DATALINK_PORT.OUTSET = DATALINK_CS_PIN;	
-
+		#endif
 	}
 	else
 	{
+		#ifdef _ANIBIKE_SLAVE
 		// map PORT C to virtual port 1
 		PORT_MapVirtualPort1( PORTCFG_VP1MAP_PORTC_gc );
 		
@@ -101,17 +105,19 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 		
 		PORT_ConfigureInterrupt0( &DATALINK_PORT, PORT_INT0LVL_HI_gc, DATALINK_DATA_PIN );		
 		PMIC.CTRL |= PMIC_LOLVLEN_bm|PMIC_MEDLVLEN_bm|PMIC_HILVLEN_bm;		
+		#endif
 	}
 }
 
 //__________________________________________________________________________________________________
+#ifdef _ANIBIKE_MASTER
 uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 {
+		
 	uint8_t i = iLength;
 	uint8_t *tempData = aData; 
 	uint8_t chs = 0;
 	uint8_t d = 0;
-	uint8_t k = 0;
 	uint8_t timeout = ANIBIKE_DL_RX_TIMEOUT;
 
 
@@ -212,10 +218,13 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 	
 	return 0;
 }
+#endif
 
 //__________________________________________________________________________________________________
+#ifdef _ANIBIKE_SLAVE
 uint8_t anibike_dl_receive_byte ( void )
 {
+	
 	asm volatile (
 					"			push	r19				\n\t"		// [1CC]
 					"			in		r19, 0x3f		\n\t"		// [1CC] store the status register
@@ -235,7 +244,6 @@ uint8_t anibike_dl_receive_byte ( void )
 					"waitclk1%=:dec		r19				\n\t"		// 
 					"			sbis	%1,%2			\n\t"		// wait for clk (bit7) to be set in DATALINK_PORT, 2cc without skip, 3cc with skip
 					"			brne	waitclk1%=		\n\t"		// we know that carry is cleared, 1cc no jump, 2cc with jump
-					//"			clc						\n\t"		// clear carry (c=0), 1cc
 					"			sbic	%1,%0			\n\t"		// check data line now
 					"			sec						\n\t"		// if data line
 					"			rol		r24				\n\t"		// push carry and pull c=0	
@@ -244,7 +252,6 @@ uint8_t anibike_dl_receive_byte ( void )
 					"waitclk2%=:dec		r19				\n\t"		// 
 					"			sbis	%1,%2			\n\t"		// wait for clk (bit7) to be set in DATALINK_PORT, 2cc without skip, 3cc with skip
 					"			brne	waitclk2%=		\n\t"		// we know that carry is cleared, 1cc no jump, 2cc with jump
-					//"			clc						\n\t"		// clear carry (c=0), 1cc
 					"			sbic	%1,%0			\n\t"		// check data line now
 					"			sec						\n\t"		// if data line
 					"			rol		r24				\n\t"		// push carry and pull c=0	
@@ -253,7 +260,6 @@ uint8_t anibike_dl_receive_byte ( void )
 					"waitclk3%=:dec		r19				\n\t"		// 
 					"			sbis	%1,%2			\n\t"		// wait for clk (bit7) to be set in DATALINK_PORT, 2cc without skip, 3cc with skip
 					"			brne	waitclk3%=		\n\t"		// we know that carry is cleared, 1cc no jump, 2cc with jump
-					//"			clc						\n\t"		// clear carry (c=0), 1cc
 					"			sbic	%1,%0			\n\t"		// check data line now
 					"			sec						\n\t"		// if data line
 					"			rol		r24				\n\t"		// push carry and pull c=0	
@@ -262,7 +268,6 @@ uint8_t anibike_dl_receive_byte ( void )
 					"waitclk4%=:dec		r19				\n\t"		// 
 					"			sbis	%1,%2			\n\t"		// wait for clk (bit7) to be set in DATALINK_PORT, 2cc without skip, 3cc with skip
 					"			brne	waitclk4%=		\n\t"		// we know that carry is cleared, 1cc no jump, 2cc with jump
-					//"			clc						\n\t"		// clear carry (c=0), 1cc
 					"			sbic	%1,%0			\n\t"		// check data line now
 					"			sec						\n\t"		// if data line
 					"			rol		r24				\n\t"		// push carry and pull c=0	
@@ -271,7 +276,6 @@ uint8_t anibike_dl_receive_byte ( void )
 					"waitclk5%=:dec		r19				\n\t"		// 
 					"			sbis	%1,%2			\n\t"		// wait for clk (bit7) to be set in DATALINK_PORT, 2cc without skip, 3cc with skip
 					"			brne	waitclk5%=		\n\t"		// we know that carry is cleared, 1cc no jump, 2cc with jump
-					//"			clc						\n\t"		// clear carry (c=0), 1cc
 					"			sbic	%1,%0			\n\t"		// check data line now
 					"			sec						\n\t"		// if data line
 					"			rol		r24				\n\t"		// push carry and pull c=0	
@@ -280,7 +284,6 @@ uint8_t anibike_dl_receive_byte ( void )
 					"waitclk6%=:dec		r19				\n\t"		// 
 					"			sbis	%1,%2			\n\t"		// wait for clk (bit7) to be set in DATALINK_PORT, 2cc without skip, 3cc with skip
 					"			brne	waitclk6%=		\n\t"		// we know that carry is cleared, 1cc no jump, 2cc with jump
-					//"			clc						\n\t"		// clear carry (c=0), 1cc
 					"			sbic	%1,%0			\n\t"		// check data line now
 					"			sec						\n\t"		// if data line
 					"			rol		r24				\n\t"		// push carry and pull c=0	
@@ -289,7 +292,6 @@ uint8_t anibike_dl_receive_byte ( void )
 					"waitclk7%=:dec		r19				\n\t"		// 
 					"			sbis	%1,%2			\n\t"		// wait for clk (bit7) to be set in DATALINK_PORT, 2cc without skip, 3cc with skip
 					"			brne	waitclk7%=		\n\t"		// we know that carry is cleared, 1cc no jump, 2cc with jump
-					//"			clc						\n\t"		// clear carry (c=0), 1cc
 					"			sbic	%1,%0			\n\t"		// check data line now
 					"			sec						\n\t"		// if data line
 					"			rol		r24				\n\t"		// push carry and pull c=0	
@@ -299,10 +301,13 @@ uint8_t anibike_dl_receive_byte ( void )
 					"			pop		r19				\n\t"
 					"			ret						\n\t"		// return stuff		
 					:: "I" (DATALINK_DATA_PINN), "I" (DATALINK_PORT_IN), "I" (DATALINK_CLK_PINN)
-	);				
+	);		
 }
+#endif	
+
 
 //__________________________________________________________________________________________________
+#ifdef _ANIBIKE_SLAVE
 void anibike_dl_receive_data	( void )
 {
 	uint8_t len, cnt;
@@ -375,14 +380,14 @@ void anibike_dl_receive_data	( void )
 	if ( chs_here == chs )
 	{
 		DATALINK_PORT.OUTSET = DATALINK_CLK_PIN;
-		printf_P( PSTR("ACK"));
+		//printf_P( PSTR("ACK"));
 		return 0;	
 	}
 
 	// wait for the data to be high (after ACK/NACK)
 	while (!(DATALINK_PORT.IN&DATALINK_DATA_PIN))	
 	{
-		printf_P( PSTR("W"));
+		//printf_P( PSTR("W"));
 		// wait and do nothing
 	}
 
@@ -396,18 +401,22 @@ void anibike_dl_receive_data	( void )
 							PORT_OPC_WIREDORPULL_gc,
 							PORT_ISC_BOTHEDGES_gc );
 						
-	rxBuffer[rxLength]='\0';	
-	printf_P( PSTR("data: %s"), rxBuffer);
+	//rxBuffer[rxLength]='\0';	
+	//printf_P( PSTR("data: %s"), rxBuffer);
 }
+#endif
 
 //__________________________________________________________________________________________________
+#ifdef _ANIBIKE_SLAVE
 void anibike_dl_flush ( void )
 {
 	rxLength = 0;
 	rxDataReady = 0;
 }
+#endif
 
 //__________________________________________________________________________________________________
+#ifdef _ANIBIKE_SLAVE
 ISR(PORTC_INT0_vect,  ISR_BLOCK)
 {
 	// Data was cleared
@@ -420,5 +429,5 @@ ISR(PORTC_INT0_vect,  ISR_BLOCK)
 	rxDataReady = 1;
 	sei ( );
 }
-
+#endif
 
