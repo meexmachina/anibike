@@ -151,39 +151,47 @@ void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit)	// color
 
 // TBD - REWRITE!!!
 //__________________________________________________________________________________________________
-void set_projection_state ( uint8_t *data, uint8_t onoff )
+void set_projection_state ( uint8_t *data )
 {
-	uint8_t *place = data+g_current_row_place;
-	register uint8_t col = 0;
-	// MUX control
-	if (onoff == 1) MUX_ENABLE
-	else MUX_DISABLE
-	
+	uint8_t *place = data+(uint8_t)(g_current_row*6);
+	uint8_t col = 0;
+		
 	col = ((*place)&0xf0)>>4;
-	RED_PWM_CTRL.CCABUF = CIE_Gamma_4bit[col]; 
-	col = ((*place)&0x0f);               
-	GREEN_PWM_CTRL.CCABUF = CIE_Gamma_4bit[col];
-	col = ((*(++place))&0xf0)>>4;             
-	BLUE_PWM_CTRL.CCABUF = CIE_Gamma_4bit[col];        
-	col = ((*place)&0x0f);
-	RED_PWM_CTRL.CCBBUF = CIE_Gamma_4bit[col];
-	col = ((*(++place))&0xf0)>>4;
-	GREEN_PWM_CTRL.CCBBUF = CIE_Gamma_4bit[col];
-	col = ((*place)&0x0f);
-	BLUE_PWM_CTRL.CCBBUF = CIE_Gamma_4bit[col];
-	col = ((*(++place))&0xf0)>>4;
-	RED_PWM_CTRL.CCCBUF = CIE_Gamma_4bit[col];        
-	col = ((*place)&0x0f);
-	GREEN_PWM_CTRL.CCCBUF = CIE_Gamma_4bit[col];        
-	col = ((*(++place))&0xf0)>>4;
-	BLUE_PWM_CTRL.CCCBUF = CIE_Gamma_4bit[col];        
-	col = ((*place)&0x0f);
-	RED_PWM_CTRL.CCDBUF = CIE_Gamma_4bit[col];
-	col = ((*(++place))&0xf0)>>4;
-	GREEN_PWM_CTRL.CCDBUF = CIE_Gamma_4bit[col];
-	col = ((*place)&0x0f);
-	BLUE_PWM_CTRL.CCDBUF = CIE_Gamma_4bit[col];
-
+	col *= col;
+	RED1 = col;
+	col = ((*place)&0x0f);  
+	col *= col;             
+	GREEN1 = col;
+	col = ((*(place+1))&0xf0)>>4;  
+	col *= col;           
+	BLUE1 = col;        
+	col = ((*(place+1))&0x0f);
+	col *= col;
+	RED2 = col;
+	col = ((*(place+2))&0xf0)>>4;
+	col *= col;
+	GREEN2 = col;
+	col = ((*(place+2))&0x0f);
+	col *= col;
+	BLUE2 = col;
+	col = ((*(place+3))&0xf0)>>4;
+	col *= col;
+	RED3 = col;        
+	col = ((*(place+3))&0x0f);
+	col *= col;
+	GREEN3 = col;        
+	col = ((*(place+4))&0xf0)>>4;
+	col *= col;
+	BLUE3 = col;        
+	col = ((*(place+4))&0x0f);
+	col *= col;
+	RED4 = col;
+	col = ((*(place+5))&0xf0)>>4;
+	col *= col;
+	GREEN4 = col;
+	col = ((*(place+5))&0x0f);
+	col *= col;
+	BLUE4 = col;
 }
 
 //__________________________________________________________________________________________________
@@ -191,12 +199,7 @@ ISR(TCC1_CCA_vect)
 {
 	g_current_row ++;
 	g_current_row &= 0x07;
-	g_current_row_place+=6;
-	if (g_current_row_place>=48) g_current_row_place = 0;
-	
 	MUX_SET_ROW (g_current_row);
-	ROW_TIMER_CTRL.CNT = 0;
-	
-	
-	set_projection_state ( g_flash_read_buffer_I, 1 );
+
+	set_projection_state ( g_flash_read_buffer_I );
 }
