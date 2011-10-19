@@ -51,5 +51,11 @@ int main(void)
 
 	while (1)
 	{
+		// Read from the flash 96 bytes
+		
+		// send appropriate 48 bytes to the secondary edge
+		
+		// idle until buffer not valid anymore
+		
 	}
 }
