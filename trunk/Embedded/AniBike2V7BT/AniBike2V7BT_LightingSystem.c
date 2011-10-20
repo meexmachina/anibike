@@ -9,8 +9,8 @@
 volatile uint16_t	g_iRedCalibrationPeriod = 280;			// a little bit more dimmed
 volatile uint16_t	g_iGreenCalibrationPeriod = 235;		// maximum 235
 volatile uint16_t	g_iBlueCalibrationPeriod = 235;			// maximum 235
-volatile uint8_t	g_current_row = 0;
-volatile uint8_t	g_current_row_place = 0;
+//volatile uint8_t	g_current_row = 0;
+//volatile uint8_t	g_current_row_place = 0;
 
 volatile uint8_t CIE_Gamma_4bit[] = {0,2,4,7,12,18,27,38,51,67,86,108,134,163,197,235};
 	
@@ -25,7 +25,7 @@ volatile uint8_t *g_current_flash_buffer = NULL;
 void initialize_lighting_system ( void )
 {
 	// Row MUX control init
-	MUX_CONTROL_PORT.DIRSET = MUX_CONTROL_PINS;
+	MUX_CONTROL_PORT_DIR |= MUX_CONTROL_PINS;
 	MUX_DISABLE;
 	MUX_SET_ROW(0);
 	
@@ -153,7 +153,7 @@ void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit)	// color
 //__________________________________________________________________________________________________
 void set_projection_state ( uint8_t *data )
 {
-	uint8_t *place = data+(uint8_t)(g_current_row*6);
+	uint8_t *place = data+(uint8_t)(CURR_ROW*6);
 	uint8_t col = 0;
 		
 	col = ((*place)&0xf0)>>4;
@@ -197,9 +197,9 @@ void set_projection_state ( uint8_t *data )
 //__________________________________________________________________________________________________
 ISR(TCC1_CCA_vect)
 {
-	g_current_row ++;
-	g_current_row &= 0x07;
-	MUX_SET_ROW (g_current_row);
+	CURR_ROW ++;						// 3cc
+	CURR_ROW &= 0x07;					// 3cc
+	MUX_SET_ROW (CURR_ROW);
 
 	set_projection_state ( g_flash_read_buffer_I );
 }

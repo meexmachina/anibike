@@ -13,12 +13,15 @@
 /*****************************************************************
  *			C O N S T A N T    D E F I N I T I O N S
  *****************************************************************/
-#define MUX_CONTROL_PORT	PORTA
+#define MUX_CONTROL_PORT		VPORT3_OUT
+#define MUX_CONTROL_PORT_DIR	VPORT3_DIR
 #define MUX_CONTROL_PINS	(PIN4_bm|PIN5_bm|PIN6_bm|PIN7_bm)
-#define MUX_ENABLE_PIN		PIN7_bm
-#define MUX_SET_ROW(r)		{PORTA_OUTCLR=0x70; PORTA_OUTSET=((r)<<4);}	// make it a virtual port 4!
-#define MUX_DISABLE			{PORTA_OUTSET=MUX_ENABLE_PIN;}
-#define MUX_ENABLE			{PORTA_OUTCLR=MUX_ENABLE_PIN;}
+#define MUX_ENABLE_PIN		0x80
+#define MUX_ENABLE_PIN_N	0x7F
+#define MUX_SET_ROW(r)		{MUX_CONTROL_PORT&=0x8F; MUX_CONTROL_PORT|=((r)<<4);}	// make it a virtual port 4!
+#define MUX_DISABLE			{MUX_CONTROL_PORT&=MUX_ENABLE_PIN_N;}
+#define MUX_ENABLE			{MUX_CONTROL_PORT|=MUX_ENABLE_PIN;}
+#define CURR_ROW			GPIO_GPIO0
 
 #define LED_COLUMN_PINS		(PIN0_bm|PIN1_bm|PIN2_bm|PIN3_bm)
 
@@ -55,7 +58,8 @@
  *****************************************************************/
 #define run_row_control			{TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );}
 #define stop_row_control		{TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_OFF_gc );}
-
+#define turn_on_projection		MUX_ENABLE
+#define turn_off_projection		MUX_DISABLE
 
 /*****************************************************************
  *			F U N C T I O N    D E F I N I T I O N S
@@ -64,6 +68,6 @@ void initialize_lighting_system ( void );
 void read_period_calibrations ( uint16_t *r, uint16_t *g, uint16_t *b );
 void write_period_calibrations ( uint16_t r, uint16_t g, uint16_t b );
 void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit);	// color = 1(RED), 2(GREEN), 3(BLUE)
-void set_projection_state ( uint8_t *data );
+void switch_projection_state ( uint8_t *data );
 
 #endif /* ANIBIKE2V7BT_LIGHTINGSYSTEM_H_ */

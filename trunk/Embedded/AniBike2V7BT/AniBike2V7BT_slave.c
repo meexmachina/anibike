@@ -13,6 +13,16 @@
 //volatile uint8_t g_flash_read_buffer_II	[48] = {0};
 //volatile uint8_t *g_current_flash_buffer = NULL;
 
+
+/*****************************************************************
+ *			GENERAL SYSTEM CONFIGURATION
+ *****************************************************************/
+void anibike_master_initialize_hardware ( void )
+{
+	// Map port A to virtual port 3
+	PORT_MapVirtualPort3( PORTCFG_VP3MAP_PORTA_gc );	
+}
+
 /*****************************************************************
  *			M A I N    F U N C T I O N 
  *****************************************************************/
