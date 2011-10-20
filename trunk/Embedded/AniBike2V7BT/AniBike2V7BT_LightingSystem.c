@@ -9,8 +9,6 @@
 volatile uint16_t	g_iRedCalibrationPeriod = 280;			// a little bit more dimmed
 volatile uint16_t	g_iGreenCalibrationPeriod = 235;		// maximum 235
 volatile uint16_t	g_iBlueCalibrationPeriod = 235;			// maximum 235
-//volatile uint8_t	g_current_row = 0;
-//volatile uint8_t	g_current_row_place = 0;
 
 volatile uint8_t CIE_Gamma_4bit[] = {0,2,4,7,12,18,27,38,51,67,86,108,134,163,197,235};
 	
@@ -20,6 +18,7 @@ volatile uint8_t CIE_Gamma_4bit[] = {0,2,4,7,12,18,27,38,51,67,86,108,134,163,19
 volatile uint8_t g_flash_read_buffer_I	[48] = {0};
 volatile uint8_t g_flash_read_buffer_II	[48] = {0};
 volatile uint8_t *g_current_flash_buffer = NULL;
+volatile uint8_t *g_current_proj_buffer = NULL;
 
 //__________________________________________________________________________________________________
 void initialize_lighting_system ( void )
@@ -79,6 +78,9 @@ void initialize_lighting_system ( void )
 	ROW_TIMER_CTRL.CCA = 0x20;
 	TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
 	ROW_TIMER_CTRL.CNT = 0;
+	
+	g_current_flash_buffer = g_flash_read_buffer_II;
+	g_current_proj_buffer = g_flash_read_buffer_I;
 }
 
 //__________________________________________________________________________________________________
@@ -158,40 +160,40 @@ void set_projection_state ( uint8_t *data )
 		
 	col = ((*place)&0xf0)>>4;
 	col *= col;
-	RED1 = col;
+	BLUE1 = col;
 	col = ((*place)&0x0f);  
 	col *= col;             
-	GREEN1 = col;
+	BLUE2 = col;
 	col = ((*(place+1))&0xf0)>>4;  
 	col *= col;           
-	BLUE1 = col;        
+	BLUE3 = col;        
 	col = ((*(place+1))&0x0f);
 	col *= col;
-	RED2 = col;
+	BLUE4 = col;
 	col = ((*(place+2))&0xf0)>>4;
 	col *= col;
-	GREEN2 = col;
+	GREEN1 = col;
 	col = ((*(place+2))&0x0f);
 	col *= col;
-	BLUE2 = col;
+	GREEN2 = col;
 	col = ((*(place+3))&0xf0)>>4;
 	col *= col;
-	RED3 = col;        
+	GREEN3 = col;        
 	col = ((*(place+3))&0x0f);
 	col *= col;
-	GREEN3 = col;        
+	GREEN4 = col;        
 	col = ((*(place+4))&0xf0)>>4;
 	col *= col;
-	BLUE3 = col;        
+	RED1 = col;        
 	col = ((*(place+4))&0x0f);
 	col *= col;
-	RED4 = col;
+	RED2 = col;
 	col = ((*(place+5))&0xf0)>>4;
 	col *= col;
-	GREEN4 = col;
+	RED3 = col;
 	col = ((*(place+5))&0x0f);
 	col *= col;
-	BLUE4 = col;
+	RED4 = col;
 }
 
 //__________________________________________________________________________________________________
@@ -201,5 +203,5 @@ ISR(TCC1_CCA_vect)
 	CURR_ROW &= 0x07;					// 3cc
 	MUX_SET_ROW (CURR_ROW);
 
-	set_projection_state ( g_flash_read_buffer_I );
+	set_projection_state ( g_current_proj_buffer );
 }
