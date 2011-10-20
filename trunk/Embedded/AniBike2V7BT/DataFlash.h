@@ -59,7 +59,9 @@ void		dataflash_protect_block4	( uint16_t BlockNum );
 void 		dataflash_erase_all 		( void );
 uint8_t 	dataflash_read_status 		( void );
 
-
+void 		dataflash_read_vector		( uint32_t addr_start, 
+										  uint8_t* buffer, 
+										  uint8_t length );
 
 
 

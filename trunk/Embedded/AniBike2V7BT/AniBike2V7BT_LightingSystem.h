@@ -68,6 +68,7 @@ void initialize_lighting_system ( void );
 void read_period_calibrations ( uint16_t *r, uint16_t *g, uint16_t *b );
 void write_period_calibrations ( uint16_t r, uint16_t g, uint16_t b );
 void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit);	// color = 1(RED), 2(GREEN), 3(BLUE)
-void switch_projection_state ( uint8_t *data );
+void switch_projection_state ( void );
+void set_projection_buffer ( uint8_t *buffer );
 
 #endif /* ANIBIKE2V7BT_LIGHTINGSYSTEM_H_ */

@@ -15,9 +15,6 @@ volatile uint8_t CIE_Gamma_4bit[] = {0,2,4,7,12,18,27,38,51,67,86,108,134,163,19
 /*****************************************************************
  *			BUFFERS
  *****************************************************************/
-volatile uint8_t g_flash_read_buffer_I	[48] = {0};
-volatile uint8_t g_flash_read_buffer_II	[48] = {0};
-volatile uint8_t *g_current_flash_buffer = NULL;
 volatile uint8_t *g_current_proj_buffer = NULL;
 
 //__________________________________________________________________________________________________
@@ -78,9 +75,6 @@ void initialize_lighting_system ( void )
 	ROW_TIMER_CTRL.CCA = 0x20;
 	TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
 	ROW_TIMER_CTRL.CNT = 0;
-	
-	g_current_flash_buffer = g_flash_read_buffer_II;
-	g_current_proj_buffer = g_flash_read_buffer_I;
 }
 
 //__________________________________________________________________________________________________
@@ -151,12 +145,13 @@ void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit)	// color
 }
 
 
-// TBD - REWRITE!!!
 //__________________________________________________________________________________________________
-void set_projection_state ( uint8_t *data )
+void switch_projection_state ( void )
 {
-	uint8_t *place = data+(uint8_t)(CURR_ROW*6);
-	uint8_t col = 0;
+	uint8_t col;
+	uint8_t *place;
+
+	place = g_current_proj_buffer+(uint8_t)(CURR_ROW*6);
 		
 	col = ((*place)&0xf0)>>4;
 	col *= col;
@@ -197,11 +192,18 @@ void set_projection_state ( uint8_t *data )
 }
 
 //__________________________________________________________________________________________________
+void set_projection_buffer ( uint8_t *buffer )
+{
+	g_current_proj_buffer = buffer;
+}
+
+//__________________________________________________________________________________________________
 ISR(TCC1_CCA_vect)
 {
 	CURR_ROW ++;						// 3cc
 	CURR_ROW &= 0x07;					// 3cc
 	MUX_SET_ROW (CURR_ROW);
-
-	set_projection_state ( g_current_proj_buffer );
+		
+	if (g_current_proj_buffer==NULL)	return;
+	switch_projection_state (  );
 }

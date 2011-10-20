@@ -8,11 +8,22 @@
 #include "AniBike2V7BT_Internal.h"
 
 /*****************************************************************
+ *			GLOBAL VARIABLES
+ *****************************************************************/
+volatile uint8_t	g_flash_read_buffer_I	[96] = {0};
+volatile uint8_t	g_flash_read_buffer_II	[96] = {0};
+volatile uint8_t*	g_current_flash_buffer;
+volatile uint8_t*	g_current_proj_buffer;
+volatile uint32_t	g_current_flash_addr = 0;
+volatile uint8_t	g_current_polarity = 0;		// can be 0 or 48
+volatile uint8_t	g_data_valid = 0;
+
+/*****************************************************************
  *			HALL SENSOR HANDLE
  *****************************************************************/
 void hall_sensor_handler ( void )
 {
-	printf_P ( PSTR("Hall Sensor\r\n"));
+	//printf_P ( PSTR("Hall Sensor\r\n"));
 }
 
 /*****************************************************************
@@ -25,9 +36,14 @@ void anibike_master_initialize_hardware ( void )
 	PORTA.OUTCLR = PIN3_bm;	
 	
 	// Map port A to virtual port 3
-	PORT_MapVirtualPort3( PORTCFG_VP3MAP_PORTA_gc );	
+	PORT_MapVirtualPort3( PORTCFG_VP3MAP_PORTA_gc );
 	
-	//g_current_flash_buffer = g_flash_read_buffer_I;
+	// set the projection buffer
+	g_current_flash_addr = 0;
+	g_current_polarity = 0;
+	g_current_proj_buffer = g_flash_read_buffer_I;
+	g_current_flash_buffer = g_flash_read_buffer_II;
+	g_data_valid = 0;
 }
 
 /*****************************************************************
@@ -54,11 +70,19 @@ int main(void)
 
 	while (1)
 	{
-		// Read from the flash 96 bytes
+		// set the appropriate buffer to the projection system
+		set_projection_buffer ( g_current_proj_buffer + g_current_polarity );
 		
+		// Read from the flash 96 bytes
+		dataflash_read_vector( g_current_flash_addr, 
+							   g_current_flash_buffer, 
+							   96 );
+										  
 		// send appropriate 48 bytes to the secondary edge
+		if (!g_current_polarity) anibike_hlcomm_send_data ( g_current_flash_buffer + 48 );
+		else anibike_hlcomm_send_data ( g_current_flash_buffer );
 		
 		// idle until buffer not valid anymore
-		
+		while (g_data_valid) {}
 	}
 }

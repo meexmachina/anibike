@@ -99,6 +99,33 @@ char dataflash_read(uint32_t addr)
 	return data;
 }
 
+void dataflash_read_vector	( uint32_t addr_start, 
+							  uint8_t* buffer, 
+							  uint8_t length )
+{
+	unsigned char adrByte1, adrByte2, adrByte3;		// adrByte1 = MSB
+	uint8_t i = length;
+	uint8_t* data = buffer; 
+
+	adrByte1 = (addr_start>>16)&0xff;
+	adrByte2 = (addr_start>>8)&0xff;
+	adrByte3 = addr_start&0xff;     
+   
+	CS_DOWN;
+	SPI_MasterTransceiveByte(&spiMasterD, READ_ARRAY);		// Read command     
+	SPI_MasterTransceiveByte(&spiMasterD, adrByte1);		// Send address - 24 bits
+	SPI_MasterTransceiveByte(&spiMasterD, adrByte2);		// starting from MSB
+	SPI_MasterTransceiveByte(&spiMasterD, adrByte3);
+
+	while (i--)
+	{
+		spiMasterD.module->DATA = 0;
+		while(!(spiMasterD.module->STATUS & SPI_IF_bm)) {	}	// wait
+		*data++ = spiMasterD.module->DATA;
+	}
+
+	CS_UP;      										  
+}
 
 //__________________________________________________________________________________________________
 void dataflash_unprotect_all (void)

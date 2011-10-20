@@ -46,6 +46,17 @@ int anibike_hlcomm_light_led_req ( uint8_t row, uint8_t rgb_choose, uint16_t val
 //#endif
 }
 
+//__________________________________________________________________________________________________
+int anibike_hlcomm_send_data ( uint8_t *data )
+{
+	anibike_hlcomm_set_data_msg msg;
+	msg.header.dest = 1;
+	msg.header.length = sizeof(msg)-sizeof(anibike_hlcomm_header);
+	msg.header.opcode = ANIBIKE_HLCOMM_SET_DATA;
+	memcpy (msg.data, data, 48);
+	return anibike_dl_send_data( (uint8_t*)((void*)(&msg)), sizeof(msg) );
+}
+
 
 //__________________________________________________________________________________________________
 
