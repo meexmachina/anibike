@@ -24,6 +24,9 @@ void anibike_master_initialize_hardware ( void )
 	PORTA.DIRSET = PIN3_bm;
 	PORTA.OUTCLR = PIN3_bm;	
 	
+	// Map port A to virtual port 3
+	PORT_MapVirtualPort3( PORTCFG_VP3MAP_PORTA_gc );	
+	
 	//g_current_flash_buffer = g_flash_read_buffer_I;
 }
 
