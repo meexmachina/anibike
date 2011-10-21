@@ -35,6 +35,7 @@ int main(void)
 	swUART_SetInterruptHandler ( NULL );
 	
 	initialize_lighting_system(  );	
+	stop_row_control;
 	anibike_dl_initialize ( ANIBIKE_DL_SLAVE );
 	anibike_hlcomm_setup_rx_system (  );
 	
