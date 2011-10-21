@@ -10,6 +10,7 @@
 /*****************************************************************
  *			GLOBAL VARIABLES
  *****************************************************************/
+extern	 uint8_t	g_cpu_speed;
 volatile uint8_t	g_flash_read_buffer_I	[96] = {0};
 volatile uint8_t	g_flash_read_buffer_II	[96] = {0};
 volatile uint8_t*	g_current_flash_buffer;
@@ -56,7 +57,7 @@ int main(void)
 	
 	initialize_hall_sensor(  );
 	initialize_lighting_system(  );	
-	run_row_control;
+	stop_row_control;
 	dataflash_spi_init (  );
 	
 	swUART_ConfigureDevice ( 0 );
@@ -82,6 +83,7 @@ int main(void)
 		if (!g_current_polarity) anibike_hlcomm_send_data ( g_current_flash_buffer + 48 );
 		else anibike_hlcomm_send_data ( g_current_flash_buffer );
 		
+		g_data_valid = 1;
 		// idle until buffer not valid anymore
 		while (g_data_valid) {}
 	}
