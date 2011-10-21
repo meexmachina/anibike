@@ -6,12 +6,16 @@
  */ 
 #include "AniBike2V7BT_Internal.h"
 
+volatile uint8_t	g_cpu_speed = 16;
+
 /*****************************************************************
  * Setting the internal RC clock frequency (2-32 MHz)
  * with 2 MHz resolution.
  *****************************************************************/
 void SetClockFreq ( uint8_t freq )
 {
+	g_cpu_speed = freq;
+	
 	if ( freq == 32 )
 	{
 		/*  Enable internal 32 MHz ring oscillator and wait until it's

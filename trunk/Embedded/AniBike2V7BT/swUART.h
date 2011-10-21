@@ -16,8 +16,11 @@
 #define SWUART_NUM_OF_STOP_BITS		1
 #define SWUART_TOTAL_NUM_BITS_TX	(9+SWUART_NUM_OF_STOP_BITS)
 #define SWUART_TOTAL_NUM_BITS_RX	(8+SWUART_NUM_OF_STOP_BITS)
-#define SWUART_DELAY_TIME_TX		140								
-#define SWUART_DELAY_TIME_RX		(SWUART_DELAY_TIME_TX)			
+#define SWUART_DELAY_REGISTER		GPIO_GPIO3
+#define SWUART_DELAY_REGISTER_ADDR	0x0003
+#define SWUART_SET_DELAY (d)		{SWUART_DELAY_REGISTER = (d);}
+//#define SWUART_DELAY_TIME_TX		140								
+//#define SWUART_DELAY_TIME_RX		(SWUART_DELAY_TIME_TX)			
 
 /* SWUART_DELAY_TIME_TX1
  * --------------------
@@ -33,6 +36,7 @@
  *			F U N C T I O N    D E F I N I T I O N S
  *****************************************************************/
 void	swUART_ConfigureDevice ( int iIntLevel );	// iIntLevel = 0,1,2,3,4 (not used, off, low, med, high)
+void	swUART_SetBaudRate ( uint32_t baud_rate);
 void	swUART_SetRxInterruptLevel ( int iIntLevel );	// iIntLevel = 0,1,2,3,4 (not used, off, low, med, high)
 void	swUART_SetInterruptHandler ( void (*Handler)( void ) );
 void	swUART_PutChar ( uint8_t uiData ) __attribute__((naked));

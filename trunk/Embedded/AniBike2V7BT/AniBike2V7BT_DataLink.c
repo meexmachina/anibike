@@ -19,7 +19,7 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 {	
 	if (enNodeType == ANIBIKE_DL_MASTER)
 	{
-		#ifdef _ANIBIKE_MASTER						
+		//#ifdef _ANIBIKE_MASTER						
 		// Set pull-down and wired-or so that there will be no problems
 		PORT_ConfigurePins( &DATALINK_PORT,
 							DATALINK_CLK_PIN,
@@ -63,11 +63,11 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 		// drive data to high
 		DATALINK_PORT.OUTSET = DATALINK_DATA_PIN;		
 		DATALINK_PORT.OUTSET = DATALINK_CS_PIN;	
-		#endif
+		//#endif
 	}
 	else
 	{
-		#ifdef _ANIBIKE_SLAVE
+		//#ifdef _ANIBIKE_SLAVE
 		// map PORT C to virtual port 1
 		PORT_MapVirtualPort1( PORTCFG_VP1MAP_PORTC_gc );
 		
@@ -105,12 +105,12 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 		
 		PORT_ConfigureInterrupt0( &DATALINK_PORT, PORT_INT0LVL_HI_gc, DATALINK_DATA_PIN );		
 		PMIC.CTRL |= PMIC_LOLVLEN_bm|PMIC_MEDLVLEN_bm|PMIC_HILVLEN_bm;		
-		#endif
+		//#endif
 	}
 }
 
 //__________________________________________________________________________________________________
-#ifdef _ANIBIKE_MASTER
+//#ifdef _ANIBIKE_MASTER
 uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 {
 		
@@ -218,10 +218,10 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 	
 	return 0;
 }
-#endif
+//#endif
 
 //__________________________________________________________________________________________________
-#ifdef _ANIBIKE_SLAVE
+//#ifdef _ANIBIKE_SLAVE
 uint8_t anibike_dl_receive_byte ( void )
 {
 	
@@ -303,17 +303,17 @@ uint8_t anibike_dl_receive_byte ( void )
 					:: "I" (DATALINK_DATA_PINN), "I" (DATALINK_PORT_IN), "I" (DATALINK_CLK_PINN)
 	);		
 }
-#endif	
+//#endif	
 
 
 //__________________________________________________________________________________________________
-#ifdef _ANIBIKE_SLAVE
+//#ifdef _ANIBIKE_SLAVE
 void anibike_dl_receive_data	( void )
 {
 	uint8_t len, cnt;
 	uint8_t *b = rxBuffer;
 	uint8_t chs = 0, chs_here = 0;
-	uint8_t timeout = ANIBIKE_DL_RX_TIMEOUT;
+//	uint8_t timeout = ANIBIKE_DL_RX_TIMEOUT;
 		
 	// set direction of the clk pin as input. hopefully will be pulled-low
 	DATALINK_PORT.OUTCLR = DATALINK_CLK_PIN;
@@ -381,7 +381,7 @@ void anibike_dl_receive_data	( void )
 	{
 		DATALINK_PORT.OUTSET = DATALINK_CLK_PIN;
 		//printf_P( PSTR("ACK"));
-		return 0;	
+		return;	
 	}
 
 	// wait for the data to be high (after ACK/NACK)
@@ -404,19 +404,19 @@ void anibike_dl_receive_data	( void )
 	//rxBuffer[rxLength]='\0';	
 	//printf_P( PSTR("data: %s"), rxBuffer);
 }
-#endif
+//#endif
 
 //__________________________________________________________________________________________________
-#ifdef _ANIBIKE_SLAVE
+//#ifdef _ANIBIKE_SLAVE
 void anibike_dl_flush ( void )
 {
 	rxLength = 0;
 	rxDataReady = 0;
 }
-#endif
+//#endif
 
 //__________________________________________________________________________________________________
-#ifdef _ANIBIKE_SLAVE
+//#ifdef _ANIBIKE_SLAVE
 ISR(PORTC_INT0_vect,  ISR_BLOCK)
 {
 	// Data was cleared
@@ -429,5 +429,5 @@ ISR(PORTC_INT0_vect,  ISR_BLOCK)
 	rxDataReady = 1;
 	sei ( );
 }
-#endif
+//#endif
 
