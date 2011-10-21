@@ -118,7 +118,7 @@ void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit)	// color
 {
 	uint8_t val = CIE_Gamma_4bit[color4bit];
 	MUX_ENABLE;
-	// Set the row num
+	// Set the row number
 	MUX_SET_ROW (row_num);
 					
 	if (color==1)
