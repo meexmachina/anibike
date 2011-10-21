@@ -93,12 +93,12 @@ typedef enum
  * Functions definitions
  ***************************************************************************************/		
 	void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType );	
-#ifdef _ANIBIKE_MASTER
+//#ifdef _ANIBIKE_MASTER
 	uint8_t anibike_dl_send_data	( uint8_t *aData, uint8_t iLength );
-#else
+//#else
 	void anibike_dl_receive_data	( void );
 	uint8_t anibike_dl_receive_byte ( void ) __attribute__((naked));
 	void anibike_dl_flush			( void );
-#endif
+//#endif
 
 #endif	//ANIBIKE2V7BT_DATALINK_H_

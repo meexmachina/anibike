@@ -10,6 +10,7 @@
  *****************************************************************/
 #include "AniBike2V7BT_Internal.h"
 
+extern uint8_t g_cpu_speed;
 
 /*****************************************************************
  *			S T A T I C   V A R I A B L E S
@@ -65,6 +66,19 @@ void swUART_ConfigureDevice ( int iIntLevel )
 	VPORT0_OUT |= (1<<UART_TX_PIN);
 	
 	swUART_SetRxInterruptLevel ( iIntLevel );
+}
+
+/*****************************************************************
+ *	swUART_SetBaudRate
+ *	Description:
+ *		Set the baud rate. 
+ *	Input: baud_rate - 1200, 2400, 9600, 19200, 38400, ...
+ *	Output: none
+ *****************************************************************/
+void	swUART_SetBaudRate ( uint32_t baud_rate)
+{
+	
+	
 }
 
 /*****************************************************************
@@ -175,13 +189,13 @@ void swUART_Delay_Tx ( void )
 {
 	asm volatile (
 			"					push	r24				\n\t"
-			"UART_delay:		ldi		r24,%0			\n\t"
+			"UART_delay:		in		r24,%0			\n\t"
 			"UART_delay1:		dec		r24				\n\t"
 			"					brne	UART_delay1		\n\t"
 			"					pop		r24				\n\t"
 			"					nop						\n\t"
 			"					ret						\n\t"
-			::"M" (SWUART_DELAY_TIME_TX)
+			::"M" (SWUART_DELAY_REGISTER_ADDR)
 	);	
 }
 
@@ -189,13 +203,13 @@ void swUART_Delay_Rx ( void )
 {
 	asm volatile (
 			"					push	r24				\n\t"
-			"UART_delay2:		ldi		r24,%0			\n\t"
+			"UART_delay2:		in		r24,%0			\n\t"
 			"UART_delay3:		dec		r24				\n\t"
 			"					brne	UART_delay3		\n\t"
 			"					pop		r24				\n\t"
 			"					nop						\n\t"
 			"					ret						\n\t"
-			::"M" (SWUART_DELAY_TIME_RX)
+			::"M" (SWUART_DELAY_REGISTER_ADDR)
 	);	
 }
 
