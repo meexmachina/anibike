@@ -18,7 +18,7 @@
  *			C O N S T A N T    D E F I N I T I O N S
  *****************************************************************/
 #define COMMAND_PROMPT		"ANIBIKE_2V7BT >> "
-#define MAX_MSG_SIZE    	50
+#define MAX_MSG_SIZE    	60
 #define	FS_MEMORY_SIZE		(uint32_t)(4194304)		// Bytes
 
 /*****************************************************************

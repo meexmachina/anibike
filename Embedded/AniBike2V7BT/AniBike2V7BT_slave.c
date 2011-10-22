@@ -33,6 +33,7 @@ int main(void)
 	swUART_ConfigureDevice ( 0 );
 	swUART_SetRxInterruptLevel ( 3 );
 	swUART_SetInterruptHandler ( NULL );
+	swUART_SetBaudRate ( 115200 );
 	
 	initialize_lighting_system(  );	
 	stop_row_control;
