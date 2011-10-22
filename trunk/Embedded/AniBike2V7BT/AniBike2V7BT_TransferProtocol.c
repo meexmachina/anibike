@@ -890,6 +890,9 @@ void tm_cmd_configure_bt (U8 argc, char **argv)
 	PORTA.DIRSET = PIN3_bm;
 	PORTA.OUTSET = PIN3_bm;
 	
+	SetClockFreq ( 16 );
+	swUART_SetBaudRate ( 9600 );
+	
 	_delay_ms(1000);
 	
 	printf_P( PSTR("AT\r\n"));
@@ -914,16 +917,20 @@ void tm_cmd_configure_bt (U8 argc, char **argv)
 			iNameChanged = 1;
 	}	
 	
-/*	printf_P( PSTR("AT+UART=460800,0,0\r\n"));
+	printf_P( PSTR("AT+UART=115200,0,0\r\n"));
 	if ( gets(sTemp) )
 	{
 		if ( strstr(sTemp, "OK") )
 			iUARTChanged = 1;
-	}	*/
+	}	
 	
 	PORTA.OUTCLR = PIN3_bm;	
+	
 	printf_P( PSTR("Exiting AT mode... Configuration complete.\r\n"));
-	printf_P( PSTR("Bluetooth info:\r\n  Status: %d\r\n  Version: %s\r\n  Name change: %d\r\n"), iTestCommandPass, sVersion, iNameChanged);
+	printf_P( PSTR("Bluetooth info:\r\n  Status: %d\r\n  Version: %s\r\n  Name change: %d\r\n  Baud change: %d\r\n"), iTestCommandPass, sVersion, iNameChanged, iUARTChanged);
+	
+	SetClockFreq ( 32 );
+	swUART_SetBaudRate ( 115200 );
 }
 
 /**************************************************************************/

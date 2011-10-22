@@ -77,52 +77,47 @@ void swUART_ConfigureDevice ( int iIntLevel )
  *	Description:
  *		Set the baud rate. 
  *	Input: baud_rate - 4800, 9600, 19200, 38400, ...
- *		SWUART_DELAY_TIME = (f_c/(2*f_b)-10)/3;
- *		9600 bps @ 2 MHz 	<= 31
- *		9600 bps @ 10 MHz	<= 105 
- *		9600 bps @ 16 MHz	<= 140
- *		9600 bps @ 8 MHz	<= 66
- *		460800 bps @ 32 MHz	<= 7
+ *
+ *		delay = alpha/(baud-gamma)-beta
+ *		
+ *		32MHz =>
+ *					alpha = 5733700
+ *					beta = 5.4553
+ *					gamma = -988.4352
+ *		16MHz =>
+ *					alpha = 1407500
+ *					beta = 5.1261
+ *					gamma = -16.8067
+ *
  *	Output: none
  *****************************************************************/
 void	swUART_SetBaudRate ( uint32_t baud_rate)
 {
 	switch (baud_rate)
 	{
-		case (4800):
-			break;
 		case (9600):
 			if (g_cpu_speed==2)		SWUART_SET_DELAY(31);		// checked
 			if (g_cpu_speed==8)		SWUART_SET_DELAY(66);		// checked
 			if (g_cpu_speed==16)	SWUART_SET_DELAY(140);		// checked
-			if (g_cpu_speed==32)	SWUART_SET_DELAY(255);		// checked
 			break;
 		case (19200):
-			if (g_cpu_speed==2)		SWUART_SET_DELAY(28);
-			if (g_cpu_speed==8)		SWUART_SET_DELAY(56);
-			if (g_cpu_speed==16)	SWUART_SET_DELAY(112);
-			if (g_cpu_speed==32)	SWUART_SET_DELAY(224);
+			if (g_cpu_speed==16)	SWUART_SET_DELAY(68);
+			if (g_cpu_speed==32)	SWUART_SET_DELAY(278);
 			break;
 		case (38400):
-			if (g_cpu_speed==2)		SWUART_SET_DELAY(14);
-			if (g_cpu_speed==8)		SWUART_SET_DELAY(28);
-			if (g_cpu_speed==16)	SWUART_SET_DELAY(56);
-			if (g_cpu_speed==32)	SWUART_SET_DELAY(112);
+			if (g_cpu_speed==16)	SWUART_SET_DELAY(32);
+			if (g_cpu_speed==32)	SWUART_SET_DELAY(140);
 			break;
 		case (57600):
-			if (g_cpu_speed==2)		SWUART_SET_DELAY(7);
-			if (g_cpu_speed==8)		SWUART_SET_DELAY(14);
-			if (g_cpu_speed==16)	SWUART_SET_DELAY(28);
-			if (g_cpu_speed==32)	SWUART_SET_DELAY(56);
+			if (g_cpu_speed==16)	SWUART_SET_DELAY(19);
+			if (g_cpu_speed==32)	SWUART_SET_DELAY(92);
 			break;
 		case (115200):
-			if (g_cpu_speed==8)		SWUART_SET_DELAY(7);
-			if (g_cpu_speed==16)	SWUART_SET_DELAY(14);
-			if (g_cpu_speed==32)	SWUART_SET_DELAY(28);
+			if (g_cpu_speed==16)	SWUART_SET_DELAY(7);
+			if (g_cpu_speed==32)	SWUART_SET_DELAY(43);
 			break;		
 		case (230400):
-			if (g_cpu_speed==16)	SWUART_SET_DELAY(7);
-			if (g_cpu_speed==32)	SWUART_SET_DELAY(14);
+			if (g_cpu_speed==32)	SWUART_SET_DELAY(12);
 			break;		
 		case (460800):
 			if (g_cpu_speed==32)	SWUART_SET_DELAY(7);		// checked

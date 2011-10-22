@@ -50,7 +50,7 @@ void anibike_dl_initialize		( ANIBIKE_DL_TYPE_EN enNodeType )
 	               SPI_MODE_1_gc,
 	               SPI_INTLVL_OFF_gc,
 	               false,
-	               SPI_PRESCALER_DIV4_gc,0);
+	               SPI_PRESCALER_DIV16_gc,0);
 				   
 		// Disable the spi interface for now
 		SPI_MasterEnable (&spiMasterC, 0);
@@ -163,9 +163,10 @@ uint8_t anibike_dl_send_data		( uint8_t *aData, uint8_t iLength )
 	do 
 	{
 		d = *tempData++;	
-		spiMasterC.module->DATA = d;
+		anibike_dl_send_byte (spiMasterC, d); 
+		//spiMasterC.module->DATA = d;
 		/* Wait for transmission complete. */
-		while(!(spiMasterC.module->STATUS & SPI_IF_bm)) {}
+		//while(!(spiMasterC.module->STATUS & SPI_IF_bm)) {}
 		chs += d;
 	} while (--i);
 	
@@ -341,12 +342,6 @@ void anibike_dl_receive_data	( void )
 
 	cnt = len &= 0x7f;
 	
-/*	if (len>128)
-	{
-		len=128;
-		cnt=128;
-	}*/
-	
 	// read out the data
 	while (cnt--)
 		*b++ = anibike_dl_receive_byte ( );
@@ -354,7 +349,7 @@ void anibike_dl_receive_data	( void )
 	// read out checksum
 	chs = anibike_dl_receive_byte ( );
 	
-	//printf_P( PSTR("length: %d; data: %s; chs: %d"), len, rxBuffer, chs);
+//	printf_P( PSTR("length: %d; data: %s; chs: %d"), len, rxBuffer, chs);
 
 	PORT_ConfigurePins( &DATALINK_PORT,
 							DATALINK_CLK_PIN,

@@ -126,6 +126,12 @@
     <Compile Include="AniBike2V7BT_DataLink.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="AniBike2V7BT_DataLinkSlave.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="AniBike2V7BT_DataLinkSlave.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="AniBike2V7BT_HighLevelComm.c">
       <SubType>compile</SubType>
     </Compile>

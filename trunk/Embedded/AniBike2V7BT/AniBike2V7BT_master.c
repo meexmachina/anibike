@@ -52,7 +52,7 @@ void anibike_master_initialize_hardware ( void )
  *****************************************************************/
 int main(void)
 {
-	SetClockFreq ( 16 );
+	SetClockFreq ( 32 );
 	anibike_master_initialize_hardware( );
 	
 	initialize_hall_sensor(  );
@@ -63,6 +63,8 @@ int main(void)
 	swUART_ConfigureDevice ( 0 );
 	swUART_SetRxInterruptLevel ( 3 );
 	swUART_SetInterruptHandler ( rx_handler );
+	swUART_SetBaudRate ( 115200 );
+	
 	set_hall_interrupt_handler( hall_sensor_handler );
 	
 	anibike_dl_initialize ( ANIBIKE_DL_MASTER );	
