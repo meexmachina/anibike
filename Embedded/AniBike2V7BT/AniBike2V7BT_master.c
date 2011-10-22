@@ -66,8 +66,7 @@ int main(void)
 	swUART_SetBaudRate ( 115200 );
 	
 	set_hall_interrupt_handler( hall_sensor_handler );
-	
-	anibike_dl_initialize ( ANIBIKE_DL_MASTER );	
+	anibike_dl_master_initialize ( );
 	
 	sei ( );
 

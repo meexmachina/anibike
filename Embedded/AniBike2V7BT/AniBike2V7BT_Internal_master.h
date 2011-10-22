@@ -28,9 +28,7 @@
 #include "AniBike2V7BT_TransferProtocol.h"
 #include "AniBike2V7BT_LightingSystem.h"
 #include "AniBike2V7BT_HallSensor.h"
-#include "AniBike2V7BT_DataLink.h"
-#include "AniBike2V7BT_HighLevelComm.h"
-
+#include "AniBike2V7BT_DataLinkMaster.h"
 
 
 /*****************************************************************
