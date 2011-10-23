@@ -100,11 +100,12 @@ int main(void)
  *****************************************************************/
 ISR(TCC1_CCB_vect)
 {
+	COLUMN_TIMER_CTRL.CNT = 0;
 	DL_DATA_COUNTER = 0;
 	CLR_DL_SEND_FINISHED;
 	
 	// update the next angle
-	CURRENT_ANGLE += 1;				// if its 255 it will wrap arround to 0 
+	CURRENT_ANGLE += 1;				// if its 255 it will wrap around to 0 
 	
 	// update the next polarity if needed
 	if (CURRENT_ANGLE&0x80)
@@ -117,7 +118,14 @@ ISR(TCC1_CCB_vect)
 	}
 	
 	// update the next flash address
-	g_current_flash_addr = FRAME_OFFSET_ADDR(g_currentEntry.iBlockList[g_currentFrameInFile]) + (CURRENT_ANGLE&0x7F)*FS_COLUMN_SIZE;
+	if (CURRENT_ANGLE==0x80)
+	{
+		g_current_flash_addr = FRAME_OFFSET_ADDR(g_currentEntry.iBlockList[g_currentFrameInFile]);
+	}		
+	else
+	{
+		g_current_flash_addr += FS_COLUMN_SIZE;
+	}		
 			
 	// switch between flash read buffers
 	if (g_current_flash_buffer ==  g_flash_read_buffer_I)
@@ -132,6 +140,7 @@ ISR(TCC1_CCB_vect)
 	}
 	
 	// send to all the slaves "start new batch massage"
+	anibike_dl_master_send_timing_sync( 600 );
 
 	CLR_FLASH_DATA_VALID;
 }
