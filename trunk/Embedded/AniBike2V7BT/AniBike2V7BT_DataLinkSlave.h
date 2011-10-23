@@ -36,6 +36,14 @@ enum
 
 typedef uint8_t anibike_dl_slave_header;
 
+#define DL_SLAVE_CIRC_BUFFER_START			GPIO_GPIO6
+#define DL_SLAVE_CIRC_BUFFER_END			GPIO_GPIO7
+#define	DL_SLAVE_CIRC_BUFFER_SIZE			256
+#define	DL_SLAVE_CIRC_BUFFER_SIZE_MASK		(0xFF)
+#define DL_SLAVE_CIRC_BUFFER_ADD(A,b)		{(A)[DL_SLAVE_CIRC_BUFFER_END++]=(b);}
+#define DL_SLAVE_CIRC_BUFFER_TOP(A)			((A)[DL_SLAVE_CIRC_BUFFER_START])
+#define DL_SLAVE_CIRC_BUFFER_POP(A)			((A)[DL_SLAVE_CIRC_BUFFER_START++])
+
 void anibike_dl_slave_initialize ( void );
 void anibike_dl_slave_handle_data ( void );
 
