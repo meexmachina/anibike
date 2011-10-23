@@ -76,6 +76,18 @@
 #define DATALINK_PORT_OUT	0x15		//VPORT1_OUT
 #define DATALINK_PORT_IN	0x16		//VPORT1_IN
 
+/*
+ * GPIO definitions:
+ *	GPIO0 - stores current row number for lighting system
+ *  GPIO1 - stores different flags - data_valid
+ *  GPIO2 - stores incoming data counter
+ *  GPIO3 - stores SW UART delay register that can change
+ */
+#define DATA_IS_VALID			(GPIO_GPIO1&0x01)
+#define SET_DATA_VALID			{GPIO_GPIO1 |= 0x01;}	
+#define CLR_DATA_VALID			{GPIO_GPIO1 &= 0xFE;}
+#define DL_DATA_COUNT			GPIO_GPIO2
+
 
 /*****************************************************************
  *			T Y P E S    D E F I N I T I O N S
