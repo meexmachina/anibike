@@ -71,8 +71,8 @@ void initialize_lighting_system ( void )
 	ROW_TIMER_CTRL.CTRLA |= TC1_CCAEN_bm;
 	TC1_ConfigClockSource(&ROW_TIMER_CTRL, TC_CLKSEL_DIV64_gc);	// we need it every 64 microseconds
 	ROW_TIMER_CTRL.CTRLB |= TC1_WGMODE0_bm|TC1_WGMODE1_bm;
-	ROW_TIMER_CTRL.PER = 0x20;
-	ROW_TIMER_CTRL.CCA = 0x20;
+	//ROW_TIMER_CTRL.PER = 0x07;		
+	ROW_TIMER_CTRL.CCA = 0x07;			// 14 usec - every tick is 31.25ns*64 = 2 usec
 	TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
 	ROW_TIMER_CTRL.CNT = 0;
 }

@@ -10,8 +10,9 @@
 #define ANIBIKE2V7BT_FILESYSTEM_H_
 
 
-#define FS_FRAME_SIZE		9600				// Bytes
+#define FS_FRAME_SIZE		(uint32_t)(12288)	// Bytes
 #define FS_HALF_FRAME_SIZE	(uint32_t)(48)		// Bytes
+#define FS_COLUMN_SIZE		(uint32_t)(96)		// Bytes
 #define	FS_FRAME_CAP		(uint32_t)(12288)	// Bytes
 #define FS_NUM_4K_BLOCKS	1024
 #define FS_FRAME_BLOCKS		3						// Number of blocks per frame
@@ -22,8 +23,9 @@
 #define ENTRY_TABLE_ADDR	0x3F9000				// The start of last seven blocks
 													// HEX: 0x400000 - 0x7 * 0x1000
 													// DEC: 4194304 - 7 * 4096
-#define ENTRY_TABLE_EL_SIZE (2+(FS_FILENAME_LENGTH)+((FS_FILE_MAX_FRAMES)*2)+1+1)
-#define ENTRY_TABLE_BLOCK	NUM_OF_FILES
+#define ENTRY_TABLE_EL_SIZE		(2+(FS_FILENAME_LENGTH)+((FS_FILE_MAX_FRAMES)*2)+1+1)
+#define ENTRY_TABLE_BLOCK		NUM_OF_FILES
+#define FRAME_OFFSET_ADDR(n)	((n)*FS_FRAME_SIZE)
 
 
 enum

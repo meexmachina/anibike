@@ -721,17 +721,7 @@ void tm_cmd_test_led		(U8 argc, char **argv)
 			}
 		}
 		
-		result = anibike_hlcomm_light_led_req( rowNum, rgb_choose, val );
-		
-		switch (result)
-		{
-			case 0: printf_P( PSTR("transaction successful (ACKed)\r\n")); break;
-			case 1: printf_P( PSTR("no slave detected\r\n")); break;
-			case 2: printf_P( PSTR("slave does not respond\r\n")); break;
-			case 3: printf_P( PSTR("received NACK\r\n")); break;
-			default: break;
-		};
-					
+		anibike_dl_master_send_light_leds_debug( rowNum, rgb_choose, val );					
 	} 
 	printf_P (PSTR("OK\r\n"));
 }
@@ -969,16 +959,7 @@ void tm_cmd_write_led_cal (U8 argc, char **argv)
 	g_iBlueCalibrationPeriod = atol(argv[3]);
 	
 	write_period_calibrations ( g_iRedCalibrationPeriod, g_iGreenCalibrationPeriod, g_iBlueCalibrationPeriod );
-	result = anibike_hlcomm_send_cal_data( g_iRedCalibrationPeriod, g_iGreenCalibrationPeriod, g_iBlueCalibrationPeriod );	
-	
-	switch (result)
-	{
-		case 0: printf_P( PSTR("transaction successful (ACKed)\r\n")); break;
-		case 1: printf_P( PSTR("no slave detected\r\n")); break;
-		case 2: printf_P( PSTR("slave does not respond\r\n")); break;
-		case 3: printf_P( PSTR("received NACK\r\n")); break;
-		default: break;
-	};	
+	anibike_dl_master_set_cal_values( g_iRedCalibrationPeriod, g_iGreenCalibrationPeriod, g_iBlueCalibrationPeriod );	
 	
 	printf_P (PSTR("OK\r\n"));
 }
@@ -990,14 +971,5 @@ void tm_cmd_write_led_cal (U8 argc, char **argv)
 /**************************************************************************/
 void tm_cmd_write_dl		(U8 argc, char **argv)
 {
-	uint8_t result = anibike_dl_send_data ((uint8_t*)((void*)(argv[1])), strlen(argv[1]));	
-	
-	switch (result)
-	{
-		case 0: printf_P( PSTR("transaction successful (ACKed)\r\n")); break;
-		case 1: printf_P( PSTR("no slave detected\r\n")); break;
-		case 2: printf_P( PSTR("slave does not respond\r\n")); break;
-		case 3: printf_P( PSTR("received NACK\r\n")); break;
-		default: break;
-	};
+
 }

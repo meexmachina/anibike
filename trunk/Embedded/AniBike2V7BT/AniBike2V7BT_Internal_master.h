@@ -88,6 +88,28 @@
 #define DATALINK_PORT_OUT	0x15		//VPORT1_OUT
 #define DATALINK_PORT_IN	0x16		//VPORT1_IN
 
+/*
+ * GPIO definitions:
+ *	GPIO0 - stores current row number for lighting system
+ *  GPIO1 - stores different flags - flash data valid, datalink finished
+ *  GPIO2 - stored current polarity (0, 48, 96, 144)
+ *  GPIO3 - stores SW UART delay register that can change
+ *	GPIO4 - stores data sending counter
+ *	GPIO5 - stores current column (angle 0:255) counter
+ */
+#define FLASH_DATA_IS_VALID		(GPIO_GPIO1&0x01)
+#define SET_FLASH_DATA_VALID	{GPIO_GPIO1 |= 0x01;}	
+#define CLR_FLASH_DATA_VALID	{GPIO_GPIO1 &= 0xFE;}
+#define DL_SEND_IS_FINISHED		(GPIO_GPIO1&0x02)
+#define SET_DL_SEND_FINISHED	{GPIO_GPIO1 |= 0x02;}
+#define CLR_DL_SEND_FINISHED	{GPIO_GPIO1 &= 0xFD;}
+#define CURRENT_POLARITY		GPIO_GPIO2
+#define DL_DATA_COUNTER			GPIO_GPIO4
+#define CURRENT_ANGLE			GPIO_GPIO5
+
+
+#define COLUMN_TIMER_CTRL		TCC1
+
 #define NOP					{asm volatile ("nop\n\t");}
 
 /*****************************************************************
@@ -99,7 +121,8 @@ extern SPI_Master_t spiMasterC;
 /*****************************************************************
  *			F U N C T I O N    D E F I N I T I O N S
  *****************************************************************/
-void	SetClockFreq ( uint8_t freq );
+void	SetClockFreq		( uint8_t freq );
+void	hall_sensor_handler ( void );
 
 
 

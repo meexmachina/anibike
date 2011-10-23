@@ -37,13 +37,12 @@ int main(void)
 	
 	initialize_lighting_system(  );	
 	stop_row_control;
-	anibike_dl_initialize ( ANIBIKE_DL_SLAVE );
-	anibike_hlcomm_setup_rx_system (  );
+	anibike_dl_slave_initialize (  );
 	
 	sei ( );
 	
 	while (1)
 	{
-		anibike_hlcomm_handle_data (  );
+		anibike_dl_slave_handle_data (  );
 	}
 }

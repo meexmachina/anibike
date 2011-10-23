@@ -7,7 +7,9 @@
 #include "AniBike2V7BT_Internal.h"
 
 SPI_Slave_t spiSlaveC = {NULL, NULL};
-
+uint8_t		g_rx_data[48];
+	
+//__________________________________________________________________________________________________
 void anibike_dl_slave_initialize ( void )
 {	
 	// map PORT C to virtual port 1
@@ -32,8 +34,23 @@ void anibike_dl_slave_initialize ( void )
 	PMIC.CTRL |= PMIC_LOLVLEN_bm|PMIC_MEDLVLEN_bm|PMIC_HILVLEN_bm;		
 }
 
+//__________________________________________________________________________________________________
+void anibike_dl_slave_handle_data ( void )
+{
+	
+}
+
+//__________________________________________________________________________________________________
 ISR(SPIC_INT_vect)
 {
+	uint8_t* data = g_rx_data;
 	/* Get received data. */
-	uint8_t data = SPI_SlaveReadByte(&spiSlaveC);
+	*data = SPI_SlaveReadByte(&spiSlaveC);
+	uint8_t length = (*data)&0x1F;	// extract the length
+	
+	while (length--)
+	{
+		while (!SPI_SlaveDataAvailable(&spiSlaveC)) {}
+		*++data = SPI_SlaveReadByte(&spiSlaveC);
+	}
 }
