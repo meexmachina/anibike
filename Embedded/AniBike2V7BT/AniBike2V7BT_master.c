@@ -19,6 +19,8 @@ volatile uint32_t		g_current_flash_addr = 0;
 volatile FileEntry_ST	g_currentEntry;
 volatile uint8_t		g_currentFrameInFile = 0;
 volatile uint8_t		g_currentDuration = 255;
+volatile uint8_t		g_current_polarity = 0;
+volatile uint8_t		g_current_data_counter = 0;
 
 /*****************************************************************
  *			GENERAL SYSTEM CONFIGURATION
@@ -37,16 +39,17 @@ void anibike_master_initialize_hardware ( void )
 	COLUMN_TIMER_CTRL.CTRLA |= TC1_CCBEN_bm;								// enable timer B
 	//TC1_ConfigClockSource(&COLUMN_TIMER_CTRL, TC_CLKSEL_DIV64_gc);		// every tick is 2 usec
 	//ROW_TIMER_CTRL.CTRLB |= TC1_WGMODE0_bm|TC1_WGMODE1_bm;				// the same like in lighting system
-	COLUMN_TIMER_CTRL.CCB = 0x012C;											// init to 600 usec
-	TC1_SetCCBIntLevel(&COLUMN_TIMER_CTRL, TC_CCBINTLVL_MED_gc );
+	//COLUMN_TIMER_CTRL.CCB = 0x012C;											// init to 600 usec
+	COLUMN_TIMER_CTRL.CCB = 0x2710;											// init to 600 usec
+	TC1_SetCCBIntLevel(&COLUMN_TIMER_CTRL, TC_CCBINTLVL_LO_gc );
 	
 	
 	// set the projection buffer
 	g_current_flash_addr = 0;
-	CURRENT_POLARITY = 0;
+	g_current_polarity = 0;
 	g_current_proj_buffer = g_flash_read_buffer_I;
 	g_current_flash_buffer = g_flash_read_buffer_II;
-	DL_DATA_COUNTER = 0;
+	g_current_data_counter = 0;
 	CLR_FLASH_DATA_VALID;
 	CLR_DL_SEND_FINISHED;
 	CURRENT_ANGLE = 0;
@@ -66,7 +69,7 @@ int main(void)
 	dataflash_spi_init (  );
 	
 	swUART_ConfigureDevice ( 0 );
-	swUART_SetRxInterruptLevel ( 3 );
+	swUART_SetRxInterruptLevel ( 4 );
 	swUART_SetInterruptHandler ( rx_handler );
 	swUART_SetBaudRate ( 115200 );
 	
@@ -78,7 +81,7 @@ int main(void)
 	while (1)
 	{
 		// set the appropriate buffer to the projection system
-		set_projection_buffer ( g_current_proj_buffer + CURRENT_POLARITY );
+		set_projection_buffer ( g_current_proj_buffer + g_current_polarity );
 		
 		// Read from the flash 96 bytes
 		dataflash_read_vector( g_current_flash_addr, 
@@ -86,13 +89,13 @@ int main(void)
 							   FS_COLUMN_SIZE );
 		
 		// mark to the sending mechanism to start transactions
-		DL_DATA_COUNTER = 0;
+		g_current_data_counter = 0;
 		SET_FLASH_DATA_VALID;		
 		
-		while (DL_DATA_COUNTER<48)
+		while (g_current_data_counter<48)
 		{
-			anibike_dl_master_send_data( &g_current_flash_buffer[DL_DATA_COUNTER], 3);
-			DL_DATA_COUNTER+=3;
+			anibike_dl_master_send_data( g_current_flash_buffer + g_current_data_counter, 3);
+			g_current_data_counter+=3;
 		}			
 										  
 		// idle until buffer not valid anymore
@@ -107,7 +110,7 @@ int main(void)
 ISR(TCC1_CCB_vect)
 {
 	COLUMN_TIMER_CTRL.CNT = 0;
-	DL_DATA_COUNTER = 0;
+	g_current_data_counter = 0;
 	CLR_DL_SEND_FINISHED;
 	
 	// update the next angle
@@ -116,11 +119,11 @@ ISR(TCC1_CCB_vect)
 	// update the next polarity if needed
 	if (CURRENT_ANGLE&0x80)
 	{
-		CURRENT_POLARITY = 48;
+		g_current_polarity = 48;
 	}
 	else
 	{
-		CURRENT_POLARITY = 0;
+		g_current_polarity = 0;
 	}
 	
 	// update the next flash address
@@ -165,12 +168,13 @@ void hall_sensor_handler ( void )
 	CURRENT_ANGLE = 0;
 	
 	// re-init other flags and variables
-	DL_DATA_COUNTER = 0;
+	g_current_data_counter = 0;
 	CLR_DL_SEND_FINISHED;
 	CLR_FLASH_DATA_VALID;
 	
 	// if finished current file, read the next entry to g_currentEntry;
 	// and set g_currentFrameInFile to 0
+	
 	
 	// if didn't finish yet, switch to the next frame
 	

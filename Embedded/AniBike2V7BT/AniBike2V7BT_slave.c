@@ -41,11 +41,11 @@ int main(void)
 	swUART_SetRxInterruptLevel ( 3 );
 	swUART_SetInterruptHandler ( NULL );
 	swUART_SetBaudRate ( 115200 );
-	
 	initialize_lighting_system(  );	
-	stop_row_control;
 	anibike_dl_slave_initialize (  );
+	stop_row_control;
 	
+	// enable interrupts
 	sei ( );
 	
 	while (1)

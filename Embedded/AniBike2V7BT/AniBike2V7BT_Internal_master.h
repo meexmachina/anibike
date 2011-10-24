@@ -92,10 +92,8 @@
  * GPIO definitions:
  *	GPIO0 - stores current row number for lighting system
  *  GPIO1 - stores different flags - flash data valid, datalink finished
- *  GPIO2 - stored current polarity (0, 48, 96, 144)
+ *  GPIO2 - stores current column (angle 0:255) counter
  *  GPIO3 - stores SW UART delay register that can change
- *	GPIO4 - stores data sending counter
- *	GPIO5 - stores current column (angle 0:255) counter
  */
 #define FLASH_DATA_IS_VALID		(GPIO_GPIO1&0x01)
 #define SET_FLASH_DATA_VALID	{GPIO_GPIO1 |= 0x01;}	
@@ -103,9 +101,7 @@
 #define DL_SEND_IS_FINISHED		(GPIO_GPIO1&0x02)
 #define SET_DL_SEND_FINISHED	{GPIO_GPIO1 |= 0x02;}
 #define CLR_DL_SEND_FINISHED	{GPIO_GPIO1 &= 0xFD;}
-#define CURRENT_POLARITY		GPIO_GPIO2
-#define DL_DATA_COUNTER			GPIO_GPIO4
-#define CURRENT_ANGLE			GPIO_GPIO5
+#define CURRENT_ANGLE			GPIO_GPIO2
 
 
 #define COLUMN_TIMER_CTRL		TCC1
