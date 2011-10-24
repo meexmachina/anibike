@@ -7,7 +7,8 @@
 #include "AniBike2V7BT_Internal.h"
 
 SPI_Slave_t spiSlaveC = {NULL, NULL};
-uint8_t		g_rx_data[DL_SLAVE_CIRC_BUFFER_SIZE];
+volatile	uint8_t		g_rx_data[DL_SLAVE_CIRC_BUFFER_SIZE];
+volatile	uint8_t		*g_current_receive_buffer = NULL;
 	
 //__________________________________________________________________________________________________
 void anibike_dl_slave_initialize ( void )
@@ -35,6 +36,12 @@ void anibike_dl_slave_initialize ( void )
 	
 	DL_SLAVE_CIRC_BUFFER_START = 0;
 	DL_SLAVE_CIRC_BUFFER_END = 0;	
+}
+
+//__________________________________________________________________________________________________
+void anibike_dl_slave_set_receive_buffer ( uint8_t* buffer)
+{
+	g_current_receive_buffer = buffer;
 }
 
 //__________________________________________________________________________________________________

@@ -88,6 +88,12 @@ int main(void)
 		// mark to the sending mechanism to start transactions
 		DL_DATA_COUNTER = 0;
 		SET_FLASH_DATA_VALID;		
+		
+		while (DL_DATA_COUNTER<48)
+		{
+			anibike_dl_master_send_data( &g_current_flash_buffer[DL_DATA_COUNTER], 3);
+			DL_DATA_COUNTER+=3;
+		}			
 										  
 		// idle until buffer not valid anymore
 		while (FLASH_DATA_IS_VALID) {}
@@ -139,8 +145,11 @@ ISR(TCC1_CCB_vect)
 		g_current_proj_buffer = g_flash_read_buffer_II;		
 	}
 	
+	set_projection_buffer ( g_current_proj_buffer );
+	
 	// send to all the slaves "start new batch massage"
 	anibike_dl_master_send_timing_sync( 600 );
+	anibike_dl_master_send_batch_start(  );
 
 	CLR_FLASH_DATA_VALID;
 }
