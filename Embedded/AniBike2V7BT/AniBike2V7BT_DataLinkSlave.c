@@ -78,10 +78,15 @@ void anibike_dl_slave_handle_data ( void )
 	{
 		//_________________________________
 		case DL_NEW_TIMING_SYNC:
-			// switch buffers
+			{
+				// read the new timing
+				uint8_t temp1 = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
+				uint8_t temp2 = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
+				
+				// switch buffers
 			
-			// re-init variables
-		
+				// re-init variables				
+			}
 			break;
 		//_________________________________
 		case DL_RESTART_DATA_BATCH:
@@ -91,10 +96,20 @@ void anibike_dl_slave_handle_data ( void )
 			break;
 		//_________________________________
 		case DL_CONTINUE_DATA_BATCH:
-			// copy data to current data receive buffer
-			
-			// progress counter
-			
+			{
+				uint8_t length = cur_byte&0x1F;
+				uint8_t temp;
+				
+				while (length--)
+				{
+					temp = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
+				}					
+						
+				// copy data to current data receive buffer
+					
+				// progress counter
+				
+			}	
 			break;
 		//_________________________________
 		case DL_LIGHT_LEDS_DEBUG:
@@ -125,25 +140,39 @@ void anibike_dl_slave_handle_data ( void )
 			break;
 		//_________________________________
 		case DL_SET_ADDRESS:
-		
+			{
+				uint8_t address = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
+				
+				// do something with the address
+			}
 			break;
 		//_________________________________
 		case DL_GO_TO_SLEEP:
-		
+			{
+				// do something to go to sleep
+			}
 			break;
 		//_________________________________	
 		case DL_SET_CAL_VALUES:
 			{
-				//uint16_t r=0,g=0,b=0;
-				//r = ((uint16_t)(DL_SLAVE_CIRC_BUFFER_POP(g_rx_data)))|(((uint16_t)(DL_SLAVE_CIRC_BUFFER_POP(g_rx_data)))<<8);
-				//g = ((uint16_t)(DL_SLAVE_CIRC_BUFFER_POP(g_rx_data)))|(((uint16_t)(DL_SLAVE_CIRC_BUFFER_POP(g_rx_data)))<<8);
-				//b = ((uint16_t)(DL_SLAVE_CIRC_BUFFER_POP(g_rx_data)))|(((uint16_t)(DL_SLAVE_CIRC_BUFFER_POP(g_rx_data)))<<8);
+				uint8_t temp1 = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);	// lsb
+				uint8_t temp2 = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);	// msb
+				uint16_t r = ((uint16_t)(temp1))|(((uint16_t)(temp2))<<8);
+				temp1 = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
+				temp2 = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);				
+				uint16_t g = ((uint16_t)(temp1))|(((uint16_t)(temp2))<<8);
+				DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
+				DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);				
+				uint16_t b = ((uint16_t)(temp1))|(((uint16_t)(temp2))<<8);
+				
+				printf_P(PSTR("%d %d %d"), (uint8_t)(r&0xff), (uint8_t)(g&0xff), (uint8_t)(b&0xff));
 				
 				//write_period_calibrations ( r, g, b );
 			}				
 			break;
 		//_________________________________	
 		default:
+			DL_SLAVE_CIRC_BUFFER_FLUSH;
 			break;
 	};
 }
@@ -162,8 +191,7 @@ ISR(SPIC_INT_vect)
 	while (length--)
 	{
 		while (!SPI_SlaveDataAvailable(&spiSlaveC)) {}
-		temp = SPI_SlaveReadByte(&spiSlaveC);
-		DL_SLAVE_CIRC_BUFFER_ADD (g_rx_data, temp);
+		DL_SLAVE_CIRC_BUFFER_ADD (g_rx_data, SPI_SlaveReadByte(&spiSlaveC));
 	}
 	
 	g_data_valid=1;

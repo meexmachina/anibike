@@ -54,6 +54,7 @@ void anibike_dl_master_send_data ( uint8_t *data, uint8_t length )		// length sm
 	
 	while (length--)
 	{
+		NOP;NOP;NOP;
 		uint8_t d = *data++;
 		SPI_MasterTransceiveByte(&spiMasterC, d);
 	}		
@@ -83,8 +84,11 @@ void anibike_dl_master_send_light_leds_debug ( uint8_t row, uint8_t rgb, uint8_t
 	//printf_P(PSTR("sending %d %d %d %d\r\n"), (uint8_t)(header), row, rgb, val);
 	
 	SPI_MasterTransceiveByte(&spiMasterC, header);	
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, row);	
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, rgb);	
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, val);
 	
 	SPI_MasterSSHigh (&DATALINK_PORT, DATALINK_CS_PIN);
@@ -98,7 +102,9 @@ void anibike_dl_master_send_timing_sync ( uint16_t column_time )
 	
 	SPI_MasterSSLow (&DATALINK_PORT, DATALINK_CS_PIN);
 	SPI_MasterTransceiveByte(&spiMasterC, header);
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, column_time&0xFF);		// LSB
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, (column_time>>8)&0xFF);	// MSB
 	SPI_MasterSSHigh (&DATALINK_PORT, DATALINK_CS_PIN);
 }
@@ -110,6 +116,7 @@ void anibike_dl_master_send_address ( uint8_t address )
 	header = DL_SET_ADDRESS|1;
 	SPI_MasterSSLow (&DATALINK_PORT, DATALINK_CS_PIN);
 	SPI_MasterTransceiveByte(&spiMasterC, header);
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, address );		
 	SPI_MasterSSHigh (&DATALINK_PORT, DATALINK_CS_PIN);	
 }
@@ -131,11 +138,17 @@ void anibike_dl_master_set_cal_values ( uint16_t r, uint16_t g, uint16_t b )
 	header = DL_SET_CAL_VALUES|6;
 	SPI_MasterSSLow (&DATALINK_PORT, DATALINK_CS_PIN);
 	SPI_MasterTransceiveByte(&spiMasterC, header);
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, r&0xFF);			//LSB
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, (r>>8)&0xFF);		//MSB
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, g&0xFF);			//LSB
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, (g>>8)&0xFF);		//MSB
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, b&0xFF);			//LSB
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, (b>>8)&0xFF);		//MSB
 	SPI_MasterSSHigh (&DATALINK_PORT, DATALINK_CS_PIN);		
 }
