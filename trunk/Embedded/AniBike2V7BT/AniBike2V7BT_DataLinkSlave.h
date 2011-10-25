@@ -44,6 +44,7 @@ typedef uint8_t anibike_dl_slave_header;
 #define DL_SLAVE_CIRC_BUFFER_TOP(A)			((A)[DL_SLAVE_CIRC_BUFFER_START])
 #define DL_SLAVE_CIRC_BUFFER_POP(A)			((A)[DL_SLAVE_CIRC_BUFFER_START++])
 #define DL_SLAVE_CIRC_BUFFER_LENGTH			((uint8_t)(DL_SLAVE_CIRC_BUFFER_END-DL_SLAVE_CIRC_BUFFER_START))
+#define DL_SLAVE_CIRC_BUFFER_FLUSH			{DL_SLAVE_CIRC_BUFFER_END = DL_SLAVE_CIRC_BUFFER_START;}
 
 void anibike_dl_slave_initialize ( void );
 void anibike_dl_slave_handle_data ( void );

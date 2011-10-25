@@ -107,6 +107,7 @@
 #define COLUMN_TIMER_CTRL		TCC1
 
 #define NOP					{asm volatile ("nop\n\t");}
+#define DELAY120NS			{NOP;NOP;NOP;NOP;}
 
 /*****************************************************************
  *			T Y P E S    D E F I N I T I O N S
