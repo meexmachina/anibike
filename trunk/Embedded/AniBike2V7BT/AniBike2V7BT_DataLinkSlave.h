@@ -45,6 +45,24 @@ typedef uint8_t anibike_dl_slave_header;
 #define DL_SLAVE_CIRC_BUFFER_POP(A)			((A)[DL_SLAVE_CIRC_BUFFER_START++])
 #define DL_SLAVE_CIRC_BUFFER_LENGTH			((uint8_t)(DL_SLAVE_CIRC_BUFFER_END-DL_SLAVE_CIRC_BUFFER_START))
 #define DL_SLAVE_CIRC_BUFFER_FLUSH			{DL_SLAVE_CIRC_BUFFER_END = DL_SLAVE_CIRC_BUFFER_START;}
+#define DL_SLAVE_CIRC_BUFFER_THROW_MSG(l,A)	{																			\
+												if ((DL_SLAVE_CIRC_BUFFER_SIZE-DL_SLAVE_CIRC_BUFFER_START)<(l)&&		\
+													DL_SLAVE_CIRC_BUFFER_END>DL_SLAVE_CIRC_BUFFER_START)				\
+												{																		\
+													DL_SLAVE_CIRC_BUFFER_START = DL_SLAVE_CIRC_BUFFER_END;				\
+												}																		\
+												else																	\
+												{																		\
+													if ((DL_SLAVE_CIRC_BUFFER_START+(l))>DL_SLAVE_CIRC_BUFFER_END)		\
+													{																	\
+														DL_SLAVE_CIRC_BUFFER_START = DL_SLAVE_CIRC_BUFFER_END;			\
+													}																	\
+													else																\
+													{																	\
+														DL_SLAVE_CIRC_BUFFER_START += (l);								\
+													}																	\
+												}																		\
+											}	
 
 void anibike_dl_slave_initialize ( void );
 void anibike_dl_slave_handle_data ( void );

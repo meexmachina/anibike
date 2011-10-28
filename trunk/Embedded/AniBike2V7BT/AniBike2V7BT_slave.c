@@ -26,7 +26,7 @@ void anibike_slave_initialize_hardware ( void )
 	g_receive_buffer = g_flash_read_buffer_II;
 	g_proj_buffer = g_flash_read_buffer_I;
 	set_projection_buffer ( g_proj_buffer );
-	anibike_dl_slave_set_receive_buffer ( g_receive_buffer );
+//	anibike_dl_slave_set_receive_buffer ( g_receive_buffer );
 }
 
 /*****************************************************************
@@ -43,7 +43,7 @@ int main(void)
 	swUART_SetBaudRate ( 115200 );
 	initialize_lighting_system(  );	
 	anibike_dl_slave_initialize (  );
-	stop_row_control;
+	run_row_control;
 	
 	// enable interrupts
 	sei ( );

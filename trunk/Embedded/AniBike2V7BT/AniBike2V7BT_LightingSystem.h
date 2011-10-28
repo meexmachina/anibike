@@ -9,18 +9,17 @@
 #ifndef ANIBIKE2V7BT_LIGHTINGSYSTEM_H_
 #define ANIBIKE2V7BT_LIGHTINGSYSTEM_H_
 
-
 /*****************************************************************
  *			C O N S T A N T    D E F I N I T I O N S
  *****************************************************************/
-#define MUX_CONTROL_PORT		VPORT3_OUT
-#define MUX_CONTROL_PORT_DIR	VPORT3_DIR
+#define MUX_CONTROL_PORT		PORTA//VPORT3_OUT
+#define MUX_CONTROL_PORT_DIR	PORTA_DIR//VPORT3_DIR
 #define MUX_CONTROL_PINS	(PIN4_bm|PIN5_bm|PIN6_bm|PIN7_bm)
 #define MUX_ENABLE_PIN		0x80
 #define MUX_ENABLE_PIN_N	0x7F
-#define MUX_SET_ROW(r)		{MUX_CONTROL_PORT&=0x8F; MUX_CONTROL_PORT|=((r)<<4);}	// make it a virtual port 4!
-#define MUX_DISABLE			{MUX_CONTROL_PORT&=MUX_ENABLE_PIN_N;}
-#define MUX_ENABLE			{MUX_CONTROL_PORT|=MUX_ENABLE_PIN;}
+#define MUX_SET_ROW(r)		{MUX_CONTROL_PORT.OUTCLR = MUX_CONTROL_PINS; MUX_CONTROL_PORT.OUTSET = ((r)<<4);}//{MUX_CONTROL_PORT&=0x8F; MUX_CONTROL_PORT|=((r)<<4);}	// make it a virtual port 4!
+#define MUX_DISABLE			{MUX_CONTROL_PORT.OUTCLR = MUX_ENABLE_PIN; }//{MUX_CONTROL_PORT&=MUX_ENABLE_PIN_N;}
+#define MUX_ENABLE			{MUX_CONTROL_PORT.OUTSET = MUX_ENABLE_PIN; }//{MUX_CONTROL_PORT|=MUX_ENABLE_PIN;}
 #define CURR_ROW			GPIO_GPIO0
 
 #define LED_COLUMN_PINS		(PIN0_bm|PIN1_bm|PIN2_bm|PIN3_bm)
@@ -39,7 +38,21 @@
 #define EEPROM_G_CONFIG_WORD	1
 #define EEPROM_B_CONFIG_WORD	2
 
-#define RED1	(*((uint8_t*)(0x938)))
+#define RED1	_SFR_MEM8(0x938)
+#define RED2	_SFR_MEM8(0x93A)
+#define RED3	_SFR_MEM8(0x93C)
+#define RED4	_SFR_MEM8(0x93E)
+#define GREEN1	_SFR_MEM8(0x838)
+#define GREEN2	_SFR_MEM8(0x83A)
+#define GREEN3	_SFR_MEM8(0x83C)
+#define GREEN4	_SFR_MEM8(0x83E)
+#define BLUE1	_SFR_MEM8(0xA38)
+#define BLUE2	_SFR_MEM8(0xA3A)
+#define BLUE3	_SFR_MEM8(0xA3C)
+#define BLUE4	_SFR_MEM8(0xA3E)
+
+/*
+#define RED1	(*((uint8_t*)(0x938))) 
 #define RED2	(*((uint8_t*)(0x93A)))
 #define RED3	(*((uint8_t*)(0x93C)))
 #define RED4	(*((uint8_t*)(0x93E)))
@@ -51,7 +64,7 @@
 #define BLUE2	(*((uint8_t*)(0xA3A)))
 #define BLUE3	(*((uint8_t*)(0xA3C)))
 #define BLUE4	(*((uint8_t*)(0xA3E)))
-
+*/
 
 /*****************************************************************
  *			M A C R O    D E F I N I T I O N S

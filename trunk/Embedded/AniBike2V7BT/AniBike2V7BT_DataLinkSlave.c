@@ -8,8 +8,13 @@
 
 SPI_Slave_t spiSlaveC;
 volatile	uint8_t		g_rx_data[DL_SLAVE_CIRC_BUFFER_SIZE] = {0};
-volatile	uint8_t		*g_current_receive_buffer = NULL;
+volatile	uint8_t		g_data_counter = 0;
 volatile	uint8_t		g_data_valid = 0;
+
+extern		uint8_t*	g_flash_read_buffer_I;
+extern		uint8_t*	g_flash_read_buffer_II;
+extern		uint8_t*	g_receive_buffer;
+extern		uint8_t*	g_proj_buffer;
 	
 //__________________________________________________________________________________________________
 void anibike_dl_slave_initialize ( void )
@@ -45,7 +50,7 @@ void anibike_dl_slave_initialize ( void )
 //__________________________________________________________________________________________________
 void anibike_dl_slave_set_receive_buffer ( uint8_t* buffer)
 {
-	g_current_receive_buffer = buffer;
+//	g_current_receive_buffer = buffer;
 }
 
 //__________________________________________________________________________________________________
@@ -84,15 +89,32 @@ void anibike_dl_slave_handle_data ( void )
 				uint8_t temp2 = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
 				
 				// switch buffers
-			
+				if (g_receive_buffer == g_flash_read_buffer_II)
+				{
+					g_receive_buffer = g_flash_read_buffer_I;
+					g_proj_buffer = g_flash_read_buffer_II;
+				}	
+				else
+				{
+					g_receive_buffer = g_flash_read_buffer_II;
+					g_proj_buffer = g_flash_read_buffer_I;					
+				}		
+				
+				// set the new projection buffer in the lighting system
+				set_projection_buffer ( g_proj_buffer );
+				
 				// re-init variables				
 			}
 			break;
 		//_________________________________
 		case DL_RESTART_DATA_BATCH:
-			// set data not valid
-			
-			// set data counter to zero
+			{
+				// set data not valid
+				g_data_valid = 0;
+						
+				// set data counter to zero
+				g_data_counter = 0;
+			}
 			break;
 		//_________________________________
 		case DL_CONTINUE_DATA_BATCH:
@@ -100,15 +122,15 @@ void anibike_dl_slave_handle_data ( void )
 				uint8_t length = cur_byte&0x1F;
 				uint8_t temp;
 				
+				if (g_data_valid)
+				{
+					DL_SLAVE_CIRC_BUFFER_THROW_MSG(length,g_rx_data);
+				}					
+				
 				while (length--)
 				{
-					temp = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
-				}					
-						
-				// copy data to current data receive buffer
-					
-				// progress counter
-				
+					g_receive_buffer[g_data_counter++] = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
+				}									
 			}	
 			break;
 		//_________________________________
@@ -117,6 +139,15 @@ void anibike_dl_slave_handle_data ( void )
 					uint8_t rownum;
 					uint8_t rgb;
 					uint8_t val;
+					
+					if (val>0)
+					{
+						MUX_ENABLE;
+					}						
+					else
+					{ 
+						MUX_DISABLE;
+					}						
 					
 					rownum = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
 					rgb = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
@@ -165,7 +196,7 @@ void anibike_dl_slave_handle_data ( void )
 				DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);				
 				uint16_t b = ((uint16_t)(temp1))|(((uint16_t)(temp2))<<8);
 				
-				printf_P(PSTR("%d %d %d"), (uint8_t)(r&0xff), (uint8_t)(g&0xff), (uint8_t)(b&0xff));
+				//printf_P(PSTR("%d %d %d"), (uint8_t)(r&0xff), (uint8_t)(g&0xff), (uint8_t)(b&0xff));
 				
 				//write_period_calibrations ( r, g, b );
 			}				
