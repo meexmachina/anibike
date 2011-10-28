@@ -212,7 +212,9 @@ void set_projection_buffer ( uint8_t *buffer )
 //__________________________________________________________________________________________________
 ISR(TCC1_CCA_vect)
 {
+	#if _ANIBIKE_MASTER
 	if (ELAPSED_ANGLE)	ELAPSED_ANGLE --;
+	#endif
 	
 	CURR_ROW ++;						// 3cc
 	CURR_ROW &= 0x07;					// 3cc

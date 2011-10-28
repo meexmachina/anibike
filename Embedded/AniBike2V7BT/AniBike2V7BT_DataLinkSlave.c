@@ -84,10 +84,6 @@ void anibike_dl_slave_handle_data ( void )
 		//_________________________________
 		case DL_NEW_TIMING_SYNC:
 			{
-				// read the new timing
-				uint8_t temp1 = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
-				uint8_t temp2 = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
-				
 				// switch buffers
 				if (g_receive_buffer == g_flash_read_buffer_II)
 				{
@@ -103,7 +99,13 @@ void anibike_dl_slave_handle_data ( void )
 				// set the new projection buffer in the lighting system
 				set_projection_buffer ( g_proj_buffer );
 				
-				// re-init variables				
+				// re-init variables			
+				// set data not valid
+				g_data_valid = 0;
+						
+				// set data counter to zero
+				g_data_counter = 0;
+					
 			}
 			break;
 		//_________________________________
@@ -120,7 +122,6 @@ void anibike_dl_slave_handle_data ( void )
 		case DL_CONTINUE_DATA_BATCH:
 			{
 				uint8_t length = cur_byte&0x1F;
-				uint8_t temp;
 				
 				if (g_data_valid)
 				{
