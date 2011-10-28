@@ -162,6 +162,12 @@
     <Compile Include="port_driver.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="rtc_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rtc_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="spi_driver.c">
       <SubType>compile</SubType>
     </Compile>

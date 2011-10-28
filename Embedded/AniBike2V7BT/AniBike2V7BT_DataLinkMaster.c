@@ -63,17 +63,6 @@ void anibike_dl_master_send_data ( uint8_t *data, uint8_t length )		// length sm
 }
 
 //__________________________________________________________________________________________________
-void anibike_dl_master_send_batch_start ( void )
-{
-	uint8_t header;
-	header = DL_RESTART_DATA_BATCH;
-	
-	SPI_MasterSSLow (&DATALINK_PORT, DATALINK_CS_PIN);
-	SPI_MasterTransceiveByte(&spiMasterC, header);
-	SPI_MasterSSHigh (&DATALINK_PORT, DATALINK_CS_PIN);
-}
-
-//__________________________________________________________________________________________________
 void anibike_dl_master_send_light_leds_debug ( uint8_t row, uint8_t rgb, uint8_t val )
 {
 	uint8_t header;
