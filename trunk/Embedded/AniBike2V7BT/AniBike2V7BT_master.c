@@ -153,8 +153,8 @@ void switch_angle_signal ( void )
 	set_projection_buffer ( g_current_proj_buffer + g_current_polarity );
 	
 	// send to all the slaves "start new batch massage"
-	anibike_dl_master_send_timing_sync( 600 );
-	anibike_dl_master_send_batch_start(  );
+	anibike_dl_master_send_timing_sync(  );
+//	anibike_dl_master_send_batch_start(  );
 
 	g_flash_data_valid = 0;
 	

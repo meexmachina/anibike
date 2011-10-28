@@ -41,7 +41,7 @@ int anibike_dl_master_check_connection ( void );
 void anibike_dl_master_send_data ( uint8_t *data, uint8_t length );	
 void anibike_dl_master_send_batch_start ( void );
 void anibike_dl_master_send_light_leds_debug ( uint8_t row, uint8_t rgb, uint8_t val );
-void anibike_dl_master_send_timing_sync ( uint16_t column_time );
+void anibike_dl_master_send_timing_sync ( void );
 void anibike_dl_master_send_address ( uint8_t address );
 void anibike_dl_master_go_to_sleep ( void );
 void anibike_dl_master_set_cal_values ( uint16_t r, uint16_t g, uint16_t b );
