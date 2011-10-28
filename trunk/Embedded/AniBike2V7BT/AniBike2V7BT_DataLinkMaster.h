@@ -25,7 +25,7 @@
 enum
 {
 	DL_NEW_TIMING_SYNC			= 0x00,
-	DL_RESTART_DATA_BATCH		= 0x20,
+	DL_RESERVED1				= 0x20,
 	DL_CONTINUE_DATA_BATCH		= 0x40,
 	DL_LIGHT_LEDS_DEBUG			= 0x60,
 	DL_SET_ADDRESS				= 0x80,
@@ -39,7 +39,6 @@ typedef uint8_t anibike_dl_slave_header;
 void anibike_dl_master_initialize ( void );
 int anibike_dl_master_check_connection ( void );
 void anibike_dl_master_send_data ( uint8_t *data, uint8_t length );	
-void anibike_dl_master_send_batch_start ( void );
 void anibike_dl_master_send_light_leds_debug ( uint8_t row, uint8_t rgb, uint8_t val );
 void anibike_dl_master_send_timing_sync ( void );
 void anibike_dl_master_send_address ( uint8_t address );

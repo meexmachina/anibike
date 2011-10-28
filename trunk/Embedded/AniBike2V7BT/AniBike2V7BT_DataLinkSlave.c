@@ -11,8 +11,8 @@ volatile	uint8_t		g_rx_data[DL_SLAVE_CIRC_BUFFER_SIZE] = {0};
 volatile	uint8_t		g_data_counter = 0;
 volatile	uint8_t		g_data_valid = 0;
 
-extern		uint8_t*	g_flash_read_buffer_I;
-extern		uint8_t*	g_flash_read_buffer_II;
+extern		uint8_t*	g_buffer_I;
+extern		uint8_t*	g_buffer_II;
 extern		uint8_t*	g_receive_buffer;
 extern		uint8_t*	g_proj_buffer;
 	
@@ -84,21 +84,22 @@ void anibike_dl_slave_handle_data ( void )
 		//_________________________________
 		case DL_NEW_TIMING_SYNC:
 			{
+				DL_SLAVE_CIRC_BUFFER_FLUSH;
 				// switch buffers
-				if (g_receive_buffer == g_flash_read_buffer_II)
+				if (g_receive_buffer == g_buffer_II)
 				{
-					g_receive_buffer = g_flash_read_buffer_I;
-					g_proj_buffer = g_flash_read_buffer_II;
+					g_receive_buffer = g_buffer_I;
+					set_projection_buffer ( g_buffer_II );
+					g_proj_buffer = g_buffer_II;
 				}	
 				else
 				{
-					g_receive_buffer = g_flash_read_buffer_II;
-					g_proj_buffer = g_flash_read_buffer_I;					
+					g_receive_buffer = g_buffer_II;
+					set_projection_buffer ( g_buffer_I );
+					g_proj_buffer = g_buffer_I;					
 				}		
 				
-				// set the new projection buffer in the lighting system
-				set_projection_buffer ( g_proj_buffer );
-				
+
 				// re-init variables			
 				// set data not valid
 				g_data_valid = 0;
