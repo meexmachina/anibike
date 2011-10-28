@@ -82,12 +82,10 @@
  *  GPIO1 - stores different flags - data_valid
  *  GPIO2 - stores incoming data counter
  *  GPIO3 - stores SW UART delay register that can change
- *	GPIO6 - stores the circular buffer start (dl_slave)
- *	GPIO7 - stores the circular buffer end (dl_slave)
  */
 //#define DATA_IS_VALID			(GPIO_GPIO1&0x01)
-//#define SET_DATA_VALID			{GPIO_GPIO1 |= 0x01;}	
-//#define CLR_DATA_VALID			{GPIO_GPIO1 &= 0xFE;}
+//#define SET_DATA_VALID		{GPIO_GPIO1 |= 0x01;}	
+//#define CLR_DATA_VALID		{GPIO_GPIO1 &= 0xFE;}
 //#define DL_DATA_COUNT			GPIO_GPIO2
 
 

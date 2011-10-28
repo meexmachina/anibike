@@ -13,8 +13,10 @@
 extern	 uint8_t		g_cpu_speed;
 volatile uint8_t		g_flash_read_buffer_I	[96] = {0};
 volatile uint8_t		g_flash_read_buffer_II	[96] = {0};
-volatile uint8_t*		g_current_flash_buffer;
-volatile uint8_t*		g_current_proj_buffer;
+volatile uint8_t*		g_current_flash_buffer = NULL;
+volatile uint8_t*		g_current_proj_buffer = NULL;
+volatile uint8_t		g_flash_data_valid = 0;
+volatile uint8_t		g_current_dl_finished = 0;
 volatile uint32_t		g_current_flash_addr = 0;
 volatile FileEntry_ST	g_currentEntry;
 volatile uint8_t		g_currentFrameInFile = 0;
@@ -36,9 +38,7 @@ void anibike_master_initialize_hardware ( void )
 	
 	
 	// setup column interchanging timer
-//	COLUMN_TIMER_CTRL.CTRLA |= TC1_CCBEN_bm;								// enable timer B
-//	COLUMN_TIMER_CTRL.CCB = 0x2710;										// init to 600 usec
-//	TC1_SetCCBIntLevel(&COLUMN_TIMER_CTRL, TC_CCBINTLVL_LO_gc );
+	ELAPSED_ANGLE = 75;
 	
 	
 	// set the projection buffer
@@ -47,8 +47,8 @@ void anibike_master_initialize_hardware ( void )
 	g_current_proj_buffer = g_flash_read_buffer_I;
 	g_current_flash_buffer = g_flash_read_buffer_II;
 	g_current_data_counter = 0;
-	CLR_FLASH_DATA_VALID;
-	CLR_DL_SEND_FINISHED;
+	g_flash_data_valid = 0;
+	g_current_dl_finished = 0;
 	CURRENT_ANGLE = 0;
 }
 
@@ -59,10 +59,9 @@ int main(void)
 {
 	SetClockFreq ( 32 );
 	anibike_master_initialize_hardware( );
-	
 	initialize_hall_sensor(  );
 	initialize_lighting_system(  );	
-	run_row_control;
+	stop_row_control;
 	dataflash_spi_init (  );
 	
 	swUART_ConfigureDevice ( 0 );
@@ -74,13 +73,18 @@ int main(void)
 	anibike_dl_master_initialize ( );
 	
 	sei ( );
-
+	MUX_ENABLE;
+	
+	for (uint8_t i=0; i<96; i++)
+	{
+		g_flash_read_buffer_I[i] = i|(i<<4);
+	}
+			
+	set_projection_buffer ( g_flash_read_buffer_I );
+	run_row_control;
+	
 	while (1)
 	{	
-		
-		// set the appropriate buffer to the projection system
-		set_projection_buffer ( g_current_proj_buffer + g_current_polarity );
-		
 		// Read from the flash 96 bytes
 		dataflash_read_vector( g_current_flash_addr, 
 							   g_current_flash_buffer, 
@@ -88,7 +92,7 @@ int main(void)
 		
 		// mark to the sending mechanism to start transactions
 		g_current_data_counter = 0;
-		SET_FLASH_DATA_VALID;		
+		g_flash_data_valid = 1;		
 		
 		while (g_current_data_counter<48)
 		{
@@ -97,7 +101,9 @@ int main(void)
 		}			
 										  
 		// idle until buffer not valid anymore
-		while (FLASH_DATA_IS_VALID) {}
+		while (ELAPSED_ANGLE) {	}
+			
+		switch_angle_signal ( );
 	}
 }
 
@@ -105,12 +111,9 @@ int main(void)
 /*****************************************************************
  *			I N T E R R U P T   H A N D L  E R S
  *****************************************************************/
-ISR(TCC1_CCB_vect)
+void switch_angle_signal ( void )
 {
-	COLUMN_TIMER_CTRL.CNT = 0;
-	g_current_data_counter = 0;
-	CLR_DL_SEND_FINISHED;
-	
+	g_current_dl_finished = 0;
 	// update the next angle
 	CURRENT_ANGLE += 1;				// if its 255 it will wrap around to 0 
 	
@@ -146,13 +149,16 @@ ISR(TCC1_CCB_vect)
 		g_current_proj_buffer = g_flash_read_buffer_II;		
 	}
 	
-	set_projection_buffer ( g_current_proj_buffer );
+	// set the appropriate buffer to the projection system
+	set_projection_buffer ( g_current_proj_buffer + g_current_polarity );
 	
 	// send to all the slaves "start new batch massage"
 	anibike_dl_master_send_timing_sync( 600 );
 	anibike_dl_master_send_batch_start(  );
 
-	CLR_FLASH_DATA_VALID;
+	g_flash_data_valid = 0;
+	
+	ELAPSED_ANGLE = 75;
 }
 
 /*****************************************************************
@@ -163,12 +169,12 @@ void hall_sensor_handler ( void )
 	//printf_P ( PSTR("Hall Sensor\r\n"));
 	
 	// init the current angle to zero
-	CURRENT_ANGLE = 0;
+//	CURRENT_ANGLE = 0;
 	
 	// re-init other flags and variables
-	g_current_data_counter = 0;
-	CLR_DL_SEND_FINISHED;
-	CLR_FLASH_DATA_VALID;
+//	g_current_data_counter = 0;
+//	CLR_DL_SEND_FINISHED;
+//	CLR_FLASH_DATA_VALID;
 	
 	// if finished current file, read the next entry to g_currentEntry;
 	// and set g_currentFrameInFile to 0

@@ -38,6 +38,7 @@
 #define EEPROM_G_CONFIG_WORD	1
 #define EEPROM_B_CONFIG_WORD	2
 
+/*
 #define RED1	_SFR_MEM8(0x938)
 #define RED2	_SFR_MEM8(0x93A)
 #define RED3	_SFR_MEM8(0x93C)
@@ -50,21 +51,21 @@
 #define BLUE2	_SFR_MEM8(0xA3A)
 #define BLUE3	_SFR_MEM8(0xA3C)
 #define BLUE4	_SFR_MEM8(0xA3E)
-
-/*
-#define RED1	(*((uint8_t*)(0x938))) 
-#define RED2	(*((uint8_t*)(0x93A)))
-#define RED3	(*((uint8_t*)(0x93C)))
-#define RED4	(*((uint8_t*)(0x93E)))
-#define GREEN1	(*((uint8_t*)(0x838)))
-#define GREEN2	(*((uint8_t*)(0x83A)))
-#define GREEN3	(*((uint8_t*)(0x83C)))
-#define GREEN4	(*((uint8_t*)(0x83E)))
-#define BLUE1	(*((uint8_t*)(0xA38)))
-#define BLUE2	(*((uint8_t*)(0xA3A)))
-#define BLUE3	(*((uint8_t*)(0xA3C)))
-#define BLUE4	(*((uint8_t*)(0xA3E)))
 */
+
+#define RED1	(*((uint8_t*)(0x928))) 
+#define RED2	(*((uint8_t*)(0x92A)))
+#define RED3	(*((uint8_t*)(0x92C)))
+#define RED4	(*((uint8_t*)(0x92E)))
+#define GREEN1	(*((uint8_t*)(0x828)))
+#define GREEN2	(*((uint8_t*)(0x82A)))
+#define GREEN3	(*((uint8_t*)(0x82C)))
+#define GREEN4	(*((uint8_t*)(0x82E)))
+#define BLUE1	(*((uint8_t*)(0xA28)))
+#define BLUE2	(*((uint8_t*)(0xA2A)))
+#define BLUE3	(*((uint8_t*)(0xA2C)))
+#define BLUE4	(*((uint8_t*)(0xA2E)))
+
 
 /*****************************************************************
  *			M A C R O    D E F I N I T I O N S

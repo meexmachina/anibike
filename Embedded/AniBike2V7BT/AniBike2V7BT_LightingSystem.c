@@ -15,7 +15,7 @@ volatile uint8_t CIE_Gamma_4bit[] = {0,2,4,7,12,18,27,38,51,67,86,108,134,163,19
 /*****************************************************************
  *			BUFFERS
  *****************************************************************/
-volatile uint8_t *g_current_proj_buffer = NULL;
+volatile uint8_t *g_current_buffer = NULL;
 
 //__________________________________________________________________________________________________
 void initialize_lighting_system ( void )
@@ -40,18 +40,21 @@ void initialize_lighting_system ( void )
 	GREEN_PWM_CTRL.CTRLB |= TC0_CCCEN_bm;
 	GREEN_PWM_CTRL.CTRLB |= TC0_CCDEN_bm;
 	GREEN_PWM_CTRL.CTRLB |= TC_WGMODE_SS_gc;
+	GREEN_PWM_CTRL.CTRLE |= TC0_BYTEM_bm;
 	
 	RED_PWM_CTRL.CTRLB |= TC0_CCAEN_bm;
 	RED_PWM_CTRL.CTRLB |= TC0_CCBEN_bm;
 	RED_PWM_CTRL.CTRLB |= TC0_CCCEN_bm;
 	RED_PWM_CTRL.CTRLB |= TC0_CCDEN_bm;
 	RED_PWM_CTRL.CTRLB |= TC_WGMODE_SS_gc;
+	RED_PWM_CTRL.CTRLE |= TC0_BYTEM_bm;
 	
 	BLUE_PWM_CTRL.CTRLB |= TC0_CCAEN_bm;
 	BLUE_PWM_CTRL.CTRLB |= TC0_CCBEN_bm;
 	BLUE_PWM_CTRL.CTRLB |= TC0_CCCEN_bm;
 	BLUE_PWM_CTRL.CTRLB |= TC0_CCDEN_bm;
 	BLUE_PWM_CTRL.CTRLB |= TC_WGMODE_SS_gc;
+	BLUE_PWM_CTRL.CTRLE |= TC0_BYTEM_bm;
 	
 	TC0_ConfigClockSource(&RED_PWM_CTRL, TC_CLKSEL_DIV1_gc);
 	TC0_ConfigClockSource(&GREEN_PWM_CTRL, TC_CLKSEL_DIV1_gc);
@@ -69,13 +72,13 @@ void initialize_lighting_system ( void )
 	
 	
 	// setup row control time on TCC1A
-//	ROW_TIMER_CTRL.CTRLA |= TC1_CCAEN_bm;
-//	TC1_ConfigClockSource(&ROW_TIMER_CTRL, TC_CLKSEL_DIV64_gc);	// we need it every 64 microseconds
-//	ROW_TIMER_CTRL.CTRLB |= TC1_WGMODE0_bm|TC1_WGMODE1_bm;
+	ROW_TIMER_CTRL.CTRLA |= TC1_CCAEN_bm;
+	TC1_ConfigClockSource(&ROW_TIMER_CTRL, TC_CLKSEL_DIV64_gc);	// we need it every 64 microseconds
+	ROW_TIMER_CTRL.CTRLB |= TC1_WGMODE0_bm;
 	//ROW_TIMER_CTRL.PER = 0x07;		
-//	ROW_TIMER_CTRL.CCA = 0x07;			// 14 usec - every tick is 31.25ns*64 = 2 usec
-//	TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
-//	ROW_TIMER_CTRL.CNT = 0;
+	ROW_TIMER_CTRL.CCA = 0x07;			// 14 usec - every tick is 31.25ns*64 = 2 usec
+	TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
+	ROW_TIMER_CTRL.CNT = 0;
 }
 
 //__________________________________________________________________________________________________
@@ -160,8 +163,8 @@ void switch_projection_state ( void )
 	uint8_t col;
 	uint8_t *place;
 
-	place = g_current_proj_buffer+(uint8_t)(CURR_ROW*6);
-		
+	place = g_current_buffer+((uint8_t)(CURR_ROW*6));
+	
 	col = ((*place)&0xf0)>>4;
 	col *= col;
 	BLUE1 = col;
@@ -203,16 +206,18 @@ void switch_projection_state ( void )
 //__________________________________________________________________________________________________
 void set_projection_buffer ( uint8_t *buffer )
 {
-	g_current_proj_buffer = buffer;
+	g_current_buffer = buffer;
 }
 
 //__________________________________________________________________________________________________
 ISR(TCC1_CCA_vect)
 {
+	if (ELAPSED_ANGLE)	ELAPSED_ANGLE --;
+	
 	CURR_ROW ++;						// 3cc
 	CURR_ROW &= 0x07;					// 3cc
 	MUX_SET_ROW (CURR_ROW);
 		
-	if (g_current_proj_buffer==NULL)	return;
+	if (g_current_buffer==NULL)	return;
 	switch_projection_state (  );
 }
