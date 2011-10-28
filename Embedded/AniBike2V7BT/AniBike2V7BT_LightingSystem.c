@@ -24,15 +24,16 @@ void initialize_lighting_system ( void )
 	MUX_CONTROL_PORT_DIR |= MUX_CONTROL_PINS;
 	MUX_DISABLE;
 	MUX_SET_ROW(0);
+	CURR_ROW = 0;
 	
 	// Column ports init
 	GREEN_PORT.DIRSET = LED_COLUMN_PINS;
 	RED_PORT.DIRSET = LED_COLUMN_PINS;
 	BLUE_PORT.DIRSET = LED_COLUMN_PINS;
 	
-	PORT_ConfigurePins( &RED_PORT,  LED_COLUMN_PINS, 1, 1, PORT_OPC_WIREDANDPULL_gc, PORT_ISC_INPUT_DISABLE_gc );
-	PORT_ConfigurePins( &GREEN_PORT,  LED_COLUMN_PINS, 1, 1, PORT_OPC_WIREDANDPULL_gc, PORT_ISC_INPUT_DISABLE_gc );
-	PORT_ConfigurePins( &BLUE_PORT,  LED_COLUMN_PINS, 1, 1, PORT_OPC_WIREDANDPULL_gc, PORT_ISC_INPUT_DISABLE_gc );
+	PORT_ConfigurePins( &RED_PORT,  LED_COLUMN_PINS, true, true, PORT_OPC_TOTEM_gc, PORT_ISC_INPUT_DISABLE_gc );
+	PORT_ConfigurePins( &GREEN_PORT,  LED_COLUMN_PINS, true, true, PORT_OPC_TOTEM_gc, PORT_ISC_INPUT_DISABLE_gc );
+	PORT_ConfigurePins( &BLUE_PORT,  LED_COLUMN_PINS, true, true, PORT_OPC_TOTEM_gc, PORT_ISC_INPUT_DISABLE_gc );
 	
 	GREEN_PWM_CTRL.CTRLB |= TC0_CCAEN_bm;
 	GREEN_PWM_CTRL.CTRLB |= TC0_CCBEN_bm;
@@ -56,7 +57,7 @@ void initialize_lighting_system ( void )
 	TC0_ConfigClockSource(&GREEN_PWM_CTRL, TC_CLKSEL_DIV1_gc);
 	TC0_ConfigClockSource(&BLUE_PWM_CTRL, TC_CLKSEL_DIV1_gc);
 	
-	read_period_calibrations ( &g_iRedCalibrationPeriod, &g_iGreenCalibrationPeriod, &g_iBlueCalibrationPeriod );
+	//read_period_calibrations ( &g_iRedCalibrationPeriod, &g_iGreenCalibrationPeriod, &g_iBlueCalibrationPeriod );
 	
 	TC_SetPeriod(&GREEN_PWM_CTRL, g_iGreenCalibrationPeriod);
 	TC_SetPeriod(&RED_PWM_CTRL, g_iRedCalibrationPeriod);
@@ -68,13 +69,13 @@ void initialize_lighting_system ( void )
 	
 	
 	// setup row control time on TCC1A
-	ROW_TIMER_CTRL.CTRLA |= TC1_CCAEN_bm;
-	TC1_ConfigClockSource(&ROW_TIMER_CTRL, TC_CLKSEL_DIV64_gc);	// we need it every 64 microseconds
-	ROW_TIMER_CTRL.CTRLB |= TC1_WGMODE0_bm|TC1_WGMODE1_bm;
+//	ROW_TIMER_CTRL.CTRLA |= TC1_CCAEN_bm;
+//	TC1_ConfigClockSource(&ROW_TIMER_CTRL, TC_CLKSEL_DIV64_gc);	// we need it every 64 microseconds
+//	ROW_TIMER_CTRL.CTRLB |= TC1_WGMODE0_bm|TC1_WGMODE1_bm;
 	//ROW_TIMER_CTRL.PER = 0x07;		
-	ROW_TIMER_CTRL.CCA = 0x07;			// 14 usec - every tick is 31.25ns*64 = 2 usec
-	TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
-	ROW_TIMER_CTRL.CNT = 0;
+//	ROW_TIMER_CTRL.CCA = 0x07;			// 14 usec - every tick is 31.25ns*64 = 2 usec
+//	TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
+//	ROW_TIMER_CTRL.CNT = 0;
 }
 
 //__________________________________________________________________________________________________
@@ -116,31 +117,39 @@ void write_period_calibrations ( uint16_t r, uint16_t g, uint16_t b )
 //__________________________________________________________________________________________________
 void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit)	// color = 1(RED), 2(GREEN), 3(BLUE)
 {
-	uint8_t val = CIE_Gamma_4bit[color4bit];
-	MUX_ENABLE;
+	uint8_t val = (uint8_t)(color4bit*color4bit);//CIE_Gamma_4bit[color4bit];
+	if (val>0)
+	{
+		MUX_ENABLE;
+	}						
+	else
+	{ 
+		MUX_DISABLE;
+	}		
 	// Set the row number
+	CURR_ROW = row_num;
 	MUX_SET_ROW (row_num);
 					
 	if (color==1)
 	{
-		RED_PWM_CTRL.CCABUF = val;        
-		RED_PWM_CTRL.CCBBUF = val;
-		RED_PWM_CTRL.CCCBUF = val;
-		RED_PWM_CTRL.CCDBUF = val;	
+		RED_PWM_CTRL.CCABUF = val+2;        
+		RED_PWM_CTRL.CCBBUF = val+2;
+		RED_PWM_CTRL.CCCBUF = val+2;
+		RED_PWM_CTRL.CCDBUF = val+2;	
 	}	
 	else if (color==2)
 	{
-		GREEN_PWM_CTRL.CCABUF = val;        
-		GREEN_PWM_CTRL.CCBBUF = val;
-		GREEN_PWM_CTRL.CCCBUF = val;
-		GREEN_PWM_CTRL.CCDBUF = val;
+		GREEN_PWM_CTRL.CCABUF = val+6;        
+		GREEN_PWM_CTRL.CCBBUF = val+6;
+		GREEN_PWM_CTRL.CCCBUF = val+6;
+		GREEN_PWM_CTRL.CCDBUF = val+6;
 	}					
 	else if (color==3)
 	{
-		BLUE_PWM_CTRL.CCABUF = val;        
-		BLUE_PWM_CTRL.CCBBUF = val;
-		BLUE_PWM_CTRL.CCCBUF = val;
-		BLUE_PWM_CTRL.CCDBUF = val;
+		BLUE_PWM_CTRL.CCABUF = val+12;        
+		BLUE_PWM_CTRL.CCBBUF = val+12;
+		BLUE_PWM_CTRL.CCCBUF = val+12;
+		BLUE_PWM_CTRL.CCDBUF = val+12;
 	}
 }
 

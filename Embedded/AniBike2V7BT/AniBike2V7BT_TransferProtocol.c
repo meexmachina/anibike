@@ -721,6 +721,8 @@ void tm_cmd_test_led		(U8 argc, char **argv)
 			}
 		}
 		
+		printf_P(PSTR("%d %d %d\r\n"), rowNum, rgb_choose, val);
+		
 		anibike_dl_master_send_light_leds_debug( rowNum, rgb_choose, val );					
 	} 
 	printf_P (PSTR("OK\r\n"));

@@ -36,12 +36,9 @@ void anibike_master_initialize_hardware ( void )
 	
 	
 	// setup column interchanging timer
-	COLUMN_TIMER_CTRL.CTRLA |= TC1_CCBEN_bm;								// enable timer B
-	//TC1_ConfigClockSource(&COLUMN_TIMER_CTRL, TC_CLKSEL_DIV64_gc);		// every tick is 2 usec
-	//ROW_TIMER_CTRL.CTRLB |= TC1_WGMODE0_bm|TC1_WGMODE1_bm;				// the same like in lighting system
-	//COLUMN_TIMER_CTRL.CCB = 0x012C;											// init to 600 usec
-	COLUMN_TIMER_CTRL.CCB = 0x2710;											// init to 600 usec
-	TC1_SetCCBIntLevel(&COLUMN_TIMER_CTRL, TC_CCBINTLVL_LO_gc );
+//	COLUMN_TIMER_CTRL.CTRLA |= TC1_CCBEN_bm;								// enable timer B
+//	COLUMN_TIMER_CTRL.CCB = 0x2710;										// init to 600 usec
+//	TC1_SetCCBIntLevel(&COLUMN_TIMER_CTRL, TC_CCBINTLVL_LO_gc );
 	
 	
 	// set the projection buffer
@@ -65,7 +62,7 @@ int main(void)
 	
 	initialize_hall_sensor(  );
 	initialize_lighting_system(  );	
-	stop_row_control;
+	run_row_control;
 	dataflash_spi_init (  );
 	
 	swUART_ConfigureDevice ( 0 );
@@ -79,7 +76,8 @@ int main(void)
 	sei ( );
 
 	while (1)
-	{
+	{	
+		
 		// set the appropriate buffer to the projection system
 		set_projection_buffer ( g_current_proj_buffer + g_current_polarity );
 		
