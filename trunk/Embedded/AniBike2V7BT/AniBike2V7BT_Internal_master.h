@@ -20,6 +20,7 @@
 #include "port_driver.h"
 #include "spi_driver.h"
 #include "tc_driver.h"
+#include "rtc_driver.h"
 #include "eeprom_driver.h"
 #include "clksys_driver.h"
 #include "DataFlash.h"

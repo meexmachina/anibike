@@ -19,6 +19,7 @@
 #include "AniBike2V7BT_DataLinkSlave.h"
 
 #include "clksys_driver.h"
+#include "rtc_driver.h"
 #include "swUART.h"
 #include "port_driver.h"
 #include "spi_driver.h"
