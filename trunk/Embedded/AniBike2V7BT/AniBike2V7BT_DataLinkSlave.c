@@ -10,6 +10,7 @@ SPI_Slave_t spiSlaveC;
 volatile	uint8_t		g_rx_data[DL_SLAVE_CIRC_BUFFER_SIZE] = {0};
 volatile	uint8_t		g_data_counter = 0;
 volatile	uint8_t		g_data_valid = 0;
+volatile	uint8_t		g_debaunce_cs = 1;
 
 extern		uint8_t*	g_buffer_I;
 extern		uint8_t*	g_buffer_II;
@@ -26,11 +27,18 @@ void anibike_dl_slave_initialize ( void )
 	DATALINK_PORT.DIRCLR = DATALINK_DATA_PIN|DATALINK_CLK_PIN|DATALINK_CS_PIN;
 		
 	PORT_ConfigurePins( &DATALINK_PORT,
-						DATALINK_CLK_PIN|DATALINK_DATA_PIN|DATALINK_CS_PIN,
+						DATALINK_CLK_PIN|DATALINK_DATA_PIN,
 						false,
 						false,
 						PORT_OPC_TOTEM_gc,
-						PORT_ISC_LEVEL_gc );
+						PORT_ISC_BOTHEDGES_gc );
+						
+	PORT_ConfigurePins( &DATALINK_PORT,
+						DATALINK_CS_PIN,
+						false,
+						false,
+						PORT_OPC_PULLUP_gc,
+						PORT_ISC_BOTHEDGES_gc );
 	
 		
 	/* Initialize SPI slave on port C. */
@@ -40,6 +48,8 @@ void anibike_dl_slave_initialize ( void )
 	              false,
 	              SPI_MODE_0_gc,
 	              SPI_INTLVL_HI_gc);
+				  
+	PORT_ConfigureInterrupt0( &DATALINK_PORT, PORT_INT0LVL_HI_gc, DATALINK_CS_PIN );		
 
 	PMIC.CTRL |= PMIC_LOLVLEN_bm|PMIC_MEDLVLEN_bm|PMIC_HILVLEN_bm;	
 	
@@ -85,21 +95,21 @@ void anibike_dl_slave_handle_data ( void )
 		case DL_NEW_TIMING_SYNC:
 			{
 				DL_SLAVE_CIRC_BUFFER_FLUSH;
+				run_row_control;
 				// switch buffers
-				if (g_receive_buffer == g_buffer_II)
+				if (g_proj_buffer == g_buffer_I)
 				{
 					g_receive_buffer = g_buffer_I;
-					set_projection_buffer ( g_buffer_II );
 					g_proj_buffer = g_buffer_II;
 				}	
 				else
 				{
 					g_receive_buffer = g_buffer_II;
-					set_projection_buffer ( g_buffer_I );
-					g_proj_buffer = g_buffer_I;					
+					g_proj_buffer = g_buffer_I;		
 				}		
 				
-
+				set_projection_buffer ( g_proj_buffer );
+				
 				// re-init variables			
 				// set data not valid
 				g_data_valid = 0;
@@ -107,16 +117,6 @@ void anibike_dl_slave_handle_data ( void )
 				// set data counter to zero
 				g_data_counter = 0;
 					
-			}
-			break;
-		//_________________________________
-		case DL_RESTART_DATA_BATCH:
-			{
-				// set data not valid
-				g_data_valid = 0;
-						
-				// set data counter to zero
-				g_data_counter = 0;
 			}
 			break;
 		//_________________________________
@@ -141,6 +141,8 @@ void anibike_dl_slave_handle_data ( void )
 					uint8_t rownum;
 					uint8_t rgb;
 					uint8_t val;
+					
+					stop_row_control;
 					
 					if (val>0)
 					{
@@ -211,7 +213,7 @@ void anibike_dl_slave_handle_data ( void )
 }
 
 //__________________________________________________________________________________________________
-ISR(SPIC_INT_vect)
+ISR(SPIC_INT_vect, ISR_BLOCK)
 {
 	uint8_t temp;
 	uint8_t length;
@@ -228,4 +230,24 @@ ISR(SPIC_INT_vect)
 	}
 	
 	g_data_valid=1;
+}
+
+//__________________________________________________________________________________________________
+ISR(PORTC_INT0_vect, ISR_BLOCK)
+{
+	DL_SLAVE_CIRC_BUFFER_FLUSH;
+	/*
+	if ( (DATALINK_PORT.IN&DATALINK_CS_PIN)!=0 )
+	{
+		NOP; NOP; NOP;
+		g_debaunce_cs = (DATALINK_PORT.IN&DATALINK_CS_PIN)!=0; // can be either =0 or !=0
+																// if =0 next time do flush
+	}
+	else
+	{
+		if (g_debaunce_cs)
+			DL_SLAVE_CIRC_BUFFER_FLUSH;
+		
+		g_debaunce_cs = 1;
+	}	*/
 }

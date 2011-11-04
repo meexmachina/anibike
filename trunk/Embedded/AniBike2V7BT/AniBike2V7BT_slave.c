@@ -25,29 +25,29 @@ void anibike_slave_initialize_hardware ( void )
 	
 	g_receive_buffer = g_buffer_II;
 	g_proj_buffer = g_buffer_I;
-	set_projection_buffer ( g_buffer_I );
+	set_projection_buffer ( g_proj_buffer );
 //	anibike_dl_slave_set_receive_buffer ( g_receive_buffer );
 
 	/////////////////////////////////////
 	// RTC
 	/* Turn on internal 32kHz. */
-	OSC.CTRL |= OSC_RC32KEN_bm;
+	//OSC.CTRL |= OSC_RC32KEN_bm;
 
-	do {
+	//do {
 		/* Wait for the 32kHz oscillator to stabilize. */
-	} while ( ( OSC.STATUS & OSC_RC32KRDY_bm ) == 0);
+	//} while ( ( OSC.STATUS & OSC_RC32KRDY_bm ) == 0);
 	
 	/* Set internal 32kHz oscillator as clock source for RTC. */
-	CLK.RTCCTRL = CLK_RTCSRC_RCOSC_gc | CLK_RTCEN_bm;
+	//CLK.RTCCTRL = CLK_RTCSRC_RCOSC_gc | CLK_RTCEN_bm;
 	
-	do {
+	//do {
 		/* Wait until RTC is not busy. */
-	} while ( RTC_Busy() );
+	//} while ( RTC_Busy() );
 	
-	RTC.PER = 2047;
-	RTC.CNT = 0;
-	RTC.COMP = 2047;
-	RTC.CTRL = ( RTC.CTRL & ~RTC_PRESCALER_gm ) | RTC_PRESCALER_DIV1_gc;
+	//RTC.PER = 2047;
+	//RTC.CNT = 0;
+	//RTC.COMP = 2047;
+	//RTC.CTRL = ( RTC.CTRL & ~RTC_PRESCALER_gm ) | RTC_PRESCALER_DIV1_gc;
 }
 
 /*****************************************************************
