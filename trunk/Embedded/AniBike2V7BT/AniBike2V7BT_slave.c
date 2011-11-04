@@ -28,6 +28,8 @@ void anibike_slave_initialize_hardware ( void )
 	set_projection_buffer ( g_buffer_I );
 //	anibike_dl_slave_set_receive_buffer ( g_receive_buffer );
 
+	/////////////////////////////////////
+	// RTC
 	/* Turn on internal 32kHz. */
 	OSC.CTRL |= OSC_RC32KEN_bm;
 
@@ -42,7 +44,10 @@ void anibike_slave_initialize_hardware ( void )
 		/* Wait until RTC is not busy. */
 	} while ( RTC_Busy() );
 	
-	RTC_Initialize( 2048, 0, 0, RTC_PRESCALER_DIV1_gc );
+	RTC.PER = 2047;
+	RTC.CNT = 0;
+	RTC.COMP = 2047;
+	RTC.CTRL = ( RTC.CTRL & ~RTC_PRESCALER_gm ) | RTC_PRESCALER_DIV1_gc;
 }
 
 /*****************************************************************
