@@ -36,10 +36,8 @@ void anibike_master_initialize_hardware ( void )
 	// Map port A to virtual port 3
 	PORT_MapVirtualPort3( PORTCFG_VP3MAP_PORTA_gc );
 	
-	
 	// setup column interchanging timer
 	ELAPSED_ANGLE = 75;
-	
 	
 	// set the projection buffer
 	g_current_flash_addr = 0;
@@ -72,6 +70,7 @@ int main(void)
 	set_hall_interrupt_handler( hall_sensor_handler );
 	anibike_dl_master_initialize ( );
 	
+
 	sei ( );
 	MUX_ENABLE;
 	
@@ -94,15 +93,17 @@ int main(void)
 		g_current_data_counter = 0;
 		g_flash_data_valid = 1;		
 		
+		
 		while (g_current_data_counter<48)
 		{
 			anibike_dl_master_send_data( g_current_flash_buffer + g_current_data_counter, 3);
 			g_current_data_counter+=3;
-		}			
+		}	
+		anibike_dl_master_end_transactions;		
 										  
 		// idle until buffer not valid anymore
-		while (ELAPSED_ANGLE) {	}
-			
+		while (ELAPSED_ANGLE) {	 }
+				
 		switch_angle_signal ( );
 	}
 }
@@ -154,7 +155,6 @@ void switch_angle_signal ( void )
 	
 	// send to all the slaves "start new batch massage"
 	anibike_dl_master_send_timing_sync(  );
-//	anibike_dl_master_send_batch_start(  );
 
 	g_flash_data_valid = 0;
 	

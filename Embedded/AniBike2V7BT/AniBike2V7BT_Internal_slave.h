@@ -88,6 +88,8 @@
 //#define SET_DATA_VALID		{GPIO_GPIO1 |= 0x01;}	
 //#define CLR_DATA_VALID		{GPIO_GPIO1 &= 0xFE;}
 //#define DL_DATA_COUNT			GPIO_GPIO2
+#define NOP					{asm volatile ("nop\n\t");}
+#define DELAY120NS			{NOP;NOP;NOP;NOP;}
 
 
 /*****************************************************************

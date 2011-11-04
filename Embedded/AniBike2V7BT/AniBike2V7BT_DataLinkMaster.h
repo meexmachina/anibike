@@ -36,6 +36,9 @@ enum
 
 typedef uint8_t anibike_dl_slave_header;
 
+#define anibike_dl_master_start_transactions	{SPI_MasterSSLow (&DATALINK_PORT, DATALINK_CS_PIN);DELAY120NS;DELAY120NS;DELAY120NS;DELAY120NS;DELAY120NS;}
+#define anibike_dl_master_end_transactions		{SPI_MasterSSHigh (&DATALINK_PORT, DATALINK_CS_PIN);}
+
 void anibike_dl_master_initialize ( void );
 int anibike_dl_master_check_connection ( void );
 void anibike_dl_master_send_data ( uint8_t *data, uint8_t length );	
