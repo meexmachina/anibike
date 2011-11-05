@@ -90,17 +90,33 @@ int main(void)
 							   FS_COLUMN_SIZE );
 		
 		// mark to the sending mechanism to start transactions
-		g_current_data_counter = 0;
-		g_flash_data_valid = 1;		
-		
-		
-		while (g_current_data_counter<48)
+		if (g_current_polarity==0)
 		{
-			anibike_dl_master_send_data( g_current_flash_buffer + g_current_data_counter, 3);
-			g_current_data_counter+=3;
+			g_current_data_counter = 0;
+			g_flash_data_valid = 1;		
+		
+		
+			while (g_current_data_counter<48)
+			{
+				anibike_dl_master_send_data( g_current_flash_buffer + g_current_data_counter, 3);
+				g_current_data_counter+=3;
+			}	
+		}
+		else
+		{
+			g_current_data_counter = 48;
+			g_flash_data_valid = 1;		
+		
+		
+			while (g_current_data_counter<96)
+			{
+				anibike_dl_master_send_data( g_current_flash_buffer + g_current_data_counter, 3);
+				g_current_data_counter+=3;
+			}				
 		}	
+		
 		anibike_dl_master_end_transactions;		
-										  
+													  
 		// idle until buffer not valid anymore
 		while (ELAPSED_ANGLE) {	 }
 				

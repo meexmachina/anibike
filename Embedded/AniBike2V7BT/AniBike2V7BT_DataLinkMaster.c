@@ -36,8 +36,8 @@ void anibike_dl_master_initialize ( void )
 	            false,
 	            SPI_MODE_0_gc,
 	            SPI_INTLVL_OFF_gc,
-	            true,
-	            SPI_PRESCALER_DIV16_gc,1);
+	            false,
+	            SPI_PRESCALER_DIV4_gc,1);
 					
 	// drive cs to high
 	DATALINK_PORT.OUTSET = DATALINK_CS_PIN;	
