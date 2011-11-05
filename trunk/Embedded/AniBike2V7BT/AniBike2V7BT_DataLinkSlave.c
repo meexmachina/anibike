@@ -10,12 +10,12 @@ SPI_Slave_t spiSlaveC;
 volatile	uint8_t		g_rx_data[DL_SLAVE_CIRC_BUFFER_SIZE] = {0};
 volatile	uint8_t		g_data_counter = 0;
 volatile	uint8_t		g_data_valid = 0;
-volatile	uint8_t		g_debaunce_cs = 1;
 
-extern		uint8_t*	g_buffer_I;
-extern		uint8_t*	g_buffer_II;
-extern		uint8_t*	g_receive_buffer;
-extern		uint8_t*	g_proj_buffer;
+volatile uint8_t g_buffer_I	[96] = {0};
+volatile uint8_t g_buffer_II[96] = {0};
+volatile uint8_t g_current_double_buffer = 0;		// 0=proj is I, receive=II
+volatile uint8_t *g_receive_buffer;
+volatile uint8_t *g_proj_buffer;
 	
 //__________________________________________________________________________________________________
 void anibike_dl_slave_initialize ( void )
@@ -55,6 +55,12 @@ void anibike_dl_slave_initialize ( void )
 	
 	DL_SLAVE_CIRC_BUFFER_START = 0;
 	DL_SLAVE_CIRC_BUFFER_END = 0;	
+	
+	
+	g_receive_buffer = g_buffer_II;
+	g_proj_buffer = g_buffer_I;
+	g_current_double_buffer = 0;
+	set_projection_buffer ( g_proj_buffer );
 }
 
 //__________________________________________________________________________________________________
@@ -97,15 +103,17 @@ void anibike_dl_slave_handle_data ( void )
 				DL_SLAVE_CIRC_BUFFER_FLUSH;
 				run_row_control;
 				// switch buffers
-				if (g_proj_buffer == g_buffer_I)
+				if (g_current_double_buffer == 0)
 				{
-					g_receive_buffer = g_buffer_I;
 					g_proj_buffer = g_buffer_II;
+					g_receive_buffer = g_buffer_I;
+					g_current_double_buffer = 1;
 				}	
 				else
 				{
+					g_proj_buffer = g_buffer_I;	
 					g_receive_buffer = g_buffer_II;
-					g_proj_buffer = g_buffer_I;		
+					g_current_double_buffer = 0;	
 				}		
 				
 				set_projection_buffer ( g_proj_buffer );
@@ -124,15 +132,17 @@ void anibike_dl_slave_handle_data ( void )
 			{
 				uint8_t length = cur_byte&0x1F;
 				
-				if (g_data_valid)
+				/*if (g_data_valid)
 				{
 					DL_SLAVE_CIRC_BUFFER_THROW_MSG(length,g_rx_data);
-				}					
-				
+				}	*/				
 				while (length--)
 				{
-					g_receive_buffer[g_data_counter++] = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
-				}									
+					uint8_t temp = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
+					g_receive_buffer[g_data_counter] = temp;
+					g_data_counter++;
+				}						
+							
 			}	
 			break;
 		//_________________________________

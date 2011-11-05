@@ -9,10 +9,6 @@
 /*****************************************************************
  *			BUFFERS
  *****************************************************************/
-volatile uint8_t g_buffer_I	[48] = {0};
-volatile uint8_t g_buffer_II	[48] = {0};
-volatile uint8_t *g_receive_buffer = NULL;
-volatile uint8_t *g_proj_buffer = NULL;
 
 
 /*****************************************************************
@@ -23,10 +19,7 @@ void anibike_slave_initialize_hardware ( void )
 	// Map port A to virtual port 3
 	PORT_MapVirtualPort3( PORTCFG_VP3MAP_PORTA_gc );	
 	
-	g_receive_buffer = g_buffer_II;
-	g_proj_buffer = g_buffer_I;
-	set_projection_buffer ( g_proj_buffer );
-//	anibike_dl_slave_set_receive_buffer ( g_receive_buffer );
+	//	anibike_dl_slave_set_receive_buffer ( g_receive_buffer );
 
 	/////////////////////////////////////
 	// RTC
