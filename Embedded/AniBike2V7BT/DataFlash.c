@@ -113,10 +113,19 @@ void dataflash_read_vector	( uint32_t addr_start,
 	adrByte3 = addr_start&0xff;     
    
 	CS_DOWN;
-	SPI_MasterTransceiveByte(&spiMasterD, READ_ARRAY);		// Read command     
-	SPI_MasterTransceiveByte(&spiMasterD, adrByte1);		// Send address - 24 bits
-	SPI_MasterTransceiveByte(&spiMasterD, adrByte2);		// starting from MSB
-	SPI_MasterTransceiveByte(&spiMasterD, adrByte3);
+	spiMasterD.module->DATA = READ_ARRAY;
+	while(!(spiMasterD.module->STATUS & SPI_IF_bm)) {	}	// wait
+	spiMasterD.module->DATA = adrByte1;
+	while(!(spiMasterD.module->STATUS & SPI_IF_bm)) {	}	// wait
+	spiMasterD.module->DATA = adrByte2;
+	while(!(spiMasterD.module->STATUS & SPI_IF_bm)) {	}	// wait
+	spiMasterD.module->DATA = adrByte3;
+	while(!(spiMasterD.module->STATUS & SPI_IF_bm)) {	}	// wait
+		
+	//SPI_MasterTransceiveByte(&spiMasterD, READ_ARRAY);		// Read command     
+	//SPI_MasterTransceiveByte(&spiMasterD, adrByte1);		// Send address - 24 bits
+	//SPI_MasterTransceiveByte(&spiMasterD, adrByte2);		// starting from MSB
+	//SPI_MasterTransceiveByte(&spiMasterD, adrByte3);
 
 	while (i--)
 	{
