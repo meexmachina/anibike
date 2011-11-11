@@ -54,12 +54,23 @@ void anibike_master_initialize_software ( void )
 {
 	for (uint8_t i=0; i<16; i++)
 	{
-		g_current_proj_buffer[3*i] = i|(i<<4);
-		g_current_proj_buffer[3*i+1] = i|(i<<4);
-		g_current_proj_buffer[3*i+2] = i|(i<<4);
-		g_current_proj_buffer[3*i+48] = i|(i<<4);
-		g_current_proj_buffer[3*i+49] = i|(i<<4);
-		g_current_proj_buffer[3*i+50] = i|(i<<4);
+		// blue l1
+		g_current_proj_buffer[i] = 0;//i|(i<<4);
+		
+		// green l1
+		g_current_proj_buffer[16+i] = i|(i<<4);
+		
+		// red l1
+		g_current_proj_buffer[32+i] = i|(i<<4);
+		
+		// bleu l2
+		g_current_proj_buffer[48+i] = i|(i<<4);
+		
+		// green l2
+		g_current_proj_buffer[64+i] = 0;//i|(i<<4);
+		
+		// red l2
+		g_current_proj_buffer[80+i] = 0;//i|(i<<4);
 	}
 	set_projection_buffer ( g_current_proj_buffer );
 	
