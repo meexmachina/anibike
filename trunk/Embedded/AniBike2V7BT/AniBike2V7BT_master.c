@@ -50,6 +50,28 @@ void anibike_master_initialize_hardware ( void )
 	CURRENT_ANGLE = 0;
 }
 
+void anibike_master_initialize_software ( void )
+{
+	for (uint8_t i=0; i<96; i++)
+	{
+		g_flash_read_buffer_I[i] = i|(i<<4);
+	}
+	set_projection_buffer ( g_flash_read_buffer_I );
+	
+	
+	// read the first entry from the filesystem	
+	if (FS_ReadNextEntry ( &g_currentEntry )==1)	// means that the filesystem is empty
+	{
+		MUX_ENABLE;
+		run_row_control;		
+	}
+	else
+	{
+		MUX_DISABLE;
+		stop_row_control;
+	}
+}
+
 /*****************************************************************
  *			M A I N    F U N C T I O N 
  *****************************************************************/
@@ -69,21 +91,14 @@ int main(void)
 	
 	set_hall_interrupt_handler( hall_sensor_handler );
 	anibike_dl_master_initialize ( );
+	anibike_master_initialize_software ( );
 	
-
 	sei ( );
-	MUX_ENABLE;
-	
-	for (uint8_t i=0; i<96; i++)
-	{
-		g_flash_read_buffer_I[i] = i|(i<<4);
-	}
-			
-	set_projection_buffer ( g_flash_read_buffer_I );
-	run_row_control;
 	
 	while (1)
 	{	
+		if (MUX_IS_DISABLED) continue;
+		
 		// Read from the flash 96 bytes
 		dataflash_read_vector( g_current_flash_addr, 
 							   g_current_flash_buffer, 
