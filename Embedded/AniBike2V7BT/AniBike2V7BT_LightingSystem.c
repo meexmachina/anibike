@@ -6,7 +6,7 @@
  */ 
 #include "AniBike2V7BT_Internal.h"
 
-volatile uint16_t	g_iRedCalibrationPeriod = 500;			// a little bit more dimmed
+volatile uint16_t	g_iRedCalibrationPeriod = 700;			// a little bit more dimmed
 volatile uint16_t	g_iGreenCalibrationPeriod = 235;		// maximum 235
 volatile uint16_t	g_iBlueCalibrationPeriod = 235;			// maximum 235
 
@@ -21,7 +21,7 @@ volatile uint8_t *g_current_buffer = NULL;
 void initialize_lighting_system ( void )
 {
 	// Row MUX control init
-	MUX_CONTROL_PORT_DIR |= MUX_CONTROL_PINS;
+	MUX_CONTROL_PORT_DIR |= MUX_CONTROL_PINS|MUX_ENABLE_PIN;
 	MUX_DISABLE;
 	MUX_SET_ROW(0);
 	CURR_ROW = 0;
@@ -167,7 +167,45 @@ void switch_projection_state ( void )
 	uint8_t col;
 	uint8_t *place;
 
-	place = g_current_buffer+((uint8_t)(CURR_ROW*6));
+	place = g_current_buffer+((uint8_t)(CURR_ROW*2));
+	
+	col = ((*place)&0xf0)>>4;
+	col *= col;
+	BLUE4 = col;
+	col = ((*place)&0x0f);  
+	col *= col;             
+	BLUE3 = col;
+	col = ((*(place+1))&0xf0)>>4;  
+	col *= col;           
+	BLUE2 = col;        
+	col = ((*(place+1))&0x0f);
+	col *= col;
+	BLUE1 = col;
+	col = ((*(place+16))&0xf0)>>4;
+	col *= col;
+	GREEN1 = col;
+	col = ((*(place+16))&0x0f);
+	col *= col;
+	GREEN2 = col;
+	col = ((*(place+17))&0xf0)>>4;
+	col *= col;
+	GREEN3 = col;        
+	col = ((*(place+17))&0x0f);
+	col *= col;
+	GREEN4 = col;        
+	col = ((*(place+32))&0xf0)>>4;
+	col *= col;
+	RED4 = col;        
+	col = ((*(place+32))&0x0f);
+	col *= col;
+	RED3 = col;
+	col = ((*(place+33))&0xf0)>>4;
+	col *= col;
+	RED2 = col;
+	col = ((*(place+33))&0x0f);
+	col *= col;
+	RED1 = col;
+/*	place = g_current_buffer+((uint8_t)(CURR_ROW*6));
 	
 	col = ((*place)&0xf0)>>4;
 	col *= col;
@@ -204,7 +242,7 @@ void switch_projection_state ( void )
 	RED2 = col;
 	col = ((*(place+5))&0x0f);
 	col *= col;
-	RED1 = col;
+	RED1 = col;*/
 }
 
 //__________________________________________________________________________________________________
