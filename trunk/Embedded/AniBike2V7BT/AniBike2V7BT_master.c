@@ -52,9 +52,14 @@ void anibike_master_initialize_hardware ( void )
 
 void anibike_master_initialize_software ( void )
 {
-	for (uint8_t i=0; i<96; i++)
+	for (uint8_t i=0; i<16; i++)
 	{
-		g_current_proj_buffer[i] = i|(i<<4);
+		g_current_proj_buffer[3*i] = i|(i<<4);
+		g_current_proj_buffer[3*i+1] = i|(i<<4);
+		g_current_proj_buffer[3*i+2] = i|(i<<4);
+		g_current_proj_buffer[3*i+48] = i|(i<<4);
+		g_current_proj_buffer[3*i+49] = i|(i<<4);
+		g_current_proj_buffer[3*i+50] = i|(i<<4);
 	}
 	set_projection_buffer ( g_current_proj_buffer );
 	
@@ -104,9 +109,9 @@ int main(void)
 		//if (MUX_IS_DISABLED) continue;
 		
 		// Read from the flash 96 bytes
-		dataflash_read_vector( g_current_flash_addr, 
-							   g_current_flash_buffer, 
-							   FS_COLUMN_SIZE );
+//		dataflash_read_vector( g_current_flash_addr, 
+//							   g_current_flash_buffer, 
+//							   FS_COLUMN_SIZE );
 		
 		// mark to the sending mechanism to start transactions
 /*		if (g_current_polarity==0)
@@ -139,7 +144,7 @@ int main(void)
 		// idle until buffer not valid anymore
 		while (ELAPSED_ANGLE) {	 }
 				
-		switch_angle_signal ( );
+//		switch_angle_signal ( );
 	}
 }
 

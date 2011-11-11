@@ -6,7 +6,7 @@
  */ 
 #include "AniBike2V7BT_Internal.h"
 
-volatile uint16_t	g_iRedCalibrationPeriod = 280;			// a little bit more dimmed
+volatile uint16_t	g_iRedCalibrationPeriod = 500;			// a little bit more dimmed
 volatile uint16_t	g_iGreenCalibrationPeriod = 235;		// maximum 235
 volatile uint16_t	g_iBlueCalibrationPeriod = 235;			// maximum 235
 
@@ -171,16 +171,16 @@ void switch_projection_state ( void )
 	
 	col = ((*place)&0xf0)>>4;
 	col *= col;
-	BLUE1 = col;
+	BLUE4 = col;
 	col = ((*place)&0x0f);  
 	col *= col;             
-	BLUE2 = col;
+	BLUE3 = col;
 	col = ((*(place+1))&0xf0)>>4;  
 	col *= col;           
-	BLUE3 = col;        
+	BLUE2 = col;        
 	col = ((*(place+1))&0x0f);
 	col *= col;
-	BLUE4 = col;
+	BLUE1 = col;
 	col = ((*(place+2))&0xf0)>>4;
 	col *= col;
 	GREEN1 = col;
@@ -195,16 +195,16 @@ void switch_projection_state ( void )
 	GREEN4 = col;        
 	col = ((*(place+4))&0xf0)>>4;
 	col *= col;
-	RED1 = col;        
+	RED4 = col;        
 	col = ((*(place+4))&0x0f);
 	col *= col;
-	RED2 = col;
+	RED3 = col;
 	col = ((*(place+5))&0xf0)>>4;
 	col *= col;
-	RED3 = col;
+	RED2 = col;
 	col = ((*(place+5))&0x0f);
 	col *= col;
-	RED4 = col;
+	RED1 = col;
 }
 
 //__________________________________________________________________________________________________
