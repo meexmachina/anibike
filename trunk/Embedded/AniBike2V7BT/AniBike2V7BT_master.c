@@ -54,19 +54,21 @@ void anibike_master_initialize_software ( void )
 {
 	for (uint8_t i=0; i<96; i++)
 	{
-		g_flash_read_buffer_I[i] = i|(i<<4);
+		g_current_proj_buffer[i] = i|(i<<4);
 	}
-	set_projection_buffer ( g_flash_read_buffer_I );
+	set_projection_buffer ( g_current_proj_buffer );
 	
 	
 	// read the first entry from the filesystem	
 	if (FS_ReadNextEntry ( &g_currentEntry )==1)	// means that the filesystem is empty
 	{
+		printf_P(PSTR("anibike 2v8bt: %s, %d, %d\r\n"), g_currentEntry.sFileName, g_currentEntry.iNumFrames, g_currentEntry.iBlockList[0]);
 		MUX_ENABLE;
 		run_row_control;		
 	}
 	else
 	{
+		printf_P(PSTR("anibike 2v8bt: file-system empty."));
 		MUX_DISABLE;
 		stop_row_control;
 	}
@@ -97,7 +99,7 @@ int main(void)
 	
 	while (1)
 	{	
-		if (MUX_IS_DISABLED) continue;
+		//if (MUX_IS_DISABLED) continue;
 		
 		// Read from the flash 96 bytes
 		dataflash_read_vector( g_current_flash_addr, 
@@ -105,7 +107,7 @@ int main(void)
 							   FS_COLUMN_SIZE );
 		
 		// mark to the sending mechanism to start transactions
-		if (g_current_polarity==0)
+/*		if (g_current_polarity==0)
 		{
 			g_current_data_counter = 0;
 			g_flash_data_valid = 1;		
@@ -128,7 +130,7 @@ int main(void)
 				anibike_dl_master_send_data( g_current_flash_buffer + g_current_data_counter, 3);
 				g_current_data_counter+=3;
 			}				
-		}	
+		}	*/
 		
 		anibike_dl_master_end_transactions;		
 													  

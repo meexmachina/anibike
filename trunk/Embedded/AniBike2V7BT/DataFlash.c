@@ -99,6 +99,7 @@ char dataflash_read(uint32_t addr)
 	return data;
 }
 
+//__________________________________________________________________________________________________
 void dataflash_read_vector	( uint32_t addr_start, 
 							  uint8_t* buffer, 
 							  uint8_t length )
