@@ -62,7 +62,9 @@ void anibike_master_initialize_software ( void )
 	// read the first entry from the filesystem	
 	if (FS_ReadNextEntry ( &g_currentEntry )==1)	// means that the filesystem is empty
 	{
-		printf_P(PSTR("anibike 2v8bt: %s, %d, %d\r\n"), g_currentEntry.sFileName, g_currentEntry.iNumFrames, g_currentEntry.iBlockList[0]);
+		printf_P(PSTR("anibike 2v8bt: %s, %d, %d\r\n"), g_currentEntry.sFileName, g_currentEntry.iNumFrames, g_currentEntry.iBlockList[0]);		
+		g_current_flash_addr = ((uint32_t)(g_currentEntry.iBlockList[0]))*FS_FRAME_SIZE;
+		g_currentFrameInFile = 0; 
 		MUX_ENABLE;
 		run_row_control;		
 	}
@@ -162,7 +164,7 @@ void switch_angle_signal ( void )
 	}
 	
 	// update the next flash address
-	if (CURRENT_ANGLE==0x80)
+	if (CURRENT_ANGLE==0x80 || CURRENT_ANGLE==0x00)
 	{
 		g_current_flash_addr = FRAME_OFFSET_ADDR(g_currentEntry.iBlockList[g_currentFrameInFile]);
 	}		
