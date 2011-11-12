@@ -205,44 +205,7 @@ void switch_projection_state ( void )
 	col = ((*(place+33))&0x0f);
 	col *= col;
 	RED1 = col;
-/*	place = g_current_buffer+((uint8_t)(CURR_ROW*6));
-	
-	col = ((*place)&0xf0)>>4;
-	col *= col;
-	BLUE4 = col;
-	col = ((*place)&0x0f);  
-	col *= col;             
-	BLUE3 = col;
-	col = ((*(place+1))&0xf0)>>4;  
-	col *= col;           
-	BLUE2 = col;        
-	col = ((*(place+1))&0x0f);
-	col *= col;
-	BLUE1 = col;
-	col = ((*(place+2))&0xf0)>>4;
-	col *= col;
-	GREEN1 = col;
-	col = ((*(place+2))&0x0f);
-	col *= col;
-	GREEN2 = col;
-	col = ((*(place+3))&0xf0)>>4;
-	col *= col;
-	GREEN3 = col;        
-	col = ((*(place+3))&0x0f);
-	col *= col;
-	GREEN4 = col;        
-	col = ((*(place+4))&0xf0)>>4;
-	col *= col;
-	RED4 = col;        
-	col = ((*(place+4))&0x0f);
-	col *= col;
-	RED3 = col;
-	col = ((*(place+5))&0xf0)>>4;
-	col *= col;
-	RED2 = col;
-	col = ((*(place+5))&0x0f);
-	col *= col;
-	RED1 = col;*/
+
 }
 
 //__________________________________________________________________________________________________

@@ -58,19 +58,22 @@ void anibike_master_initialize_software ( void )
 		g_current_proj_buffer[i] = 0;//i|(i<<4);
 		
 		// green l1
-		g_current_proj_buffer[16+i] = i|(i<<4);
-		
+		if (i>=14)
+			g_current_proj_buffer[16+i] = i|(i<<4);
+		else
+			g_current_proj_buffer[16+i] = 0;
+			
 		// red l1
 		g_current_proj_buffer[32+i] = i|(i<<4);
 		
 		// bleu l2
-		g_current_proj_buffer[48+i] = i|(i<<4);
+		g_current_proj_buffer[48+i] = 0;
 		
 		// green l2
-		g_current_proj_buffer[64+i] = 0;//i|(i<<4);
+		g_current_proj_buffer[64+i] = 0;
 		
 		// red l2
-		g_current_proj_buffer[80+i] = 0;//i|(i<<4);
+		g_current_proj_buffer[80+i] = 0;
 	}
 	set_projection_buffer ( g_current_proj_buffer );
 	
