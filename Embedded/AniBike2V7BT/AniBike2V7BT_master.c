@@ -52,28 +52,29 @@ void anibike_master_initialize_hardware ( void )
 
 void anibike_master_initialize_software ( void )
 {
-	for (uint8_t i=0; i<16; i++)
+	uint8_t o = 0;
+	
+	for (uint8_t i=(0+o); i<(16+o); i++)
 	{
+		uint8_t k = i%16;
+		uint8_t v = 4+(k/2);
 		// blue l1
-		g_current_proj_buffer[i] = 0;//i|(i<<4);
+		g_current_proj_buffer[k] = 0;//(i)|((i)<<4);
 		
 		// green l1
-		if (i<=4)
-			g_current_proj_buffer[16+i] = i|(i<<4);
-		else
-			g_current_proj_buffer[16+i] = 0;
+		g_current_proj_buffer[16+k] = (v)|((v)<<4);
 			
 		// red l1
-		g_current_proj_buffer[32+i] = i|(i<<4);
+		g_current_proj_buffer[32+k] = 0;//(i)|((i)<<4);
 		
-		// bleu l2
-		g_current_proj_buffer[48+i] = 0;
+		// blue l2
+		g_current_proj_buffer[48+k] = 0;
 		
 		// green l2
-		g_current_proj_buffer[64+i] = 0;
+		g_current_proj_buffer[64+k] = 0;
 		
 		// red l2
-		g_current_proj_buffer[80+i] = 0;
+		g_current_proj_buffer[80+k] = 0;
 	}
 	set_projection_buffer ( g_current_proj_buffer );
 	
@@ -123,12 +124,12 @@ int main(void)
 		//if (MUX_IS_DISABLED) continue;
 		
 		// Read from the flash 96 bytes
-//		dataflash_read_vector( g_current_flash_addr, 
-//							   g_current_flash_buffer, 
-//							   FS_COLUMN_SIZE );
+		dataflash_read_vector( g_current_flash_addr, 
+							   g_current_flash_buffer, 
+							   FS_COLUMN_SIZE );
 		
 		// mark to the sending mechanism to start transactions
-/*		if (g_current_polarity==0)
+		if (g_current_polarity==0)
 		{
 			g_current_data_counter = 0;
 			g_flash_data_valid = 1;		
@@ -151,14 +152,14 @@ int main(void)
 				anibike_dl_master_send_data( g_current_flash_buffer + g_current_data_counter, 3);
 				g_current_data_counter+=3;
 			}				
-		}	*/
+		}	
 		
 		anibike_dl_master_end_transactions;		
 													  
 		// idle until buffer not valid anymore
 		while (ELAPSED_ANGLE) {	 }
 				
-//		switch_angle_signal ( );
+		switch_angle_signal ( );
 	}
 }
 
