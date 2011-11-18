@@ -696,7 +696,6 @@ void tm_cmd_test_led		(U8 argc, char **argv)
 		uint16_t val = 0;
 		uint8_t rowNum = atoi (argv[1]);
 		uint8_t rgb_choose = 0;
-		uint8_t result = 0;
 		
 		val = atol (argv[3]);
 		
@@ -948,8 +947,6 @@ void tm_cmd_read_led_cal	(U8 argc, char **argv)
 /**************************************************************************/
 void tm_cmd_write_led_cal (U8 argc, char **argv)
 {
-	uint8_t result = 0;
-	
 	if (argc != 4)
 	{
 		printf_P( PSTR("usage: write_cal red16 green16 blue16\r\n"));

@@ -167,7 +167,7 @@ void switch_projection_state ( void )
 	uint8_t col;
 	uint8_t *place;
 
-	place = g_current_buffer+((uint8_t)(CURR_ROW*2));
+	place = &g_current_buffer[((uint8_t)(CURR_ROW*2))];
 	
 	col = ((*place)&0xf0)>>4;
 	col *= col;

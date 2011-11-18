@@ -341,7 +341,7 @@ uint8_t swUART_ReadChar ( void )
 }
 
 
-/*int putchar_io (char c, FILE *unused)
+/*int putchar_io (char c, FILE *unused)`
 {
     if (c == '\n')
     {
