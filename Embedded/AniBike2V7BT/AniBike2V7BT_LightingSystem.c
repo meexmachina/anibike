@@ -237,11 +237,14 @@ ISR(TCC1_CCA_vect)
 //__________________________________________________________________________________________________
 ISR(TCC1_CCA_vect)
 {
+	if (g_current_buffer==NULL)	return;
+	
 	CURR_ROW ++;						// 3cc
 	CURR_ROW &= 0x07;					// 3cc
-	MUX_SET_ROW (CURR_ROW);
-		
-	if (g_current_buffer==NULL)	return;
+	
+	MUX_DISABLE
 	switch_projection_state (  );
+	MUX_SET_ROW (CURR_ROW);
+	MUX_ENABLE
 }
 #endif
