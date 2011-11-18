@@ -78,6 +78,7 @@ void initialize_lighting_system ( void )
 	//ROW_TIMER_CTRL.PER = 0x07;		
 	#ifdef _ANIBIKE_MASTER
 	ROW_TIMER_CTRL.CCA = 0x07;			// 14 usec - every tick is 31.25ns*64 = 2 usec
+	//ROW_TIMER_CTRL.CCA = 0xFFFF;			// 14 usec - every tick is 31.25ns*64 = 2 usec
 	#else
 	ROW_TIMER_CTRL.CCA = 0x20;			// 30 usec - every tick is 31.25ns*64 = 2 usec
 	#endif
@@ -167,7 +168,7 @@ void switch_projection_state ( void )
 	uint8_t col;
 	uint8_t *place;
 
-	place = &g_current_buffer[((uint8_t)(CURR_ROW*2))];
+	place = &g_current_buffer[((uint8_t)((CURR_ROW)*2))];
 	
 	col = ((*place)&0xf0)>>4;
 	col *= col;
@@ -217,15 +218,18 @@ void set_projection_buffer ( uint8_t *buffer )
 //__________________________________________________________________________________________________
 #if _ANIBIKE_MASTER
 ISR(TCC1_CCA_vect)
-{
-	if (ELAPSED_ANGLE)	ELAPSED_ANGLE --;
-
+{	
+	if (ELAPSED_ANGLE)	ELAPSED_ANGLE --;	
+	
+	if (g_current_buffer==NULL)	return;
+	
 	CURR_ROW ++;						// 3cc
 	CURR_ROW &= 0x07;					// 3cc
-	MUX_SET_ROW (CURR_ROW);
-		
-	if (g_current_buffer==NULL)	return;
+	
+	MUX_DISABLE
 	switch_projection_state (  );
+	MUX_SET_ROW (CURR_ROW);	
+	MUX_ENABLE
 }
 #endif
 
