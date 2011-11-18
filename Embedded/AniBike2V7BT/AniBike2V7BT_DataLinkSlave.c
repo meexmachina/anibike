@@ -16,6 +16,7 @@ volatile uint8_t g_buffer_II[96] = {0};
 volatile uint8_t g_current_double_buffer = 0;		// 0=proj is I, receive=II
 volatile uint8_t *g_receive_buffer;
 volatile uint8_t *g_proj_buffer;
+volatile uint8_t g_just_flushed = 1;
 	
 //__________________________________________________________________________________________________
 void anibike_dl_slave_initialize ( void )
@@ -47,7 +48,7 @@ void anibike_dl_slave_initialize ( void )
 	              &DATALINK_PORT,
 	              false,
 	              SPI_MODE_0_gc,
-	              SPI_INTLVL_HI_gc);
+	              SPI_INTLVL_MED_gc);
 				  
 	PORT_ConfigureInterrupt0( &DATALINK_PORT, PORT_INT0LVL_HI_gc, DATALINK_CS_PIN );		
 
@@ -75,22 +76,23 @@ void anibike_dl_slave_handle_data ( void )
 	uint8_t opcode;
 	uint8_t cur_byte = 0;
 	
-	//if (!DATA_IS_VALID)
-	//	return;
+	if (!g_data_valid) return;
+	g_data_valid--;			
 	
 	// check if the fifo has grown
 	if (DL_SLAVE_CIRC_BUFFER_LENGTH == 0)
 	{
 		return;
-	}		
+	}	
 	
-	cur_byte = DL_SLAVE_CIRC_BUFFER_TOP(g_rx_data);
+	/*	cur_byte = DL_SLAVE_CIRC_BUFFER_TOP(g_rx_data);
 	
 	// not all the data has been gotten yet
 	if (DL_SLAVE_CIRC_BUFFER_LENGTH <= (cur_byte&0x1F))
 	{
 		return;
-	}		
+	}*/		
+		
 			
 	cur_byte = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
 	opcode = cur_byte&0xE0;
@@ -124,25 +126,20 @@ void anibike_dl_slave_handle_data ( void )
 						
 				// set data counter to zero
 				g_data_counter = 0;
-					
+				
 			}
 			break;
 		//_________________________________
 		case DL_CONTINUE_DATA_BATCH:
 			{
 				uint8_t length = cur_byte&0x1F;
-				
-				/*if (g_data_valid)
-				{
-					DL_SLAVE_CIRC_BUFFER_THROW_MSG(length,g_rx_data);
-				}	*/				
+							
 				while (length--)
 				{
 					uint8_t temp = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
-					g_receive_buffer[g_data_counter] = temp;
-					g_data_counter++;
-				}						
-							
+					g_receive_buffer[g_data_counter++] = temp;
+					//g_data_counter++;
+				}	
 			}	
 			break;
 		//_________________________________
@@ -181,6 +178,7 @@ void anibike_dl_slave_handle_data ( void )
 					{
 						set_row_color ( rownum, 3, val);
 					}
+
 				}			
 			break;
 		//_________________________________
@@ -218,6 +216,7 @@ void anibike_dl_slave_handle_data ( void )
 		//_________________________________	
 		default:
 			DL_SLAVE_CIRC_BUFFER_FLUSH;
+			g_data_valid = 0;
 			break;
 	};
 }
@@ -229,35 +228,25 @@ ISR(SPIC_INT_vect)
 	uint8_t length;
 	/* Get received data. */
 	
+	if (g_just_flushed) g_just_flushed=0;
+	
 	temp = SPI_SlaveReadByte(&spiSlaveC);
 	DL_SLAVE_CIRC_BUFFER_ADD (g_rx_data, temp);
 	length = temp&0x1F;	// extract the length
 	
 	while (length--)
 	{
-		while (!SPI_SlaveDataAvailable(&spiSlaveC)) {}
+		while (!SPI_SlaveDataAvailable(&spiSlaveC)) { if (g_just_flushed) return; }
 		DL_SLAVE_CIRC_BUFFER_ADD (g_rx_data, SPI_SlaveReadByte(&spiSlaveC));
 	}
-	
-	g_data_valid=1;
+
+	g_data_valid++;
 }
 
 //__________________________________________________________________________________________________
 ISR(PORTC_INT0_vect)
 {
 	DL_SLAVE_CIRC_BUFFER_FLUSH;
-	/*
-	if ( (DATALINK_PORT.IN&DATALINK_CS_PIN)!=0 )
-	{
-		NOP; NOP; NOP;
-		g_debaunce_cs = (DATALINK_PORT.IN&DATALINK_CS_PIN)!=0; // can be either =0 or !=0
-																// if =0 next time do flush
-	}
-	else
-	{
-		if (g_debaunce_cs)
-			DL_SLAVE_CIRC_BUFFER_FLUSH;
-		
-		g_debaunce_cs = 1;
-	}	*/
+	g_just_flushed = 1;
+	g_data_valid=0;
 }
