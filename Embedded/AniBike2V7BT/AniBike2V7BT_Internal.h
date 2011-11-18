@@ -9,7 +9,7 @@
 #ifndef ANIBIKE2V7BT_INTERNAL_H_
 #define ANIBIKE2V7BT_INTERNAL_H_
 
-//#define F_CPU 32000000
+#define F_CPU 32000000
 
 #ifdef _ANIBIKE_MASTER
 	#include "AniBike2V7BT_Internal_master.h"
