@@ -57,7 +57,7 @@ void anibike_dl_master_send_data ( uint8_t *data, uint8_t length )		// length sm
 	
 	//SPI_MasterSSLow (&DATALINK_PORT, DATALINK_CS_PIN);
 	SPI_MasterTransceiveByte(&spiMasterC, (uint8_t)(header));
-	
+	DELAY120NS
 	while (length--)
 	{
 		//NOP;NOP;NOP;
@@ -94,10 +94,6 @@ void anibike_dl_master_send_timing_sync ( void )
 {
 	uint8_t header;
 	header = DL_NEW_TIMING_SYNC;
-	anibike_dl_master_end_transactions
-	DELAY120NS
-	DELAY120NS
-	anibike_dl_master_start_transactions
 	SPI_MasterTransceiveByte(&spiMasterC, header);
 }
 

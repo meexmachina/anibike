@@ -129,7 +129,7 @@ int main(void)
 							   FS_COLUMN_SIZE );
 		
 		// mark to the sending mechanism to start transactions
-		if (g_current_polarity==0)
+		if (g_current_polarity==1)
 		{
 			g_current_data_counter = 0;
 			g_flash_data_valid = 1;		
@@ -158,7 +158,8 @@ int main(void)
 													  
 		// idle until buffer not valid anymore
 		while (ELAPSED_ANGLE) {	 }
-				
+		
+						
 		switch_angle_signal ( );
 	}
 }
@@ -170,6 +171,8 @@ int main(void)
 void switch_angle_signal ( void )
 {
 	g_current_dl_finished = 0;
+	anibike_dl_master_start_transactions	
+	
 	// update the next angle
 	CURRENT_ANGLE += 1;				// if its 255 it will wrap around to 0 
 	

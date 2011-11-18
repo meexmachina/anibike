@@ -52,7 +52,7 @@ int main(void)
 	anibike_slave_initialize_hardware (  );
 	
 	swUART_ConfigureDevice ( 0 );
-	swUART_SetRxInterruptLevel ( 3 );
+	swUART_SetRxInterruptLevel ( 1 );
 	swUART_SetInterruptHandler ( NULL );
 	swUART_SetBaudRate ( 115200 );
 	initialize_lighting_system(  );	
