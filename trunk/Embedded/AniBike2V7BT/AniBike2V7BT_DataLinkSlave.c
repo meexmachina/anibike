@@ -223,7 +223,7 @@ void anibike_dl_slave_handle_data ( void )
 }
 
 //__________________________________________________________________________________________________
-ISR(SPIC_INT_vect, ISR_BLOCK)
+ISR(SPIC_INT_vect)
 {
 	uint8_t temp;
 	uint8_t length;
@@ -243,7 +243,7 @@ ISR(SPIC_INT_vect, ISR_BLOCK)
 }
 
 //__________________________________________________________________________________________________
-ISR(PORTC_INT0_vect, ISR_BLOCK)
+ISR(PORTC_INT0_vect)
 {
 	DL_SLAVE_CIRC_BUFFER_FLUSH;
 	/*

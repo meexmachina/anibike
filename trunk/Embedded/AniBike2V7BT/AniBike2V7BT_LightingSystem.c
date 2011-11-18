@@ -80,7 +80,7 @@ void initialize_lighting_system ( void )
 	ROW_TIMER_CTRL.CCA = 0x07;			// 14 usec - every tick is 31.25ns*64 = 2 usec
 	//ROW_TIMER_CTRL.CCA = 0xFFFF;			// 14 usec - every tick is 31.25ns*64 = 2 usec
 	#else
-	ROW_TIMER_CTRL.CCA = 0x20;			// 30 usec - every tick is 31.25ns*64 = 2 usec
+	ROW_TIMER_CTRL.CCA = 0x22;			// 30 usec - every tick is 31.25ns*64 = 2 usec
 	#endif
 	TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
 	ROW_TIMER_CTRL.CNT = 0;
@@ -235,7 +235,7 @@ ISR(TCC1_CCA_vect)
 
 #if _ANIBIKE_SLAVE
 //__________________________________________________________________________________________________
-ISR(TCC1_CCA_vect)
+ISR(TCC1_CCA_vect, ISR_NOBLOCK)
 {
 	if (g_current_buffer==NULL)	return;
 	
