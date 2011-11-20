@@ -14,6 +14,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "AniBike2V7BT_LightingSystem.h"
 #include "AniBike2V7BT_DataLinkSlave.h"

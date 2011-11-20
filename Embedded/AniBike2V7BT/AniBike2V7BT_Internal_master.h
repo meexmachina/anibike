@@ -15,6 +15,8 @@
 #include <util/delay.h>
 #include <util/crc16.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "swUART.h"
 #include "port_driver.h"
@@ -121,6 +123,7 @@ extern SPI_Master_t spiMasterC;
  *			F U N C T I O N    D E F I N I T I O N S
  *****************************************************************/
 void	SetClockFreq		( uint8_t freq );
+void	switch_angle_signal ( void );
 void	hall_sensor_handler ( void );
 
 

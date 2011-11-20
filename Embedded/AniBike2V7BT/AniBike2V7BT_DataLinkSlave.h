@@ -63,6 +63,8 @@ typedef uint8_t anibike_dl_slave_header;
 													}																	\
 												}																		\
 											}	
+#define EXTENDED_GPIO						(RTC.PERL)
+#define JUST_FINISHED_FLUSH					EXTENDED_GPIO
 
 void anibike_dl_slave_initialize ( void );
 void anibike_dl_slave_handle_data ( void );
