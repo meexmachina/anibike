@@ -103,7 +103,6 @@ void anibike_dl_slave_handle_data ( void )
 		case DL_NEW_TIMING_SYNC:
 			{
 				DL_SLAVE_CIRC_BUFFER_FLUSH;
-				run_row_control;
 				// switch buffers
 				if (g_current_double_buffer == 0)
 				{
@@ -127,6 +126,8 @@ void anibike_dl_slave_handle_data ( void )
 				// set data counter to zero
 				g_data_counter = 0;
 				
+				MUX_ENABLE;
+				run_row_control;	
 			}
 			break;
 		//_________________________________
@@ -193,6 +194,8 @@ void anibike_dl_slave_handle_data ( void )
 		case DL_GO_TO_SLEEP:
 			{
 				// do something to go to sleep
+				MUX_DISABLE;
+				stop_row_control;
 			}
 			break;
 		//_________________________________	
