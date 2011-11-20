@@ -16,7 +16,8 @@ volatile uint8_t g_buffer_II[96] = {0};
 volatile uint8_t g_current_double_buffer = 0;		// 0=proj is I, receive=II
 volatile uint8_t *g_receive_buffer;
 volatile uint8_t *g_proj_buffer;
-volatile uint8_t g_just_flushed = 1;
+//volatile uint8_t g_just_flushed = 1;
+volatile uint8_t g_needed_flush = 0;
 	
 //__________________________________________________________________________________________________
 void anibike_dl_slave_initialize ( void )
@@ -39,7 +40,8 @@ void anibike_dl_slave_initialize ( void )
 						false,
 						false,
 						PORT_OPC_PULLUP_gc,
-						PORT_ISC_BOTHEDGES_gc );
+						PORT_ISC_FALLING_gc );
+						//PORT_ISC_BOTHEDGES_gc );
 	
 		
 	/* Initialize SPI slave on port C. */
@@ -194,8 +196,8 @@ void anibike_dl_slave_handle_data ( void )
 		case DL_GO_TO_SLEEP:
 			{
 				// do something to go to sleep
-				MUX_DISABLE;
 				stop_row_control;
+				MUX_DISABLE;
 			}
 			break;
 		//_________________________________	
@@ -249,7 +251,7 @@ ISR(SPIC_INT_vect)
 //__________________________________________________________________________________________________
 ISR(PORTC_INT0_vect)
 {
-	DL_SLAVE_CIRC_BUFFER_FLUSH;
+	//if ()
+	g_needed_flush = 1;
 	JUST_FINISHED_FLUSH = 1;
-	g_data_valid=0;
 }

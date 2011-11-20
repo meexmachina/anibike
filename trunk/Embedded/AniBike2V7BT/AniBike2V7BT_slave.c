@@ -9,7 +9,8 @@
 /*****************************************************************
  *			BUFFERS
  *****************************************************************/
-
+extern volatile uint8_t g_needed_flush;
+extern volatile	uint8_t	g_data_valid;
 
 /*****************************************************************
  *			GENERAL SYSTEM CONFIGURATION
@@ -18,29 +19,6 @@ void anibike_slave_initialize_hardware ( void )
 {
 	// Map port A to virtual port 3
 	PORT_MapVirtualPort3( PORTCFG_VP3MAP_PORTA_gc );	
-	
-	//	anibike_dl_slave_set_receive_buffer ( g_receive_buffer );
-
-	/////////////////////////////////////
-	// RTC
-	/* Turn on internal 32kHz. */
-	//OSC.CTRL |= OSC_RC32KEN_bm;
-
-	//do {
-		/* Wait for the 32kHz oscillator to stabilize. */
-	//} while ( ( OSC.STATUS & OSC_RC32KRDY_bm ) == 0);
-	
-	/* Set internal 32kHz oscillator as clock source for RTC. */
-	//CLK.RTCCTRL = CLK_RTCSRC_RCOSC_gc | CLK_RTCEN_bm;
-	
-	//do {
-		/* Wait until RTC is not busy. */
-	//} while ( RTC_Busy() );
-	
-	//RTC.PER = 2047;
-	//RTC.CNT = 0;
-	//RTC.COMP = 2047;
-	//RTC.CTRL = ( RTC.CTRL & ~RTC_PRESCALER_gm ) | RTC_PRESCALER_DIV1_gc;
 }
 
 /*****************************************************************
@@ -48,8 +26,7 @@ void anibike_slave_initialize_hardware ( void )
  *****************************************************************/
 int main(void)
 {
-	_delay_ms(200);
-	
+	//_delay_ms(200);
 	SetClockFreq ( 32 );
 	anibike_slave_initialize_hardware (  );
 	
@@ -59,8 +36,8 @@ int main(void)
 	swUART_SetBaudRate ( 115200 );
 	initialize_lighting_system(  );	
 	anibike_dl_slave_initialize (  );
-	run_row_control;
-	MUX_ENABLE;
+	//run_row_control;
+	//MUX_ENABLE;
 	
 	// enable interrupts
 	sei ( );
@@ -68,5 +45,12 @@ int main(void)
 	while (1)
 	{
 		anibike_dl_slave_handle_data (  );
+		
+		if (g_needed_flush)
+		{
+			g_needed_flush = 0;
+			DL_SLAVE_CIRC_BUFFER_FLUSH;
+			g_data_valid=0;
+		}
 	}
 }
