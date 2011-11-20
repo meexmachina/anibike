@@ -69,6 +69,6 @@ void read_period_calibrations ( uint16_t *r, uint16_t *g, uint16_t *b );
 void write_period_calibrations ( uint16_t r, uint16_t g, uint16_t b );
 void set_row_color ( uint8_t row_num, uint8_t color, uint8_t color4bit);	// color = 1(RED), 2(GREEN), 3(BLUE)
 void switch_projection_state ( void ) __attribute__((always_inline));
-void set_projection_buffer ( uint8_t *buffer ) __attribute__((always_inline));;
+void set_projection_buffer ( uint8_t *buffer ) __attribute__((always_inline));
 
 #endif /* ANIBIKE2V7BT_LIGHTINGSYSTEM_H_ */

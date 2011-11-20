@@ -61,7 +61,7 @@ uint8_t 	dataflash_read_status 		( void );
 
 void 		dataflash_read_vector		( uint32_t addr_start, 
 										  uint8_t* buffer, 
-										  uint8_t length );
+										  uint8_t length ) __attribute__((flatten));
 
 
 
