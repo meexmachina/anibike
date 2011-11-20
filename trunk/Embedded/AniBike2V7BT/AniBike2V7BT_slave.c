@@ -48,6 +48,8 @@ void anibike_slave_initialize_hardware ( void )
  *****************************************************************/
 int main(void)
 {
+	_delay_ms(200);
+	
 	SetClockFreq ( 32 );
 	anibike_slave_initialize_hardware (  );
 	

@@ -119,7 +119,19 @@ void anibike_dl_master_go_to_sleep ( void )
 	anibike_dl_master_end_transactions
 	DELAY120NS
 	DELAY120NS
+	DELAY120NS
+	DELAY120NS
+	DELAY120NS
+	DELAY120NS
 	anibike_dl_master_start_transactions
+	DELAY120NS
+	DELAY120NS
+	DELAY120NS
+	DELAY120NS
+	DELAY120NS
+	DELAY120NS
+	DELAY120NS
+	DELAY120NS
 	SPI_MasterTransceiveByte(&spiMasterC, header);
 	anibike_dl_master_end_transactions
 }

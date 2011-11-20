@@ -76,7 +76,7 @@ void anibike_master_setup_realtime_counter ( void )
 	RTC.CNT = 0;
 	RTC.COMP = 2047;		// 2 msec
 	RTC.CTRL = ( RTC.CTRL & ~RTC_PRESCALER_gm ) | RTC_PRESCALER_DIV1_gc;	
-	RTC_SetCompareIntLevel( RTC_COMPINTLVL_HI_gc  );
+	RTC_SetCompareIntLevel( RTC_COMPINTLVL_LO_gc  );
 }
 
 /*****************************************************************
@@ -124,7 +124,7 @@ void anibike_master_initialize_software ( void )
 int main(void)
 {
 	// Sleep a little bit until the power supply is stabilized
-	_delay_ms(50);
+	_delay_ms(100);
 	
 	SetClockFreq ( 32 );
 	anibike_master_setup_realtime_counter (  );
@@ -322,5 +322,6 @@ ISR(RTC_COMP_vect)
 	MUX_DISABLE;
 	stop_row_control;
 	
-	
+	// send the secondary boards to stop all projection
+	anibike_dl_master_go_to_sleep (  );
 }
