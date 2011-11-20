@@ -103,7 +103,7 @@ void anibike_master_initialize_software ( void )
 	// read the first entry from the filesystem	
 	if (FS_ReadNextEntry ( &g_currentEntry )==1)	// means that the filesystem is empty
 	{
-		printf_P(PSTR("anibike 2v8bt: %s, %d, %d\r\n"), g_currentEntry.sFileName, g_currentEntry.iNumFrames, g_currentEntry.iBlockList[0]);		
+		//printf_P(PSTR("anibike 2v8bt: %s, %d, %d\r\n"), g_currentEntry.sFileName, g_currentEntry.iNumFrames, g_currentEntry.iBlockList[0]);		
 		g_current_flash_addr = ((uint32_t)(g_currentEntry.iBlockList[0]))*FS_FRAME_SIZE;
 		g_currentFrameInFile = 0; 
 		g_currentDuration = g_currentEntry.iDuration;
@@ -112,7 +112,7 @@ void anibike_master_initialize_software ( void )
 	}
 	else
 	{
-		printf_P(PSTR("anibike 2v8bt: file-system empty."));
+		//printf_P(PSTR("anibike 2v8bt: file-system empty."));
 		MUX_DISABLE;
 		stop_row_control;
 	}
@@ -256,8 +256,8 @@ void hall_sensor_handler ( void )
 	//printf_P ( PSTR("H"));
 	if ((RTC.CNT)<100) 
 	{
-		MUX_DISABLE;
 		stop_row_control;
+		MUX_DISABLE;
 		anibike_dl_master_go_to_sleep (  );
 		return;
 	}		
@@ -302,8 +302,8 @@ void hall_sensor_handler ( void )
 		}		
 		else
 		{
-			MUX_DISABLE;
 			stop_row_control;
+			MUX_DISABLE;
 			anibike_dl_master_go_to_sleep (  );
 		}
 	}
@@ -330,9 +330,9 @@ void hall_sensor_handler ( void )
 ISR(RTC_COMP_vect)
 {
 	// stop all projection
-	MUX_DISABLE;
 	stop_row_control;
-	
+	MUX_DISABLE;
+		
 	// send the secondary boards to stop all projection
 	anibike_dl_master_go_to_sleep (  );
 }
