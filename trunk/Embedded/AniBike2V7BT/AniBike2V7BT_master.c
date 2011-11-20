@@ -23,6 +23,7 @@ volatile uint8_t		g_currentFrameInFile = 0;
 volatile uint8_t		g_currentDuration = 255;
 volatile uint8_t		g_current_polarity = 0;
 volatile uint8_t		g_current_data_counter = 0;
+volatile uint8_t		g_delta_angle = 255;
 
 /*****************************************************************
  *			GENERAL SYSTEM CONFIGURATION
@@ -37,7 +38,7 @@ void anibike_master_initialize_hardware ( void )
 	PORT_MapVirtualPort3( PORTCFG_VP3MAP_PORTA_gc );
 	
 	// setup column interchanging timer
-	ELAPSED_ANGLE = 75;
+	ELAPSED_ANGLE = g_delta_angle;
 	
 	// set the projection buffer
 	g_current_flash_addr = 0;
@@ -75,6 +76,7 @@ void anibike_master_setup_realtime_counter ( void )
 	RTC.CNT = 0;
 	RTC.COMP = 2047;		// 2 msec
 	RTC.CTRL = ( RTC.CTRL & ~RTC_PRESCALER_gm ) | RTC_PRESCALER_DIV1_gc;	
+	RTC_SetCompareIntLevel( RTC_COMPINTLVL_HI_gc  );
 }
 
 /*****************************************************************
@@ -88,12 +90,12 @@ void anibike_master_initialize_software ( void )
 	{
 		uint8_t k = i%16;
 		uint8_t v = 4+(k/2);
-		g_current_proj_buffer[k] = 0;//(i)|((i)<<4);		// blue l1
-		g_current_proj_buffer[16+k] = (v)|((v)<<4);			// green l1
-		g_current_proj_buffer[32+k] = 0;//(i)|((i)<<4);		// red l1	
-		g_current_proj_buffer[48+k] = 0;					// blue l2
-		g_current_proj_buffer[64+k] = 0;					// green l2
-		g_current_proj_buffer[80+k] = 0;					// red l2
+		g_current_proj_buffer[   k] = 0;				// blue l1
+		g_current_proj_buffer[16+k] = (v)|((v)<<4);		// green l1
+		g_current_proj_buffer[32+k] = 0;				// red l1	
+		g_current_proj_buffer[48+k] = 0;				// blue l2
+		g_current_proj_buffer[64+k] = 0;				// green l2
+		g_current_proj_buffer[80+k] = 0;				// red l2
 	}
 	set_projection_buffer ( g_current_proj_buffer );
 	
@@ -104,6 +106,7 @@ void anibike_master_initialize_software ( void )
 		printf_P(PSTR("anibike 2v8bt: %s, %d, %d\r\n"), g_currentEntry.sFileName, g_currentEntry.iNumFrames, g_currentEntry.iBlockList[0]);		
 		g_current_flash_addr = ((uint32_t)(g_currentEntry.iBlockList[0]))*FS_FRAME_SIZE;
 		g_currentFrameInFile = 0; 
+		g_currentDuration = g_currentEntry.iDuration;
 		MUX_ENABLE;
 		run_row_control;		
 	}
@@ -121,10 +124,9 @@ void anibike_master_initialize_software ( void )
 int main(void)
 {
 	// Sleep a little bit until the power supply is stabilized
-	_delay_ms(200);
+	_delay_ms(50);
 	
 	SetClockFreq ( 32 );
-	
 	anibike_master_setup_realtime_counter (  );
 	anibike_master_initialize_hardware(  );
 	initialize_hall_sensor(  );
@@ -240,7 +242,7 @@ void switch_angle_signal ( void )
 
 	g_flash_data_valid = 0;
 	
-	ELAPSED_ANGLE = 75;
+	ELAPSED_ANGLE = g_delta_angle;
 }
 
 /*****************************************************************
@@ -248,7 +250,10 @@ void switch_angle_signal ( void )
  *****************************************************************/
 void hall_sensor_handler ( void )
 {
-	//printf_P ( PSTR("Hall Sensor\r\n"));
+	uint16_t temp;
+	printf_P ( PSTR("H"));
+	
+	anibike_dl_master_end_transactions
 	
 	// init the current angle to zero
 	CURRENT_ANGLE = 0;
@@ -256,11 +261,66 @@ void hall_sensor_handler ( void )
 	// re-init other flags and variables
 	g_current_data_counter = 0;
 	g_flash_data_valid = 0;
+	g_current_dl_finished = 0;
 	
-	// if finished current file, read the next entry to g_currentEntry;
-	// and set g_currentFrameInFile to 0
+	anibike_dl_master_start_transactions	
+	
+	// calculate the new delta-angle time
+	// the rtc ticks every 1 ms. row changes every 16 usec.
+	// so given T msec, multiply by 1000/255 will give number of usec for single rotation
+	// then divide by 16 (row change time).
+	// so given T msec we multiply with 0.2437=3.9/16. which is 0.2437~1/4-1/128
+	temp = (RTC.CNT);
+	g_delta_angle = (uint8_t)((temp)>>2-(temp)>>7);
+	ELAPSED_ANGLE = g_delta_angle;
+	RTC.CNT = 0;						// re-init real-time counter
 	
 	
-	// if didn't finish yet, switch to the next frame
+	if (g_currentDuration == 0)
+	{
+		// if finished current file, read the next entry to g_currentEntry;
+		if (FS_ReadNextEntry ( &g_currentEntry )==1)
+		{
+			g_current_flash_addr = ((uint32_t)(g_currentEntry.iBlockList[0]))*FS_FRAME_SIZE;
+			g_currentDuration = g_currentEntry.iDuration;
+			g_currentFrameInFile = 0;
+			g_current_polarity = 0;
+			g_current_flash_buffer = g_flash_read_buffer_I;
+			g_current_proj_buffer = g_flash_read_buffer_II;	
+			set_projection_buffer ( g_current_proj_buffer );
+			anibike_dl_master_send_timing_sync(  );
+		}		
+		else
+		{
+			MUX_DISABLE;
+			stop_row_control;
+		}
+	}
+	else
+	{
+		// if didn't finish yet, switch to the next frame
+		g_currentFrameInFile = (g_currentFrameInFile+1)%g_currentEntry.iNumFrames;
+		g_current_flash_addr = ((uint32_t)(g_currentEntry.iBlockList[g_currentFrameInFile]))*FS_FRAME_SIZE;
+		g_currentDuration --;		
+		g_current_flash_buffer = g_flash_read_buffer_I;
+		g_current_proj_buffer = g_flash_read_buffer_II;		
+		g_current_polarity = 0;
+		set_projection_buffer ( g_current_proj_buffer );
+		anibike_dl_master_send_timing_sync(  );
+	}
+	
+	MUX_ENABLE;
+	run_row_control;		
+}
+
+/*****************************************************************
+ *			LONG IDLE INTERRUPT
+ *****************************************************************/
+ISR(RTC_COMP_vect)
+{
+	// stop all projection
+	MUX_DISABLE;
+	stop_row_control;
+	
 	
 }

@@ -95,7 +95,7 @@ uint8_t FS_ReadEntry ( uint32_t *pAddress, FileEntry_ST* pEntry )
 	}
 	
 	// Read other information
-	pEntry->Reserved1 = SPI_MasterTransceiveByte(&spiMasterD, 0);
+	pEntry->iDuration = SPI_MasterTransceiveByte(&spiMasterD, 0);
 	pEntry->Reserved2 = SPI_MasterTransceiveByte(&spiMasterD, 0);
 
 	CS_UP;
@@ -243,7 +243,7 @@ uint8_t FS_ReadEntry_FileMatch ( uint32_t *pAddress, FileEntry_ST* pEntry, char*
 		pEntry->iBlockList[itr] = transfer_word (0);
 
 	// Read other information
-	pEntry->Reserved1 = SPI_MasterTransceiveByte(&spiMasterD, 0); 
+	pEntry->iDuration = SPI_MasterTransceiveByte(&spiMasterD, 0); 
 	pEntry->Reserved2 = SPI_MasterTransceiveByte(&spiMasterD, 0); 
 
 	CS_UP;
@@ -274,7 +274,7 @@ void FS_ShowFileInformation ( void )
 		printf_P(PSTR("%d	%s		%d		%d		%d\r\n"), 	iCount,
 															sFileEntry.sFileName,
 															sFileEntry.iBlockList[0],
-															sFileEntry.Reserved1,
+															sFileEntry.iDuration,
 															sFileEntry.Reserved2 );
 
 
@@ -314,7 +314,7 @@ uint8_t FS_SearchFile (char *FileName, FileEntry_ST	*sFileEntry )
 		{
 			printf_P(PSTR("Nm:%s\r\nOffs:%d\r\nNOFr:%d\r\n"),
 																sFileEntry->sFileName,
-																sFileEntry->Reserved1,
+																sFileEntry->iDuration,
 																sFileEntry->iNumFrames );
 			printf_P ( PSTR("FrLst:") );
 
