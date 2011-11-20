@@ -77,10 +77,11 @@ void initialize_lighting_system ( void )
 	ROW_TIMER_CTRL.CTRLB |= TC1_WGMODE0_bm;
 	//ROW_TIMER_CTRL.PER = 0x07;		
 	#ifdef _ANIBIKE_MASTER
-	ROW_TIMER_CTRL.CCA = 0x07;			// 14 usec - every tick is 31.25ns*64 = 2 usec
-	//ROW_TIMER_CTRL.CCA = 0x00FF;			// 14 usec - every tick is 31.25ns*64 = 2 usec
+	ROW_TIMER_CTRL.CCA = 0x08;			// 16 usec - every tick is 31.25ns*64 = 2 usec
+										// its like a pre-scalar of 512 (we use 32MHz = 31.25 ns)
+	//ROW_TIMER_CTRL.CCA = 0x00FF;		// very long time for debug
 	#else
-	ROW_TIMER_CTRL.CCA = 0x24;			// 30 usec - every tick is 31.25ns*64 = 2 usec
+	ROW_TIMER_CTRL.CCA = 0x24;			// 72 usec - every tick is 31.25ns*64 = 2 usec
 	#endif
 	TC1_SetCCAIntLevel(&ROW_TIMER_CTRL, TC_CCAINTLVL_LO_gc );
 	ROW_TIMER_CTRL.CNT = 0;

@@ -50,6 +50,36 @@ void anibike_master_initialize_hardware ( void )
 	CURRENT_ANGLE = 0;
 }
 
+/*****************************************************************
+ *			SETUP REAL-TIME-COUNTER FOR HALL SENSOR
+ *****************************************************************/
+void anibike_master_setup_realtime_counter ( void )
+{
+	/* Turn on internal 32kHz. */
+	OSC.CTRL |= OSC_RC32KEN_bm;
+
+	do {
+		/* Wait for the 32kHz oscillator to stabilize. */
+	} while ( ( OSC.STATUS & OSC_RC32KRDY_bm ) == 0);
+	
+	/* Set internal 32kHz oscillator as clock source for RTC. */
+	CLK.RTCCTRL = CLK_RTCSRC_RCOSC_gc | CLK_RTCEN_bm;
+	
+	do {
+		/* Wait until RTC is not busy. */
+	} while ( RTC_Busy() );
+	
+	// the distance between ticks is going to be 1 msec if there was no hall sensor for 2 seconds
+	// the system will shut down the main current consumers
+	RTC.PER = 2047;			// 2 msec
+	RTC.CNT = 0;
+	RTC.COMP = 2047;		// 2 msec
+	RTC.CTRL = ( RTC.CTRL & ~RTC_PRESCALER_gm ) | RTC_PRESCALER_DIV1_gc;	
+}
+
+/*****************************************************************
+ *			GENERAL SOFTWARE CONFIGURATION
+ *****************************************************************/
 void anibike_master_initialize_software ( void )
 {
 	uint8_t o = 0;
@@ -58,23 +88,12 @@ void anibike_master_initialize_software ( void )
 	{
 		uint8_t k = i%16;
 		uint8_t v = 4+(k/2);
-		// blue l1
-		g_current_proj_buffer[k] = 0;//(i)|((i)<<4);
-		
-		// green l1
-		g_current_proj_buffer[16+k] = (v)|((v)<<4);
-			
-		// red l1
-		g_current_proj_buffer[32+k] = 0;//(i)|((i)<<4);
-		
-		// blue l2
-		g_current_proj_buffer[48+k] = 0;
-		
-		// green l2
-		g_current_proj_buffer[64+k] = 0;
-		
-		// red l2
-		g_current_proj_buffer[80+k] = 0;
+		g_current_proj_buffer[k] = 0;//(i)|((i)<<4);		// blue l1
+		g_current_proj_buffer[16+k] = (v)|((v)<<4);			// green l1
+		g_current_proj_buffer[32+k] = 0;//(i)|((i)<<4);		// red l1	
+		g_current_proj_buffer[48+k] = 0;					// blue l2
+		g_current_proj_buffer[64+k] = 0;					// green l2
+		g_current_proj_buffer[80+k] = 0;					// red l2
 	}
 	set_projection_buffer ( g_current_proj_buffer );
 	
@@ -102,10 +121,13 @@ void anibike_master_initialize_software ( void )
 int main(void)
 {
 	// Sleep a little bit until the power supply is stabilized
-	_delay_ms(200);
+//	_delay_ms(200);
 	
 	SetClockFreq ( 32 );
-	anibike_master_initialize_hardware( );
+	
+	anibike_master_setup_realtime_counter (  );
+	
+	anibike_master_initialize_hardware(  );
 	initialize_hall_sensor(  );
 	initialize_lighting_system(  );	
 	stop_row_control;
@@ -230,12 +252,11 @@ void hall_sensor_handler ( void )
 	//printf_P ( PSTR("Hall Sensor\r\n"));
 	
 	// init the current angle to zero
-//	CURRENT_ANGLE = 0;
+	CURRENT_ANGLE = 0;
 	
 	// re-init other flags and variables
-//	g_current_data_counter = 0;
-//	CLR_DL_SEND_FINISHED;
-//	CLR_FLASH_DATA_VALID;
+	g_current_data_counter = 0;
+	g_flash_data_valid = 0;
 	
 	// if finished current file, read the next entry to g_currentEntry;
 	// and set g_currentFrameInFile to 0
