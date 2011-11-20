@@ -42,7 +42,7 @@ typedef struct {
 	char		sFileName[FS_FILENAME_LENGTH];		// File name string
 	uint16_t 	iBlockList[FS_FILE_MAX_FRAMES];		// Frame block list
 
-	uint8_t		Reserved1;			// Angle of the hall effect
+	uint8_t		iDuration;			// Angle of the hall effect
 									// Or Duration in Moussavi
 	uint8_t		Reserved2;			// Enum describes different filetypes
 									// Or Width in Moussavi
