@@ -55,7 +55,7 @@ void 		FS_StopReadingFrame 	( void );
 uint8_t 	FS_SearchFile 			( char *FileName, FileEntry_ST	*sFileEntry );
 uint8_t 	FS_ReadEntry_FileMatch 	( uint32_t *pAddress, FileEntry_ST* pEntry, char* FileName );
 uint8_t 	FS_ReadFileContents		( char* FileName );
-uint8_t 	FS_ReadNextEntry 		( FileEntry_ST* pEntry );
+uint8_t 	FS_ReadNextEntry 		( FileEntry_ST* pEntry ) __attribute__((hot));
 uint8_t 	FS_ReadEntry 			( uint32_t *pAddress, FileEntry_ST* pEntry );
 uint16_t 	transfer_word 			( uint16_t w );
 

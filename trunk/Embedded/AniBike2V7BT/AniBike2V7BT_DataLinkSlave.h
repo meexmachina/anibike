@@ -67,8 +67,6 @@ typedef uint8_t anibike_dl_slave_header;
 #define JUST_FINISHED_FLUSH					EXTENDED_GPIO
 
 void anibike_dl_slave_initialize ( void );
-void anibike_dl_slave_handle_data ( void );
-
-
+void anibike_dl_slave_handle_data ( void ) __attribute__((hot));
 
 #endif /* ANIBIKE2V7BT_DATALINKSLAVE_H_ */
