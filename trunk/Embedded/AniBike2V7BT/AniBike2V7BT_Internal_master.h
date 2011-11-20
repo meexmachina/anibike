@@ -122,9 +122,12 @@ extern SPI_Master_t spiMasterC;
 /*****************************************************************
  *			F U N C T I O N    D E F I N I T I O N S
  *****************************************************************/
-void	SetClockFreq		( uint8_t freq );
-void	switch_angle_signal ( void );
-void	hall_sensor_handler ( void );
+void	SetClockFreq							( uint8_t freq );
+void	switch_angle_signal						( void );
+void	hall_sensor_handler						( void );
+void	anibike_master_initialize_hardware		( void );
+void	anibike_master_setup_realtime_counter	( void );
+void	anibike_master_initialize_software		( void );
 
 
 
