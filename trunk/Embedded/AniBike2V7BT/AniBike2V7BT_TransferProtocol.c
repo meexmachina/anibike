@@ -112,7 +112,7 @@ void rx_handler ( void )
 				break;
 			}									   
 			
-			strcpy (last_msg, msg);	    
+			strcpy ((char*)(last_msg), (char*)(msg));	    
 			cmd_parse((char *)msg);
 	        msg_ptr = msg;
 	        break;
@@ -226,7 +226,7 @@ void tm_cmd_echo_on(U8 argc, char **argv)
 void cmd_parse(char *cmd)
 {
     U8 argc, i = 0;
-    char *argv[30];
+    char *argv[40];
 
     fflush(stdout);
 
@@ -234,7 +234,7 @@ void cmd_parse(char *cmd)
     do
     {
         argv[++i] = strtok(NULL, " ");
-    } while ((i < 30) && (argv[i] != NULL));
+    } while ((i < 40) && (argv[i] != NULL));
     
     argc = i;
     for (i=0; cmd_tbl[i].cmd != NULL; i++)

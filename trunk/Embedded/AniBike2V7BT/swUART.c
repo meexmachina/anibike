@@ -102,7 +102,7 @@ void	swUART_SetBaudRate ( uint32_t baud_rate)
 			break;
 		case (19200):
 			if (g_cpu_speed==16)	SWUART_SET_DELAY(68);
-			if (g_cpu_speed==32)	SWUART_SET_DELAY(278);
+			//if (g_cpu_speed==32)	SWUART_SET_DELAY(278);
 			break;
 		case (38400):
 			if (g_cpu_speed==16)	SWUART_SET_DELAY(32);
@@ -338,6 +338,8 @@ uint8_t swUART_ReadChar ( void )
 					
 					:: "M" (SWUART_TOTAL_NUM_BITS_RX), "I" (UART_PORT_IN), "I" (UART_RX_PIN)
 	);	
+	
+	return 0;		// only for compiler because the returning is already in assembly
 }
 
 

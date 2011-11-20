@@ -101,6 +101,9 @@ void anibike_master_initialize_software ( void )
  *****************************************************************/
 int main(void)
 {
+	// Sleep a little bit until the power supply is stabilized
+	_delay_ms(200);
+	
 	SetClockFreq ( 32 );
 	anibike_master_initialize_hardware( );
 	initialize_hall_sensor(  );

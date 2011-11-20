@@ -77,8 +77,8 @@ void initialize_lighting_system ( void )
 	ROW_TIMER_CTRL.CTRLB |= TC1_WGMODE0_bm;
 	//ROW_TIMER_CTRL.PER = 0x07;		
 	#ifdef _ANIBIKE_MASTER
-	//ROW_TIMER_CTRL.CCA = 0x07;			// 14 usec - every tick is 31.25ns*64 = 2 usec
-	ROW_TIMER_CTRL.CCA = 0x00FF;			// 14 usec - every tick is 31.25ns*64 = 2 usec
+	ROW_TIMER_CTRL.CCA = 0x07;			// 14 usec - every tick is 31.25ns*64 = 2 usec
+	//ROW_TIMER_CTRL.CCA = 0x00FF;			// 14 usec - every tick is 31.25ns*64 = 2 usec
 	#else
 	ROW_TIMER_CTRL.CCA = 0x24;			// 30 usec - every tick is 31.25ns*64 = 2 usec
 	#endif
@@ -168,7 +168,7 @@ void switch_projection_state ( void )
 	uint8_t col;
 	uint8_t *place;
 
-	place = &g_current_buffer[((uint8_t)((CURR_ROW)*2))];
+	place = (uint8_t*)(&g_current_buffer[((uint8_t)((CURR_ROW)*2))]);
 	
 	col = ((*place)&0xf0)>>4;
 	col *= col;

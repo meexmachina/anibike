@@ -228,7 +228,7 @@ ISR(SPIC_INT_vect)
 	uint8_t length;
 	/* Get received data. */
 	
-	if (g_just_flushed) g_just_flushed=0;
+	if (JUST_FINISHED_FLUSH==1) JUST_FINISHED_FLUSH=0;
 	
 	temp = SPI_SlaveReadByte(&spiSlaveC);
 	DL_SLAVE_CIRC_BUFFER_ADD (g_rx_data, temp);
@@ -236,7 +236,7 @@ ISR(SPIC_INT_vect)
 	
 	while (length--)
 	{
-		while (!SPI_SlaveDataAvailable(&spiSlaveC)) { if (g_just_flushed) return; }
+		while (!SPI_SlaveDataAvailable(&spiSlaveC)) { if (JUST_FINISHED_FLUSH) return; }
 		DL_SLAVE_CIRC_BUFFER_ADD (g_rx_data, SPI_SlaveReadByte(&spiSlaveC));
 	}
 
@@ -247,6 +247,6 @@ ISR(SPIC_INT_vect)
 ISR(PORTC_INT0_vect)
 {
 	DL_SLAVE_CIRC_BUFFER_FLUSH;
-	g_just_flushed = 1;
+	JUST_FINISHED_FLUSH = 1;
 	g_data_valid=0;
 }
