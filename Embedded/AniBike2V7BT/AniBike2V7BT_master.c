@@ -72,9 +72,9 @@ void anibike_master_setup_realtime_counter ( void )
 	
 	// the distance between ticks is going to be 1 msec if there was no hall sensor for 2 seconds
 	// the system will shut down the main current consumers
-	RTC.PER = 2047;			// 2 msec
+	RTC.PER = 1000;			// 1 msec
 	RTC.CNT = 0;
-	RTC.COMP = 2047;		// 2 msec
+	RTC.COMP = 1000;		// 1 msec
 	RTC.CTRL = ( RTC.CTRL & ~RTC_PRESCALER_gm ) | RTC_PRESCALER_DIV1_gc;	
 	RTC_SetCompareIntLevel( RTC_COMPINTLVL_LO_gc  );
 }
@@ -251,9 +251,16 @@ void switch_angle_signal ( void )
 void hall_sensor_handler ( void )
 {
 	uint16_t temp;
-	printf_P ( PSTR("H"));
-	
 	anibike_dl_master_end_transactions
+	
+	//printf_P ( PSTR("H"));
+	if ((RTC.CNT)<100) 
+	{
+		MUX_DISABLE;
+		stop_row_control;
+		anibike_dl_master_go_to_sleep (  );
+		return;
+	}		
 	
 	// init the current angle to zero
 	CURRENT_ANGLE = 0;
@@ -271,9 +278,12 @@ void hall_sensor_handler ( void )
 	// then divide by 16 (row change time).
 	// so given T msec we multiply with 0.2437=3.9/16. which is 0.2437~1/4-1/128
 	temp = (RTC.CNT);
-	g_delta_angle = (uint8_t)((temp)>>2-(temp)>>7);
+	//printf_P ( PSTR("%d"), temp);
+	g_delta_angle = (uint8_t)(((temp/4)-(temp/128))&0xff);
 	ELAPSED_ANGLE = g_delta_angle;
 	RTC.CNT = 0;						// re-init real-time counter
+	//printf_P ( PSTR(",%d,"), g_delta_angle);
+	
 	
 	
 	if (g_currentDuration == 0)
@@ -294,6 +304,7 @@ void hall_sensor_handler ( void )
 		{
 			MUX_DISABLE;
 			stop_row_control;
+			anibike_dl_master_go_to_sleep (  );
 		}
 	}
 	else
