@@ -36,8 +36,6 @@ int main(void)
 	swUART_SetBaudRate ( 115200 );
 	initialize_lighting_system(  );	
 	anibike_dl_slave_initialize (  );
-	//run_row_control;
-	//MUX_ENABLE;
 	
 	// enable interrupts
 	sei ( );

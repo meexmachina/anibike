@@ -141,7 +141,6 @@ void anibike_dl_slave_handle_data ( void )
 				{
 					uint8_t temp = DL_SLAVE_CIRC_BUFFER_POP(g_rx_data);
 					g_receive_buffer[g_data_counter++] = temp;
-					//g_data_counter++;
 				}	
 			}	
 			break;

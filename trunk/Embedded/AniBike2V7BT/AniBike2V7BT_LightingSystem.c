@@ -6,7 +6,7 @@
  */ 
 #include "AniBike2V7BT_Internal.h"
 
-volatile uint16_t	g_iRedCalibrationPeriod = 700;			// a little bit more dimmed
+volatile uint16_t	g_iRedCalibrationPeriod = 800;			// a little bit more dimmed
 volatile uint16_t	g_iGreenCalibrationPeriod = 235;		// maximum 235
 volatile uint16_t	g_iBlueCalibrationPeriod = 235;			// maximum 235
 
