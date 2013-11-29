@@ -11,5 +11,8 @@
     <string name="device_control_activity_title">Control Anibike</string>
     <string name="title_about_anibike">About Anibike</string>
     <string name="title_about_device">About The Device</string>
+    <string name="title_activity_device_selection">DeviceSelectionActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
